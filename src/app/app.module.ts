@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 /* Gráficos */
 import { NgChartsModule } from "ng2-charts";
 /* Calendario */
@@ -11,16 +13,19 @@ import { NgxQRCodeModule } from "@techiediaries/ngx-qrcode";
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    routingComponents
   ],
   imports: [
     BrowserModule,
     NgChartsModule,
+    FormsModule,
+    HttpClientModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
