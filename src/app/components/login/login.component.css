@@ -1,0 +1,84 @@
+@media screen and (max-width: 510px){
+    .boton{
+        width: 90px;
+    }
+}
+@media screen and (max-width: 940px){
+    .imagen{
+        margin-right: 50px;
+    }
+}
+.contenido{
+    background-color: #EBEFF3;
+    height: 625px;
+    width: 100%;
+}
+img{
+    height: 120px;
+    width: 120px;
+    
+}
+.imagen{
+   align-items: center;
+}
+.nombre{
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 44px;
+    margin-top: 50px;
+    /* identical to box height */
+    color: #000000;
+    text-align: center;
+    margin-left: 40px;
+}
+
+.formulario{
+    margin-top: 20px;
+    width: 580px;
+    height: 550px;
+    top: 200px;
+    background: #FFFFFF;
+    border-radius: 24px;
+}
+.titulo{
+    margin-top: 40px;
+    text-align: center;
+    
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 44px;
+    color: #E55767;
+}
+.seccionu{
+    margin-top: 40px;
+    margin-left: 86px;
+}
+.ingreso{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 48px;
+    /* identical to box height, or 200% */
+    color: #000000;
+}
+input{
+    width: 75%;
+    margin-bottom: 50px;
+    border: 1px solid #E2E1E5;
+    border-radius: 9px;
+    align-items: flex-start;
+    padding: 10px 15px;
+}
+button{
+    background: #E55767;
+    border-radius: 12px;
+    width: 180px;
+    height: 40px;
+    margin-top: 30px;
+    color: white;
+}
