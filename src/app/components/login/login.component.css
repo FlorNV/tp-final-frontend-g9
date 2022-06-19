@@ -1,0 +1,98 @@
+.contenido{
+    background-color: #EBEFF3;
+    height: 750px;
+    width: 100%;
+}
+img{
+    height: 120px;
+    width: 120px;
+}
+.imagen{
+   align-items: center;
+}
+.nombre{
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 44px;
+    margin-top: 50px;
+    color: #000000;
+    text-align: center;
+    margin-left: 25px;
+}
+.formulario{
+    margin-top: 20px;
+    width: 580px;
+    height: 550px;
+    top: 200px;
+    background: #FFFFFF;
+    border-radius: 24px;
+}
+.titulo{
+    margin-top: 40px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 44px;
+    color: #E55767;
+}
+.seccionu{
+    margin-top: 40px;
+    margin-left: 86px;
+}
+.ingreso{
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 48px;
+    color: #000000;
+}
+input{
+    width: 75%;
+    margin-bottom: 50px;
+    border: 1px solid #E2E1E5;
+    border-radius: 9px;
+    align-items: flex-start;
+    padding: 10px 15px;
+}
+.boton{
+    background: #E55767;
+    color: white;
+    border-radius: 12px;
+    width: 180px;
+    height: 40px;
+    margin-top: 30px;
+    font-size: 18px;
+}
+.boton:hover{
+    background-color: rgba(42, 158, 210, 0.8);
+}
+@media(max-width: 360px){
+    .contenido{
+        height: 600px;
+        width: 100%;
+    }
+    .formulario{
+        width: 230px;
+        height: 330px;
+    }
+    .seccionu{
+        margin-left: 30px;
+    }
+}
+@media(max-width: 767px){
+    .contenido{
+        height: 850px;
+        width: auto;
+    }
+    .formulario{
+        width: 400px;
+        height: 530px;
+    }
+    .boton{
+        width: 90px;
+    }
+}
+@media screen and (max-width: 940px){
+    .imagen{
+        margin-right: 60px;
+    }
+}
