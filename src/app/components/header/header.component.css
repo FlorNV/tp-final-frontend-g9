@@ -1,0 +1,24 @@
+img{
+    height: 120px;
+    width: 120px;
+}
+svg{
+    height: 60px;
+    width: 60px;
+    color: #EBEFF3;
+}
+
+.fondo{
+    background-color: #E55767;
+   
+}
+
+div a{
+    color: #EBEFF3;
+}
+ul a{
+    background-color: #E55767;
+}
+span li {
+    list-style-type: none;
+}
