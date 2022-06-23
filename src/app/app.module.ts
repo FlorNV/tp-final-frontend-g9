@@ -15,11 +15,13 @@ import { environment } from '../environments/environment';
 
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HeaderParticipanteComponent } from './components/header-participante/header-participante.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    routingComponents
+    routingComponents,
+    HeaderParticipanteComponent
   ],
   imports: [
     BrowserModule,

@@ -5,10 +5,11 @@ import { HeaderComponent } from './components/header/header.component';
 import { LoginComponent } from './components/login/login.component';
 import { EmpleadoComponent } from './components/empleado/empleado.component';
 
+
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'empleado', component: EmpleadoComponent },
-  { path: '**', pathMatch: 'full', redirectTo: 'login' }
+  { path: '**', pathMatch: 'full', redirectTo: 'login' },
 ];
 
 @NgModule({
