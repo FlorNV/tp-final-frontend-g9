@@ -32,3 +32,8 @@ label {
 .bi-person-plus {
     font-size: 6rem;
 }
+
+p i {
+    font-size: 3rem;
+    margin-top: 2rem;
+}

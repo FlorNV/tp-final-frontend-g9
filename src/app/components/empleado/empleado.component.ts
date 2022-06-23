@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Form, NgForm } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Dependencia } from 'src/app/models/dependencia';
 import { Empleado } from 'src/app/models/empleado';
 import { DependenciaService } from 'src/app/services/dependencia.service';
 import { EmpleadoService } from 'src/app/services/empleado.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-empleado',
@@ -17,15 +18,20 @@ export class EmpleadoComponent implements OnInit {
   dependencias!: Array<Dependencia>;
   selectedItems = [];
   dropdownSettings: IDropdownSettings;
+  respuesta: any;
 
-  constructor(private empleadoService: EmpleadoService, private dependenciaService: DependenciaService) { 
+  constructor(private empleadoService: EmpleadoService, 
+              private dependenciaService: DependenciaService, 
+              private modalService: NgbModal) { 
+    
     this.dropdownSettings = {
       singleSelection: false,
       idField: '_id',
       textField: 'tipo',
       enableCheckAll: false,
       itemsShowLimit: 3,
-      allowSearchFilter: true
+      allowSearchFilter: true,
+      searchPlaceholderText: 'Buscar'
     };
     this.empleado = new Empleado();
     this.empleado.rol = '';
@@ -40,17 +46,19 @@ export class EmpleadoComponent implements OnInit {
     console.log(this.selectedItems);
   }
 
-  guardarEmpleado() {
+  guardarEmpleado(content: any) {
     this.empleado.dependencias = this.assignDependencias(this.selectedItems);
     this.empleadoService.addEmpleado(this.empleado).subscribe(
       (result) => {
         if(result.status == 201) {
-          alert(result.message);
+          this.respuesta = result;
+          this.open(content);
         }
       },
       (error) => {
         if(error.status == 500) {
-          alert(error.message);
+          this.respuesta = error;
+          this.open(content);
         }
       }
     )
@@ -73,6 +81,10 @@ export class EmpleadoComponent implements OnInit {
       dependencias.push(dependencia);
     });
     return dependencias;
+  }
+
+  open(content: any) {
+    this.modalService.open(content, { centered: true });
   }
 
   limpiarForm(form: NgForm) {

@@ -45,11 +45,16 @@
                         <div class="col-12">
                             <label class="form-label" for="email">Email</label>
                             <input class="form-control" type="email" id="email" placeholder="Ingrese correo electrónico"
-                            [(ngModel)]="empleado.email" name="email" required #email="ngModel"
+                            [(ngModel)]="empleado.email" name="email" required email #email="ngModel"
                             [ngClass]="{'border-danger': email.invalid && (email.dirty || email.touched)}">
 
-                            <div *ngIf="email.invalid && (email.dirty || email.touched) && email.errors?.['required']" class="form-text text-danger">
-                                <i class="bi bi-exclamation-circle"></i> El email es requerido.
+                            <div *ngIf="email.invalid && (email.dirty || email.touched)" >
+                                <div *ngIf="email.errors?.['required']" class="form-text text-danger">
+                                    <i class="bi bi-exclamation-circle"></i> Proporcione una dirección de correo electrónico.
+                                </div>
+                                <div *ngIf="email.errors?.['email']" class="form-text text-danger">
+                                    <i class="bi bi-exclamation-circle"></i> Proporcione una dirección de correo electrónico válida.
+                                </div>
                             </div>
                         </div>
 
@@ -66,7 +71,7 @@
                                 <div *ngIf="password.errors?.['minlength']" class="form-text text-danger">
                                   <i class="bi bi-exclamation-circle"></i> El password debe tener al menos 8 caracteres.
                                 </div>
-                              </div>
+                            </div>
                         </div>
 
                         <div class="col-md-4">
@@ -99,7 +104,7 @@
                         </div>
 
                         <div class="col-12 text-center mt-5">
-                            <button (click)="guardarEmpleado(); limpiarForm(empleadoForm)" [disabled]="!empleadoForm.valid"
+                            <button (click)="guardarEmpleado(content); limpiarForm(empleadoForm)" [disabled]="!empleadoForm.valid"
                             type="submit" class="btn btn-celeste px-5">Agregar</button>
                         </div>
                     </form>
@@ -108,3 +113,19 @@
         </div>
     </div>
 </div>
+
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Aviso</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body text-center text-uppercase">
+        <p class="mt-4">{{ respuesta.message }}</p>
+        <p *ngIf="respuesta.status==201" class="mt-4"><i class="bi bi-check-circle text-success"></i></p>
+        <p *ngIf="respuesta.status!=201" class="mt-4"><i class="bi bi-exclamation-circle text-danger"></i></p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-celeste" (click)="modal.close()">Close</button>
+    </div>
+</ng-template>

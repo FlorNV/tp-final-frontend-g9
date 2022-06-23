@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 /* Gráficos */
 import { NgChartsModule } from "ng2-charts";
@@ -27,6 +28,8 @@ import { AppComponent } from './app.component';
     NgChartsModule,
     FormsModule,
     HttpClientModule,
+    NgbModalModule,
+    NgbModule,
     NgMultiSelectDropDownModule.forRoot(),
     CalendarModule.forRoot({
       provide: DateAdapter,
