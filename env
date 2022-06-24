@@ -1,0 +1,6 @@
+# ./.env
+
+# Puerto donde correra el servidor
+PORT=8000
+# Cadena de conexion de mongo
+MONGO_URI=mongodb://localhost:27017/proyectofinal
