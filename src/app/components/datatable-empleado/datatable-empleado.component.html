@@ -1,25 +1,38 @@
-<table datatable class="table table-bordered" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
-    <thead>
-        <tr class="align-text-middle">
-            
-            <th>Apellido</th>
-            <th>Nombre</th>
-            <th>Legajo</th>
-            <th>Email</th>
-            <th>Esta en Reunión</th>
-            <th>Sala</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let e of empleados">
-            <td>{{e.apellido}}</td>
-            <td>{{e.nombre}}</td>
-            <td>{{e.legajo}}</td>
-            <td>{{e.email}}</td>
-            <td>{{e.estaEnReunion | yesNo}}</td>
-            <td *ngFor="let t of e.dependencias">{{t.tipo }}</td>
-        </tr>
-    </tbody>
-    <tfoot>
-    </tfoot>
-</table>
+<div class="col-12">
+    <h5 class="bg-rosa mb-0 px-5 py-3 rounded-top">Resgistro de Empleados</h5>
+    <div class="px-5 py-4 bg-white rounded-bottom">
+        <table datatable class="table table-bordered" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+            <thead>
+                <tr class="align-text-middle">
+                    
+                    <th>Apellido</th>
+                    <th>Nombre</th>
+                    <th>Legajo</th>
+                    <th>Email</th>
+                    <th>Esta en Reunión</th>
+                    <th>Sala</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let e of empleados">
+                    <td>{{e.apellido}}</td>
+                    <td>{{e.nombre}}</td>
+                    <td>{{e.legajo}}</td>
+                    <td>{{e.email}}</td>
+                    <td>{{e.estaEnReunion | yesNo}}</td>
+                    <td >
+                        <p *ngFor="let t of e.dependencias">
+                            {{t.tipo }}
+                        </p>
+                       
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+            </tfoot>
+        </table>
+    </div>
+
+</div>
+
+

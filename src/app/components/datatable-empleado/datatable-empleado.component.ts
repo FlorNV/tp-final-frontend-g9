@@ -26,6 +26,7 @@ export class DatatableEmpleadoComponent implements OnInit {
     next:(result) =>{
         this.empleados=result['data']['empleados'];
         console.log(this.empleados);
+        this.rerender();
         
     },
     error: () => {
@@ -50,6 +51,12 @@ export class DatatableEmpleadoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dtOptions = {
+      autoWidth: false,
+      pagingType: 'full_numbers',
+      pageLength: 5,
+      scrollX: true
+    };
     this.getAllEmpleados();
   }
 
