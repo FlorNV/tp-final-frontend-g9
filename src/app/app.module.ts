@@ -21,13 +21,16 @@ import {DataTablesModule} from 'angular-datatables';
 import { DatatableEmpleadoComponent } from './components/datatable-empleado/datatable-empleado.component'
 import { CustomFormsModule } from 'ng2-validation';
 import { YesNoPipe } from './yes-no.pipe';
+import { HeaderParticipanteComponent } from './components/header-participante/header-participante.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
     DatatableEmpleadoComponent,
-    YesNoPipe
+    YesNoPipe,
+    HeaderParticipanteComponent
   ],
   imports: [
     BrowserModule,

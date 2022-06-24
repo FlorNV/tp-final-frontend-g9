@@ -6,12 +6,12 @@ import { LoginComponent } from './components/login/login.component';
 import { EmpleadoComponent } from './components/empleado/empleado.component';
 import { DatatableEmpleadoComponent } from './components/datatable-empleado/datatable-empleado.component';
 
+
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'empleado', component: EmpleadoComponent },
   {path:'empleados',component:DatatableEmpleadoComponent},
   { path: '**', pathMatch: 'full', redirectTo: 'login' },
-  
 ];
 
 @NgModule({
