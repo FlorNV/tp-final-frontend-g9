@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { CustomFormsModule } from 'ng2-validation';
 /* Gráficos */
 import { NgChartsModule } from "ng2-charts";
 /* Calendario */
@@ -17,6 +20,7 @@ import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderParticipanteComponent } from './components/header-participante/header-participante.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +32,9 @@ import { HeaderParticipanteComponent } from './components/header-participante/he
     NgChartsModule,
     FormsModule,
     HttpClientModule,
+    NgbModalModule,
+    NgbModule,
+    NgMultiSelectDropDownModule.forRoot(),
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
@@ -39,7 +46,8 @@ import { HeaderParticipanteComponent } from './components/header-participante/he
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
-    })
+    }),
+    CustomFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
