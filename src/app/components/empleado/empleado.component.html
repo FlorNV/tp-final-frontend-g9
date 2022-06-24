@@ -7,42 +7,105 @@
                     <i class="bi bi-person-plus d-none d-md-block"></i>
                 </div>
                 <div class="col-md-8 p-5 bg-white">
-                    <form class="row g-3" action="" method="POST">
+                    <form #empleadoForm="ngForm" class="row g-3" action="" method="POST">
+
                         <div class="col-12">
                             <label class="form-label" for="apellido">Apellido</label>
-                            <input class="form-control" type="text" name="apellido" id="apellido" placeholder="Ingrese apellido">
+                            <input class="form-control" type="text" id="apellido" placeholder="Ingrese apellido"
+                            [(ngModel)]="empleado.apellido" name="apellido" required #apellido="ngModel"
+                            [ngClass]="{'border-danger': apellido.invalid && (apellido.dirty || apellido.touched)}">
+
+                            <div *ngIf="apellido.invalid && (apellido.dirty || apellido.touched) && apellido.errors?.['required']" class="form-text text-danger">
+                                <i class="bi bi-exclamation-circle"></i> El apellido es requerido.
+                            </div>
                         </div>
+
                         <div class="col-12">
                             <label class="form-label" for="nombre">Nombre</label>
-                            <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Ingrese nombre">
+                            <input class="form-control" type="text" id="nombre" placeholder="Ingrese nombre"
+                            [(ngModel)]="empleado.nombre" name="nombre" required #nombre="ngModel"
+                            [ngClass]="{'border-danger': nombre.invalid && (nombre.dirty || nombre.touched)}">
+
+                            <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched) && nombre.errors?.['required']" class="form-text text-danger">
+                                <i class="bi bi-exclamation-circle"></i> El nombre es requerido.
+                            </div>
                         </div>
+
                         <div class="col-12">
                             <label class="form-label" for="legajo">Legajo</label>
-                            <input class="form-control" type="text" name="legajo" id="legajo" placeholder="Ingrese legajo">
+                            <input class="form-control" type="text" id="legajo" placeholder="Ingrese legajo"
+                            [(ngModel)]="empleado.legajo" name="legajo" required #legajo="ngModel"
+                            [ngClass]="{'border-danger': legajo.invalid && (legajo.dirty || legajo.touched)}">
+
+                            <div *ngIf="legajo.invalid && (legajo.dirty || legajo.touched) && legajo.errors?.['required']" class="form-text text-danger">
+                                <i class="bi bi-exclamation-circle"></i> El legajo es requerido.
+                            </div>
                         </div>
+
                         <div class="col-12">
                             <label class="form-label" for="email">Email</label>
-                            <input class="form-control" type="email" placeholder="Ingrese correo electrónico">
+                            <input class="form-control" type="email" id="email" placeholder="Ingrese correo electrónico"
+                            [(ngModel)]="empleado.email" name="email" required email #email="ngModel"
+                            [ngClass]="{'border-danger': email.invalid && (email.dirty || email.touched)}">
+
+                            <div *ngIf="email.invalid && (email.dirty || email.touched)" >
+                                <div *ngIf="email.errors?.['required']" class="form-text text-danger">
+                                    <i class="bi bi-exclamation-circle"></i> Proporcione una dirección de correo electrónico.
+                                </div>
+                                <div *ngIf="email.errors?.['email']" class="form-text text-danger">
+                                    <i class="bi bi-exclamation-circle"></i> Proporcione una dirección de correo electrónico válida.
+                                </div>
+                            </div>
                         </div>
+
+                        <div class="col-12">
+                            <label class="form-label" for="password">Password</label>
+                            <input class="form-control" type="password" id="password" placeholder="Ingrese contraseña"
+                            [(ngModel)]="empleado.clave" name="password" required minlength="8" #password="ngModel"
+                            [ngClass]="{'border-danger': password.invalid && (password.dirty || password.touched)}">
+
+                            <div *ngIf="password.invalid && (password.dirty || password.touched)">
+                                <div *ngIf="password.errors?.['required']" class="form-text text-danger">
+                                  <i class="bi bi-exclamation-circle"></i> El password es requerido.
+                                </div>
+                                <div *ngIf="password.errors?.['minlength']" class="form-text text-danger">
+                                  <i class="bi bi-exclamation-circle"></i> El password debe tener al menos 8 caracteres.
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="col-md-4">
                             <label class="form-label" for="rol">Rol</label>
-                            <select class="form-select" name="rol" id="rol">
-                                <option value="" selected disabled>Seleccione Rol</option>
-                                <option value="">Participante</option>
-                                <option value="">Administrador</option>
+                            <select class="form-select" id="rol" [(ngModel)]="empleado.rol" name="rol" required #rol="ngModel"
+                            [ngClass]="{'border-danger': rol.invalid && (rol.dirty || rol.touched)}">
+                                <option [value]="''" selected disabled>Seleccione Rol</option>
+                                <option [value]="'PARTICIPANTE'">Participante</option>
+                                <option [value]="'ADMINISTRADOR'">Administrador</option>
                             </select>
-                        </div>
+
+                            <div *ngIf="rol.invalid && (rol.dirty || rol.touched) && rol.errors?.['required']" class="form-text text-danger">
+                                <i class="bi bi-exclamation-circle"></i> Seleccione Rol.
+                            </div>
+                        </div>        
+
                         <div class="col-md-8">
-                            <label class="form-label" for="dependencia">Dependencia</label>
-                            <select class="form-select" name="dependencia" id="dependencia">
-                                <option value="" selected disabled>Seleccione Dependencia</option>
-                                <option value="">Contable</option>
-                                <option value="">Personal</option>
-                                <option value="">Auditoría</option>
-                            </select>
+                            <label class="form-label">Dependencias</label>
+                            <ng-multiselect-dropdown
+                            [placeholder]="'Seleccione dependencia'"
+                            [settings]="dropdownSettings"
+                            [data]="dependencias"
+                            [(ngModel)]="selectedItems"
+                            name="dependencias" required #dep="ngModel"
+                            >
+                            </ng-multiselect-dropdown>
+                            <div *ngIf="dep.invalid && (dep.dirty || dep.touched) && dep.errors?.['required']" class="form-text text-danger">
+                                <i class="bi bi-exclamation-circle"></i> Seleccione al menos una dependencia.
+                            </div>
                         </div>
+
                         <div class="col-12 text-center mt-5">
-                            <button class="btn btn-celeste px-5">Agregar</button>
+                            <button (click)="guardarEmpleado(content); limpiarForm(empleadoForm)" [disabled]="!empleadoForm.valid"
+                            type="submit" class="btn btn-celeste px-5">Agregar</button>
                         </div>
                     </form>
                 </div>
@@ -50,3 +113,19 @@
         </div>
     </div>
 </div>
+
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Aviso</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body text-center text-uppercase">
+        <p class="mt-4">{{ respuesta.message }}</p>
+        <p *ngIf="respuesta.status==201" class="mt-4"><i class="bi bi-check-circle text-success"></i></p>
+        <p *ngIf="respuesta.status!=201" class="mt-4"><i class="bi bi-exclamation-circle text-danger"></i></p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-celeste" (click)="modal.close()">Close</button>
+    </div>
+</ng-template>
