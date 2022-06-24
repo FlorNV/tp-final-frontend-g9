@@ -1,0 +1,17 @@
+thead {
+    background-color: #E55767;
+    color: #fff;
+}
+
+thead tr th {
+    text-align: center !important;
+}
+
+tbody tr td{
+    text-align: center !important;
+}
+
+.bg-rosa {
+    background-color: #E55767;
+    color: #fff;
+}

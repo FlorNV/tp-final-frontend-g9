@@ -26,7 +26,7 @@ export class EmpleadoService {
 
   public getEmpleados(): Observable<any> {
     const options = {headers: new HttpHeaders({})};
-    return this._http.get(this.URL, options);
+    return this._http.get(this.URL+ "/" , options);
   }
 
   public updateEmpleado(empleado: Empleado): Observable<any> {
