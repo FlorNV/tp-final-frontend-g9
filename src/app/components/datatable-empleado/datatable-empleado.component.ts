@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import{DataTableDirective} from 'angular-datatables';
 import { Subject } from 'rxjs';
-
+import { EmpleadoService } from 'src/app/services/empleado.service';
+import { Empleado } from 'src/app/models/empleado';
+import { Dependencia } from 'src/app/models/dependencia';
 @Component({
   selector: 'app-datatable-empleado',
   templateUrl: './datatable-empleado.component.html',
@@ -15,9 +17,40 @@ export class DatatableEmpleadoComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
 
 
-  constructor() { }
+  empleados:Array<Empleado>=[];
+  //salas:Array<Dependencia>=[];
+  constructor(private empleadoService:EmpleadoService) { }
+
+  getAllEmpleados(){
+  this.empleadoService.getEmpleados().subscribe({
+    next:(result) =>{
+        this.empleados=result['data']['empleados'];
+        console.log(this.empleados);
+        
+    },
+    error: () => {
+      alert('Error en la peticion');
+    },
+  })
+  }
+
+  ngAfterViewInit(): void {
+    this.dtTrigger.next(undefined);
+  }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
+
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      this.dtTrigger.next(undefined);     
+    });
+  }
 
   ngOnInit(): void {
+    this.getAllEmpleados();
   }
 
 }

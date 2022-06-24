@@ -1,1 +1,25 @@
-<p>datatable-empleado works!</p>
+<table datatable class="table table-bordered" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+    <thead>
+        <tr class="align-text-middle">
+            
+            <th>Apellido</th>
+            <th>Nombre</th>
+            <th>Legajo</th>
+            <th>Email</th>
+            <th>Esta en Reunión</th>
+            <th>Sala</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let e of empleados">
+            <td>{{e.apellido}}</td>
+            <td>{{e.nombre}}</td>
+            <td>{{e.legajo}}</td>
+            <td>{{e.email}}</td>
+            <td>{{e.estaEnReunion | yesNo}}</td>
+            <td *ngFor="let t of e.dependencias">{{t.tipo }}</td>
+        </tr>
+    </tbody>
+    <tfoot>
+    </tfoot>
+</table>
