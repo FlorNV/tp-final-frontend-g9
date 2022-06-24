@@ -15,16 +15,19 @@ import { environment } from '../environments/environment';
 
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
-
+import {DataTablesModule} from 'angular-datatables';
+import { DatatableEmpleadoComponent } from './components/datatable-empleado/datatable-empleado.component'
 @NgModule({
   declarations: [
     AppComponent,
-    routingComponents
+    routingComponents,
+    DatatableEmpleadoComponent
   ],
   imports: [
     BrowserModule,
     NgChartsModule,
     FormsModule,
+    DataTablesModule,
     HttpClientModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
