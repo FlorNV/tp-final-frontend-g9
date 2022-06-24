@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { CustomFormsModule } from 'ng2-validation';
 /* Gráficos */
 import { NgChartsModule } from "ng2-charts";
 /* Calendario */
@@ -17,12 +18,14 @@ import { environment } from '../environments/environment';
 
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CustomFormsModule } from 'ng2-validation';
+import { HeaderParticipanteComponent } from './components/header-participante/header-participante.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    routingComponents
+    routingComponents,
+    HeaderParticipanteComponent
   ],
   imports: [
     BrowserModule,
