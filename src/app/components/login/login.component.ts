@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { findIndex } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Empleado } from 'src/app/models/empleado';
 import { Login } from 'src/app/models/login';
 import { LoginService } from 'src/app/services/login.service';
@@ -15,44 +15,49 @@ export class LoginComponent implements OnInit {
   login!: Login;
   empleado!: Empleado;
   rol!: string;
+  respuesta!: any;
+  message!: string;
 
-  usuarios: Array<any> = [{"id":0, "nombre": "Administrador","usuarioCorreo":"admin@gmail.com","usuarioPassword":"admin"},
-                          {"id":1, "nombre": "Joaquin","usuarioCorreo":"joako@gmail.com","usuarioPassword":"1234"},
-                          {"id":2, "nombre": "Florencia","usuarioCorreo":"flor@gmail.com","usuarioPassword":"4567"},
-                          {"id":3, "nombre": "Rocio","usuarioCorreo":"roog@gmail.com","usuarioPassword":"1596"}];
-  validateEmail: boolean = true
   indice!: number;
   constructor(private loginService: LoginService,
-              private router: Router) {
+              private router: Router,
+              private modalService: NgbModal) {
     this.login = new Login();
   }
 
   ngOnInit(): void {
   }
   
-  ingresar(){
+  ingresar(content: any){
     this.loginService.autenticacion(this.login).subscribe(
       (result) => {
-
-        this.empleado = new Empleado();
-        this.empleado = result.data.empleado;
-        this.rol = result.data.empleado.rol;
         
         if(result.status == 200){
+          this.rol = result.data.empleado.rol;
           if(this.rol=="ADMINISTRADOR"){
-            alert("Bienvenido")
+            this.respuesta = result;
+            this.message = "Autenticacion Exitosa"
+            this.open(content);
             this.router.navigate(['empleado'])
           }
           if(this.rol=="PARTICIPANTE"){
+            this.respuesta = result;
+            this.message = "Autenticacion Exitosa"
+            this.open(content);
             //redirige a la vista del calendario
-            alert("Bienvenido: " + this.empleado.apellido + " " + this.empleado.nombre)
           }
         } 
       },
       (error) =>{
-        console.log(error)
+        this.respuesta = error;
+        this.message = "Email o contraseña incorrecta";
+        this.open(content)
       }
     )
+  }
+
+  open(content: any) {
+    this.modalService.open(content, { centered: true });
   }
 
 }
