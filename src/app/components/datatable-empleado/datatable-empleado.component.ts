@@ -3,7 +3,8 @@ import{DataTableDirective} from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { EmpleadoService } from 'src/app/services/empleado.service';
 import { Empleado } from 'src/app/models/empleado';
-import { Dependencia } from 'src/app/models/dependencia';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-datatable-empleado',
   templateUrl: './datatable-empleado.component.html',
@@ -18,8 +19,8 @@ export class DatatableEmpleadoComponent implements OnInit {
 
 
   empleados:Array<Empleado>=[];
-  //salas:Array<Dependencia>=[];
-  constructor(private empleadoService:EmpleadoService) { }
+  mensaje='';
+  constructor(private empleadoService:EmpleadoService,private router: Router) { }
 
   getAllEmpleados(){
   this.empleadoService.getEmpleados().subscribe({
@@ -33,6 +34,24 @@ export class DatatableEmpleadoComponent implements OnInit {
       alert('Error en la peticion');
     },
   })
+  }
+
+  eliminarEmpleados(id:string){
+    this.empleadoService.deleteEmpleado(id).subscribe({
+      next:(result)=>{
+          this.mensaje=result;
+          console.log(this.mensaje);
+          this.getAllEmpleados();
+          this.rerender();
+      },
+      error: () => {
+        alert('Error en la peticion');
+      },
+    })
+  }
+
+  modificar(_id:string){
+    this.router.navigate(['empleado',_id])
   }
 
   ngAfterViewInit(): void {
