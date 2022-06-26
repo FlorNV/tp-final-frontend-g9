@@ -9,8 +9,11 @@
                     <th>Nombre</th>
                     <th>Legajo</th>
                     <th>Email</th>
-                    <th>Esta en Reunión</th>
-                    <th>Sala</th>
+                    <th>Está en Reunión</th>
+                    <th>Rol</th>
+                    <th>Dependencias</th>
+                    <th>Modificar</th>
+                    <th>Eliminar</th>
                 </tr>
             </thead>
             <tbody>
@@ -20,11 +23,18 @@
                     <td>{{e.legajo}}</td>
                     <td>{{e.email}}</td>
                     <td>{{e.estaEnReunion | yesNo}}</td>
+                    <td>{{e.rol}}</td>
                     <td >
                         <p *ngFor="let t of e.dependencias">
                             {{t.tipo }}
                         </p>
                        
+                    </td>
+                    <td>
+                        <button class="btn btn-celeste" (click)="modificar(e._id)">Modificar</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-secondary" (click)="eliminarEmpleados(e._id)">Eliminar</button>
                     </td>
                 </tr>
             </tbody>
