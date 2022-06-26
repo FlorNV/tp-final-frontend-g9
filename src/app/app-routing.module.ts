@@ -3,15 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { HeaderComponent } from './components/header/header.component';
 import { LoginComponent } from './components/login/login.component';
-import { EmpleadoComponent } from './components/empleado/empleado.component';
+import { EmpleadoFormComponent } from './components/empleado-form/empleado-form.component';
 import { DatatableEmpleadoComponent } from './components/datatable-empleado/datatable-empleado.component';
-import { UpdateEmpleadoComponent } from './components/update-empleado/update-empleado.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'empleado', component: EmpleadoComponent },
-  {path:'empleados',component:DatatableEmpleadoComponent},
-  {path:'empleado/:id', component:UpdateEmpleadoComponent},
+  { path: 'empleado-form/:id', component: EmpleadoFormComponent },
+  { path: 'empleados', component: DatatableEmpleadoComponent},
   { path: '**', pathMatch: 'full', redirectTo: 'login' },
 ];
 
@@ -23,6 +21,7 @@ export class AppRoutingModule { };
 export const routingComponents = [
   LoginComponent, 
   HeaderComponent, 
-  EmpleadoComponent,
-  
+  EmpleadoFormComponent,
+  DatatableEmpleadoComponent,
+
 ];

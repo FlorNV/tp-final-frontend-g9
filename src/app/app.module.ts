@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { CustomFormsModule } from 'ng2-validation';
 /* Gráficos */
 import { NgChartsModule } from "ng2-charts";
 /* Calendario */
@@ -17,13 +18,10 @@ import { environment } from '../environments/environment';
 
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {DataTablesModule} from 'angular-datatables';
+import { DataTablesModule } from 'angular-datatables';
 import { DatatableEmpleadoComponent } from './components/datatable-empleado/datatable-empleado.component'
-import { CustomFormsModule } from 'ng2-validation';
 import { YesNoPipe } from './yes-no.pipe';
 import { HeaderParticipanteComponent } from './components/header-participante/header-participante.component';
-import { UpdateEmpleadoComponent } from './components/update-empleado/update-empleado.component';
-
 
 @NgModule({
   declarations: [
@@ -32,7 +30,6 @@ import { UpdateEmpleadoComponent } from './components/update-empleado/update-emp
     DatatableEmpleadoComponent,
     YesNoPipe,
     HeaderParticipanteComponent,
-    UpdateEmpleadoComponent
   ],
   imports: [
     BrowserModule,
