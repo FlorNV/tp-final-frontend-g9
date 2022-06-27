@@ -11,7 +11,7 @@ export class LoginService {
   URL: string;
 
   constructor( private _http: HttpClient) {
-    this.URL = "http://localhost:27017/api/v1/autenticacion/login";
+    this.URL = "http://localhost:8000/api/v1/autenticacion/login";
   }
 
   public autenticacion(login: Login): Observable<any>{
@@ -22,5 +22,32 @@ export class LoginService {
     };
     const body = JSON.stringify(login)
     return this._http.post(this.URL+"/",body,options);
+  }
+
+  public logout(){
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("perfil");
+    sessionStorage.removeItem("userid");
+  }
+
+  public userLoggedIn(){
+    var resultado = false;
+    var usuario = sessionStorage.getItem("user");
+    
+    if(usuario!=null){
+      resultado = true;
+    }
+    
+    return resultado;
+  }
+
+  public userLogged(){
+    var usuario = sessionStorage.getItem("user");
+    return usuario;
+  }
+
+  public idLogged(){
+    var id = sessionStorage.getItem("userid");
+    return id;
   }
 }

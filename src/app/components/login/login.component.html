@@ -14,7 +14,7 @@
 
                 <div class="col-md-11 col-8">
                     <label for="correo" class="form-label">Correo</label>
-                    <input [(ngModel)]="login.email" ngModel type="email" class="form-control" id="correo" name="correo" placeholder="Ingrese email"
+                    <input [(ngModel)]="login.email" ngModel [email]="true" type="email" class="form-control" id="correo" name="correo" placeholder="Ingrese email"
                     required #email="ngModel" [ngClass]="{'border-danger': email.invalid && (email.dirty || email.touched)}"
                     >
                 </div>

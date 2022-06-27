@@ -14,7 +14,6 @@ export class LoginComponent implements OnInit {
 
   login!: Login;
   empleado!: Empleado;
-  rol!: string;
   respuesta!: any;
   message!: string;
 
@@ -31,33 +30,39 @@ export class LoginComponent implements OnInit {
   ingresar(content: any){
     this.loginService.autenticacion(this.login).subscribe(
       (result) => {
-        
         if(result.status == 200){
-          this.rol = result.data.empleado.rol;
-          if(this.rol=="ADMINISTRADOR"){
-            this.respuesta = result;
-            this.message = "Autenticacion Exitosa"
-            this.open(content);
-            this.router.navigate(['empleado'])
+          this.empleado = new Empleado();
+          this.empleado = result.data.empleado;
+          if(this.empleado.rol=="ADMINISTRADOR"){
+            sessionStorage.setItem("user", this.empleado.apellido + " " + this.empleado.nombre);
+            sessionStorage.setItem("userid", this.empleado._id);
+            sessionStorage.setItem("perfil", this.empleado.rol);
+            this.message = "Autenticación Exitosa"
+            this.open(content, 'empleado');
+          }else if(this.empleado.rol=="PARTICIPANTE"){
+            sessionStorage.setItem("user", this.empleado.apellido + " " + this.empleado.nombre);
+            sessionStorage.setItem("userid", this.empleado._id);
+            sessionStorage.setItem("perfil", this.empleado.rol);
+            this.message = "Autenticación Exitosa"
+            this.open(content,'empleados');
           }
-          if(this.rol=="PARTICIPANTE"){
-            this.respuesta = result;
-            this.message = "Autenticacion Exitosa"
-            this.open(content);
-            //redirige a la vista del calendario
-          }
-        } 
+        }
       },
       (error) =>{
-        this.respuesta = error;
         this.message = "Email o contraseña incorrecta";
-        this.open(content)
+        this.open(content,'')
       }
     )
   }
 
-  open(content: any) {
-    this.modalService.open(content, { centered: true });
+  open(content: any, page: string) {
+    this.modalService.open(content, { centered: true }).result.then(
+      (result) =>{
+        this.router.navigate([page])
+      }, (reason) => {
+        this.router.navigate([page])
+      }
+    )
   }
 
 }
