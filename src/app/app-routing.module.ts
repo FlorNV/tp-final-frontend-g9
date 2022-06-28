@@ -5,12 +5,13 @@ import { HeaderComponent } from './components/header/header.component';
 import { LoginComponent } from './components/login/login.component';
 import { EmpleadoComponent } from './components/empleado/empleado.component';
 import { DatatableEmpleadoComponent } from './components/datatable-empleado/datatable-empleado.component';
-
+import { UpdateEmpleadoComponent } from './components/update-empleado/update-empleado.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'empleado', component: EmpleadoComponent },
   {path:'empleados',component:DatatableEmpleadoComponent},
+  {path:'empleado/:id', component:UpdateEmpleadoComponent},
   { path: '**', pathMatch: 'full', redirectTo: 'login' },
 ];
 

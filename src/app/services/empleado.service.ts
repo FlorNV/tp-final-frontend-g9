@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { id } from 'date-fns/locale';
 import { Observable } from 'rxjs';
 import { Empleado } from '../models/empleado';
 
@@ -27,6 +28,11 @@ export class EmpleadoService {
   public getEmpleados(): Observable<any> {
     const options = {headers: new HttpHeaders({})};
     return this._http.get(this.URL+ "/" , options);
+  }
+
+  public getEmpleado(id:string):Observable<any>{
+    const option ={headers:new HttpHeaders({})};
+    return this._http.get(this.URL + '/' + id, option);
   }
 
   public updateEmpleado(empleado: Empleado): Observable<any> {

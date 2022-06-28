@@ -22,6 +22,7 @@ import { DatatableEmpleadoComponent } from './components/datatable-empleado/data
 import { CustomFormsModule } from 'ng2-validation';
 import { YesNoPipe } from './yes-no.pipe';
 import { HeaderParticipanteComponent } from './components/header-participante/header-participante.component';
+import { UpdateEmpleadoComponent } from './components/update-empleado/update-empleado.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { HeaderParticipanteComponent } from './components/header-participante/he
     routingComponents,
     DatatableEmpleadoComponent,
     YesNoPipe,
-    HeaderParticipanteComponent
+    HeaderParticipanteComponent,
+    UpdateEmpleadoComponent
   ],
   imports: [
     BrowserModule,
