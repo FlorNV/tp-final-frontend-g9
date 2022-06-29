@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light fondo" >
+<nav class="navbar navbar-expand-lg navbar-light fondo" *ngIf="loginService.userLoggedIn()" >
     <div class="container-fluid  ">
         <img src="../../../assets/icons/calendario.png" alt="" class="">
 
@@ -12,7 +12,7 @@
 
 
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" *ngIf="loginService.userRole()=='ADMINISTRADOR'">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         Administración
@@ -22,14 +22,26 @@
                         <li><a class="dropdown-item" [routerLink]="['empleados']">Lista de Empleados</a></li>
                     </ul>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="loginService.userRole()=='ADMINISTRADOR'">
                     <a class="nav-link active" aria-current="page" href="#">Calendario</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="loginService.userRole()=='ADMINISTRADOR'">
                     <a class="nav-link" href="#">Reuniones</a>
                 </li>
 
-                <li class="nav-item dropdown">
+
+                <li class="nav-item" *ngIf="loginService.userRole()=='PARTICIPANTE'">
+                    <a class="nav-link active" aria-current="page" href="#">Agenda</a>
+                </li>
+                <li class="nav-item" *ngIf="loginService.userRole()=='PARTICIPANTE'">
+                    <a class="nav-link mx-3" href="#">Audiencia</a>
+                </li>
+                <li class="nav-item" *ngIf="loginService.userRole()=='PARTICIPANTE'">
+                    <a class="nav-link mx-3" href="#">Consultar Audiencia</a>
+                </li>
+
+
+                <li class="nav-item dropdown" *ngIf="loginService.userRole()=='ADMINISTRADOR'">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         Reportes
@@ -40,7 +52,7 @@
                         <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
                 </li>
-
+                
             </ul>
             <span class="navbar-text  ms-auto">
                 <li class="nav-item dropdown">
@@ -62,3 +74,5 @@
         </div>
     </div>
 </nav>
+
+

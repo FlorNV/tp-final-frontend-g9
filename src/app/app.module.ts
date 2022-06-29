@@ -21,7 +21,6 @@ import { AppComponent } from './app.component';
 import { DataTablesModule } from 'angular-datatables';
 import { DatatableEmpleadoComponent } from './components/datatable-empleado/datatable-empleado.component'
 import { YesNoPipe } from './yes-no.pipe';
-import { HeaderParticipanteComponent } from './components/header-participante/header-participante.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +28,6 @@ import { HeaderParticipanteComponent } from './components/header-participante/he
     routingComponents,
     DatatableEmpleadoComponent,
     YesNoPipe,
-    HeaderParticipanteComponent,
   ],
   imports: [
     BrowserModule,

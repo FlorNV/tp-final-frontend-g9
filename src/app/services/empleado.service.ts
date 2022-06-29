@@ -12,7 +12,7 @@ export class EmpleadoService {
   URL: string;
 
   constructor(private _http: HttpClient) { 
-    this.URL = "http://localhost:3000/api/v1/empleados/";
+    this.URL = "http://localhost:8000/api/v1/empleados/";
   }
 
   public addEmpleado(empleado: Empleado): Observable<any> {
