@@ -11,7 +11,7 @@ export class DependenciaService {
   URL: string;
 
   constructor(private _http: HttpClient) { 
-    this.URL = "http://localhost:8000/api/v1/dependencias";
+    this.URL = "http://localhost:3000/api/v1/dependencias";
   }
 
   public addEDependencia(dependencia: Dependencia): Observable<any> {

@@ -12,7 +12,7 @@ export class EmpleadoService {
   URL: string;
 
   constructor(private _http: HttpClient) { 
-    this.URL = "http://localhost:8000/api/v1/empleados";
+    this.URL = "http://localhost:3000/api/v1/empleados/";
   }
 
   public addEmpleado(empleado: Empleado): Observable<any> {
@@ -26,13 +26,13 @@ export class EmpleadoService {
   }
 
   public getEmpleados(): Observable<any> {
-    const options = {headers: new HttpHeaders({})};
-    return this._http.get(this.URL+ "/" , options);
+    const options = { headers: new HttpHeaders({}) };
+    return this._http.get(this.URL, options);
   }
 
-  public getEmpleado(id:string):Observable<any>{
-    const option ={headers:new HttpHeaders({})};
-    return this._http.get(this.URL + '/' + id, option);
+  public getEmpleado(id: string): Observable<any> {
+    const option = { headers: new HttpHeaders({}) };
+    return this._http.get(this.URL + id, option);
   }
 
   public updateEmpleado(empleado: Empleado): Observable<any> {
@@ -42,11 +42,11 @@ export class EmpleadoService {
       })
     };
     const body = JSON.stringify(empleado);
-    return this._http.put(this.URL + "/" + empleado._id, body, options);
+    return this._http.put(this.URL + empleado._id, body, options);
   }
 
   public deleteEmpleado(id: string): Observable<any> {
     const options = {headers: new HttpHeaders({})};
-    return this._http.delete(this.URL + "/" + id, options);
+    return this._http.delete(this.URL + id, options);
   }
 }
