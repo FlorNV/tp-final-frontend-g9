@@ -50,4 +50,8 @@ export class LoginService {
     var id = sessionStorage.getItem("userid");
     return id;
   }
+  public userRole(){
+    var role = sessionStorage.getItem("perfil");
+    return role;
+  }
 }

@@ -38,13 +38,13 @@ export class LoginComponent implements OnInit {
             sessionStorage.setItem("userid", this.empleado._id);
             sessionStorage.setItem("perfil", this.empleado.rol);
             this.message = "Autenticación Exitosa"
-            this.open(content, 'empleado');
+            this.open(content, 'empleados');
           }else if(this.empleado.rol=="PARTICIPANTE"){
             sessionStorage.setItem("user", this.empleado.apellido + " " + this.empleado.nombre);
             sessionStorage.setItem("userid", this.empleado._id);
             sessionStorage.setItem("perfil", this.empleado.rol);
             this.message = "Autenticación Exitosa"
-            this.open(content,'empleados');
+            this.open(content,'empleados');//TODO:cambiar a agenda cuando exista
           }
         }
       },
@@ -63,6 +63,10 @@ export class LoginComponent implements OnInit {
         this.router.navigate([page])
       }
     )
+  }
+
+  isLogin(){
+    return this.loginService.userLoggedIn();
   }
 
 }
