@@ -40,3 +40,8 @@ input{
 .boton:hover{
     background-color: rgba(185, 6, 51, 0.8);
 }
+
+p i {
+    font-size: 3rem;
+    margin-top: 2rem;
+}

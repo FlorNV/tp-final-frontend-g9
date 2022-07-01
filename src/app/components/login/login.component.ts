@@ -30,27 +30,27 @@ export class LoginComponent implements OnInit {
   ingresar(content: any){
     this.loginService.autenticacion(this.login).subscribe(
       (result) => {
+        this.respuesta = result;
         if(result.status == 200){
           this.empleado = new Empleado();
           this.empleado = result.data.empleado;
+          sessionStorage.setItem("user", this.empleado.apellido + " " + this.empleado.nombre);
+          sessionStorage.setItem("userid", this.empleado._id);
+          sessionStorage.setItem("perfil", this.empleado.rol);
+          this.message = "Autenticación Exitosa"
           if(this.empleado.rol=="ADMINISTRADOR"){
-            sessionStorage.setItem("user", this.empleado.apellido + " " + this.empleado.nombre);
-            sessionStorage.setItem("userid", this.empleado._id);
-            sessionStorage.setItem("perfil", this.empleado.rol);
-            this.message = "Autenticación Exitosa"
             this.open(content, 'empleados');
           }else if(this.empleado.rol=="PARTICIPANTE"){
-            sessionStorage.setItem("user", this.empleado.apellido + " " + this.empleado.nombre);
-            sessionStorage.setItem("userid", this.empleado._id);
-            sessionStorage.setItem("perfil", this.empleado.rol);
-            this.message = "Autenticación Exitosa"
             this.open(content,'empleados');//TODO:cambiar a agenda cuando exista
           }
         }
       },
       (error) =>{
-        this.message = "Email o contraseña incorrecta";
-        this.open(content,'')
+        if(error.status == 401){
+          this.respuesta = error;
+          this.message = "Email o contraseña incorrecta";
+          this.open(content,'')
+        }
       }
     )
   }
