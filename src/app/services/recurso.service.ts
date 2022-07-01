@@ -22,7 +22,7 @@ export class RecursoService {
       })
     };
     const body = JSON.stringify(recFisico);
-    return this._http.post("http://localhost:27017/api/v1/recursos/",body,options);
+    return this._http.post("http://localhost:8000/api/v1/recursos/",body,options);
   }
 
   public addRecursoDigital(recDigital: RecursoDigital): Observable<any>{
@@ -32,6 +32,6 @@ export class RecursoService {
       })
     };
     const body = JSON.stringify(recDigital);
-    return this._http.post("http://localhost:27017/api/v1/recursos-digitales/",body,options);
+    return this._http.post("http://localhost:8000/api/v1/recursos-digitales/",body,options);
   }
 }
