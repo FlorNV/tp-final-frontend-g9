@@ -21,6 +21,8 @@ import { AppComponent } from './app.component';
 import { DataTablesModule } from 'angular-datatables';
 import { DatatableEmpleadoComponent } from './components/datatable-empleado/datatable-empleado.component'
 import { YesNoPipe } from './yes-no.pipe';
+import { LoginService } from './services/login.service';
+import { RecursoFormComponent } from './components/recurso-form/recurso-form.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { YesNoPipe } from './yes-no.pipe';
     routingComponents,
     DatatableEmpleadoComponent,
     YesNoPipe,
+    RecursoFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,7 @@ import { YesNoPipe } from './yes-no.pipe';
     }),
     CustomFormsModule
   ],
-  providers: [],
+  providers: [LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
