@@ -5,11 +5,13 @@ import { HeaderComponent } from './components/header/header.component';
 import { LoginComponent } from './components/login/login.component';
 import { EmpleadoFormComponent } from './components/empleado-form/empleado-form.component';
 import { DatatableEmpleadoComponent } from './components/datatable-empleado/datatable-empleado.component';
+import { TipoReunionComponent } from './components/tipo-reunion/tipo-reunion.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'empleado-form/:id', component: EmpleadoFormComponent },
   { path: 'empleados', component: DatatableEmpleadoComponent},
+  {path:'tipoReunion',component:TipoReunionComponent},
   { path: '**', pathMatch: 'full', redirectTo: 'login' },
 ];
 

@@ -21,6 +21,7 @@ import { AppComponent } from './app.component';
 import { DataTablesModule } from 'angular-datatables';
 import { DatatableEmpleadoComponent } from './components/datatable-empleado/datatable-empleado.component'
 import { YesNoPipe } from './yes-no.pipe';
+import { TipoReunionComponent } from './components/tipo-reunion/tipo-reunion.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { YesNoPipe } from './yes-no.pipe';
     routingComponents,
     DatatableEmpleadoComponent,
     YesNoPipe,
+    TipoReunionComponent,
   ],
   imports: [
     BrowserModule,
