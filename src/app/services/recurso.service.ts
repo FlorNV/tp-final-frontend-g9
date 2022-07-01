@@ -9,10 +9,7 @@ import { RecursoFisico } from '../models/recurso-fisico';
 })
 export class RecursoService {
 
-  //URL: string;
-
   constructor(private _http: HttpClient) {
-    //this.URL = "http://localhost:27017/api/v1/recursos"
   }
 
   public addRecursoFisico(recFisico: RecursoFisico): Observable<any>{
