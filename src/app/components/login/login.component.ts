@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { findIndex } from 'rxjs';
+import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Empleado } from 'src/app/models/empleado';
+import { Login } from 'src/app/models/login';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -8,36 +12,61 @@ import { findIndex } from 'rxjs';
 })
 export class LoginComponent implements OnInit {
 
-  correo!: string;
-  password!: string;
-  usuarios: Array<any> = [{"id":0, "nombre": "Administrador","usuarioCorreo":"admin@gmail.com","usuarioPassword":"admin"},
-                          {"id":1, "nombre": "Joaquin","usuarioCorreo":"joako@gmail.com","usuarioPassword":"1234"},
-                          {"id":2, "nombre": "Florencia","usuarioCorreo":"flor@gmail.com","usuarioPassword":"4567"},
-                          {"id":3, "nombre": "Rocio","usuarioCorreo":"roog@gmail.com","usuarioPassword":"1596"}];
-  validateEmail: boolean = true
+  login!: Login;
+  empleado!: Empleado;
+  respuesta!: any;
+  message!: string;
+
   indice!: number;
-  constructor() { }
+  constructor(private loginService: LoginService,
+              private router: Router,
+              private modalService: NgbModal) {
+    this.login = new Login();
+  }
 
   ngOnInit(): void {
   }
   
-  ingresar(){
-    //*llamada al servicio de empleados para buscar por correo y contraseña
-    this.indice = this.usuarios.findIndex(i => this.correo ===i.usuarioCorreo && this.password===i.usuarioPassword);
-    //*si el indice devuelto es -1 significa que el correo o la contraseña no se encuentran en la base de datos
-    if(this.indice!=-1){
-      if(this.correo === "admin@gmail.com"){
-        //*Redireccionar a la seccion de administrador
-        alert("Bienvenido: " + this.usuarios[this.indice].nombre);
-        alert("Accediendo al menu del administrador...");
-      }else{
-        //*Redireccionar a la seccion de empleado
-        alert("Bienvenido/a: " + this.usuarios[this.indice].nombre);
-      }      
-    }else{
-      //*El correo o la contraseña son incorrectos
-      alert("El correo o la contraseña es incorrecta.")
-    }
+  ingresar(content: any){
+    this.loginService.autenticacion(this.login).subscribe(
+      (result) => {
+        this.respuesta = result;
+        if(result.status == 200){
+          this.empleado = new Empleado();
+          this.empleado = result.data.empleado;
+          sessionStorage.setItem("user", this.empleado.apellido + " " + this.empleado.nombre);
+          sessionStorage.setItem("userid", this.empleado._id);
+          sessionStorage.setItem("perfil", this.empleado.rol);
+          this.message = "Autenticación Exitosa"
+          if(this.empleado.rol=="ADMINISTRADOR"){
+            this.open(content, 'empleados');
+          }else if(this.empleado.rol=="PARTICIPANTE"){
+            this.open(content,'empleados');//TODO:cambiar a agenda cuando exista
+          }
+        }
+      },
+      (error) =>{
+        if(error.status == 401){
+          this.respuesta = error;
+          this.message = "Email o contraseña incorrecta";
+          this.open(content,'')
+        }
+      }
+    )
+  }
+
+  open(content: any, page: string) {
+    this.modalService.open(content, { centered: true }).result.then(
+      (result) =>{
+        this.router.navigate([page])
+      }, (reason) => {
+        this.router.navigate([page])
+      }
+    )
+  }
+
+  isLogin(){
+    return this.loginService.userLoggedIn();
   }
 
 }

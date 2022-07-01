@@ -51,7 +51,7 @@ export class DatatableEmpleadoComponent implements OnInit {
   }
 
   modificar(_id:string){
-    this.router.navigate(['empleado',_id])
+    this.router.navigate(['empleado-form',_id])
   }
 
   ngAfterViewInit(): void {
