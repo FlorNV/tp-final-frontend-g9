@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
 import { RecursoDigital } from 'src/app/models/recurso-digital';
 import { RecursoFisico } from 'src/app/models/recurso-fisico';
 import { RecursoService } from 'src/app/services/recurso.service';
@@ -11,20 +14,64 @@ import { RecursoService } from 'src/app/services/recurso.service';
 })
 export class RecursoFormComponent implements OnInit {
 
+  @ViewChild(DataTableDirective, {static: false})
+  dtElement!: DataTableDirective;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
+
   fisico: boolean = false;
   digital: boolean = false;
   recurso: boolean = false;
   recFisico!: RecursoFisico;
   recDigital!: RecursoDigital;
   respuesta!: any;
+  recursosFisicos!: Array<RecursoFisico>;
+  recursosDigitales!: Array<RecursoDigital>; 
 
   constructor(private recursoService: RecursoService,
-              private modalService: NgbModal) {
+              private modalService: NgbModal,
+              router: Router) {
     this.recFisico = new RecursoFisico();
     this.recDigital = new RecursoDigital();
   }
 
   ngOnInit(): void {
+    this.dtOptions = {
+      autoWidth: false,
+      pagingType: 'full_numbers',
+      pageLength: 5,
+      scrollX: true
+    }
+    this.cargarRecursosFisicos();
+    this.cargarRecursosDigitales();
+  }
+
+  cargarRecursosFisicos(): void{
+    this.recursoService.getRecursosFisicos().subscribe(
+      (result) => {
+        this.recursosFisicos = new Array<RecursoFisico>();
+        result.data.recursos.forEach((element: any) => {
+          let recFisico = new RecursoFisico();
+          Object.assign(recFisico, element);
+          this.recursosFisicos.push(recFisico);
+        });
+        this.rerender();
+      }
+    )
+  }
+
+  cargarRecursosDigitales(): void {
+    this.recursoService.getRecursosDigitales().subscribe(
+    (result) => {
+        this.recursosDigitales = new Array<RecursoDigital>();
+        result.data.recursos.forEach((element: any) => {
+          let recDigital = new RecursoDigital();
+          Object.assign(recDigital,element);
+          this.recursosDigitales.push(recDigital);
+        });
+        this.rerender();
+      }
+    )
   }
 
   recursoFisico(){
@@ -44,6 +91,7 @@ export class RecursoFormComponent implements OnInit {
           if(result.status==201){
             this.respuesta = result;
             this.open(content);
+            this.cargarRecursosFisicos();
           }
         },
         (error) => {
@@ -80,6 +128,43 @@ export class RecursoFormComponent implements OnInit {
         
       }
     )
+  }
+
+  modificarRecursoFisico(id: string){
+
+  }
+
+  eliminarRecursoFisico(id: string){
+    this.recursoService.deleteRecursoFisico(id).subscribe(
+      (result) => {
+        this.respuesta = result;
+        this.cargarRecursosFisicos();
+        this.rerender();
+      }
+    )
+  }
+
+  modificarRecursoDigital(id: string){
+
+  }
+
+  eliminarRecursoDigital(id: string){
+
+  }
+
+  ngAfterViewInit(): void {
+    this.dtTrigger.next(undefined);
+  }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
+
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      this.dtTrigger.next(undefined);   
+    });
   }
 
 }
