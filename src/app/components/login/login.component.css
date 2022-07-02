@@ -2,13 +2,13 @@
     background-color: #EBEFF3;
 }
 img{
-    height: 120px;
-    width: 120px;
+    height: 6.5rem;
+    width: 6.5rem;
 }
 
 .nombre{
     font-weight: 600;
-    font-size: 30px;
+    font-size: 1.8rem;
     line-height: 44px;
     margin-top: 30px;
     color: #000000;

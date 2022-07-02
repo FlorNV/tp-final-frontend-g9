@@ -2,7 +2,7 @@
     <div class="container-fluid  ">
         <img src="../../../assets/icons/calendario.png" alt="" class="">
 
-        <a class="navbar-brand text-white mx-3" href="#">Nombre app</a>
+        <a class="navbar-brand text-white mx-3" href="#">MeetingCalendar</a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,7 +24,7 @@
                     </ul>
                 </li>
                 <li class="nav-item" *ngIf="loginService.userRole()=='ADMINISTRADOR'">
-                    <a class="nav-link active" aria-current="page" href="#">Calendario</a>
+                    <a class="nav-link active" aria-current="page" [routerLink]="['calendario']">Calendario</a>
                 </li>
                 <li class="nav-item" *ngIf="loginService.userRole()=='ADMINISTRADOR'">
                     <a class="nav-link" href="#">Reuniones</a>
@@ -32,7 +32,7 @@
 
 
                 <li class="nav-item" *ngIf="loginService.userRole()=='PARTICIPANTE'">
-                    <a class="nav-link active" aria-current="page" href="#">Agenda</a>
+                    <a class="nav-link active" aria-current="page" [routerLink]="['calendario']">Agenda</a>
                 </li>
                 <li class="nav-item" *ngIf="loginService.userRole()=='PARTICIPANTE'">
                     <a class="nav-link mx-3" href="#">Audiencia</a>
@@ -64,9 +64,9 @@
                             <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                         </svg>
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" >
+                    <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdownMenuLink" >
                         <li><a class="dropdown-item" *ngIf="!loginService.userLoggedIn()" [routerLink]="['login']">Login</a></li>
-                        <li><p *ngIf="loginService.userLoggedIn()">{{loginService.userLogged()}}</p></li>
+                        <li><p class="dropdown-item text-white" *ngIf="loginService.userLoggedIn()">{{loginService.userLogged()}}</p></li>
                         <li><a class="dropdown-item" [routerLink]="['login']" *ngIf="loginService.userLoggedIn()" (click)="logout()">Logout</a></li>
                         
                     </ul>
