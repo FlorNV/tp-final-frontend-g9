@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Query, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
@@ -14,14 +15,23 @@ import { RecursoService } from 'src/app/services/recurso.service';
 })
 export class RecursoFormComponent implements OnInit {
 
-  @ViewChild(DataTableDirective, {static: false})
-  dtElement!: DataTableDirective;
+  @ViewChildren(DataTableDirective)
+  dtElements!: QueryList<DataTableDirective>;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
+  dtTrigger2: Subject<any> = new Subject<any>();
+
+  recursoForm = new FormGroup({
+    nombre: new FormControl('',[Validators.required]),
+    recurso: new FormControl('',[Validators.required])
+  })
 
   fisico: boolean = false;
   digital: boolean = false;
   recurso: boolean = false;
+  modificar: boolean= false;
+  new: boolean = false;
+
   recFisico!: RecursoFisico;
   recDigital!: RecursoDigital;
   respuesta!: any;
@@ -31,11 +41,14 @@ export class RecursoFormComponent implements OnInit {
   constructor(private recursoService: RecursoService,
               private modalService: NgbModal,
               router: Router) {
-    this.recFisico = new RecursoFisico();
-    this.recDigital = new RecursoDigital();
+    
+    
   }
 
-  ngOnInit(): void {
+  get nombre(){return this.recursoForm.get('nombre');}
+  get recursoF(){return this.recursoForm.get('recurso');}
+
+  ngOnInit():void {
     this.dtOptions = {
       autoWidth: false,
       pagingType: 'full_numbers',
@@ -46,9 +59,10 @@ export class RecursoFormComponent implements OnInit {
     this.cargarRecursosDigitales();
   }
 
-  cargarRecursosFisicos(): void{
-    this.recursoService.getRecursosFisicos().subscribe(
-      (result) => {
+  /** Accedo al servico para obtener todos los recursos fisicos de la Base de Datos*/
+  cargarRecursosFisicos():void{
+    this.recursoService.getRecursosFisicos().subscribe({
+      next: (result) => {
         this.recursosFisicos = new Array<RecursoFisico>();
         result.data.recursos.forEach((element: any) => {
           let recFisico = new RecursoFisico();
@@ -57,12 +71,13 @@ export class RecursoFormComponent implements OnInit {
         });
         this.rerender();
       }
-    )
+    })
   }
 
-  cargarRecursosDigitales(): void {
-    this.recursoService.getRecursosDigitales().subscribe(
-    (result) => {
+  /** Accedo al servico para obtener todos los recursos digitales de la Base de Datos*/
+  cargarRecursosDigitales(): void{
+    this.recursoService.getRecursosDigitales().subscribe({
+    next: (result) => {
         this.recursosDigitales = new Array<RecursoDigital>();
         result.data.recursos.forEach((element: any) => {
           let recDigital = new RecursoDigital();
@@ -71,55 +86,73 @@ export class RecursoFormComponent implements OnInit {
         });
         this.rerender();
       }
-    )
+    })
   }
 
+  /** Carga un nuevo recurso fisico*/
   recursoFisico(){
+    this.recFisico = new RecursoFisico();
     this.fisico = true;
     this.digital = false;
+    this.new = true;
   }
 
+  /** Carga un nuevo recurso digital*/
   recursoDigital(){
+    this.recDigital = new RecursoDigital();
     this.digital = true;
     this.fisico = false;
+    this.new = true;
   }
 
-  agregarRecurso(content: any){
-    if(this.fisico== true){
-      this.recursoService.addRecursoFisico(this.recFisico).subscribe(
-        (result) =>{
-          if(result.status==201){
-            this.respuesta = result;
-            this.open(content);
-            this.cargarRecursosFisicos();
-          }
-        },
-        (error) => {
-          if(error.status == 500){
-            this.respuesta = error;
-            this.open(content);
-          }
-          
+  /** Alta de un recurso fisico*/
+  agregarRecursoFisico(content: any){
+    this.recursoService.addRecursoFisico(this.recFisico).subscribe(
+      (result) =>{
+        if(result.status==201){
+          this.respuesta = result;
+          this.open(content);
         }
-      )
-    }else{
-      this.recursoService.addRecursoDigital(this.recDigital).subscribe(
-        (result) => {
-          if(result.status==201){
-            this.respuesta = result;
-            this.open(content);
-          }
-        },
-        (error) => {
-          if(error.status == 500){
-            this.respuesta = error;
-            this.open(content);
-          }
+      },
+      (error) => {
+        if(error.status == 500){
+          this.respuesta = error;
+          this.open(content);
         }
-      )
-    }
+      }
+    )
+    this.fisico= false;
+    this.cargarRecursosFisicos();
+    this.rerender();
   }
 
+  /** Alta de un recurso digital*/
+  agregarRecursoDigital(content: any) {
+    this.recursoService.addRecursoDigital(this.recDigital).subscribe(
+      (result) => {
+        if(result.status==201){
+          this.respuesta = result;
+          this.open(content);
+        }
+      },
+      (error) => {
+        if(error.status == 500){
+          this.respuesta = error;
+          this.open(content);
+        }
+      }
+    )
+    this.digital = false;
+    this.cargarRecursosDigitales();
+    this.rerender();
+  }
+
+  cancelar(recursoForm: Form){
+    this.modificar = false;
+    
+  }
+
+  /** Modal*/
   open(content: any) {
     this.modalService.open(content, { centered: true }).result.then(
       (result) =>{
@@ -130,10 +163,56 @@ export class RecursoFormComponent implements OnInit {
     )
   }
 
-  modificarRecursoFisico(id: string){
-
+  /** Buscar recurso fisico por id*/
+  cargarRecursoFisico(id: string){
+    this.fisico = true;
+    this.recFisico = new RecursoFisico();
+    let result = this.recursosFisicos.filter(rf => rf._id == id)[0];
+    Object.assign(this.recFisico,result);
+    this.modificar = true;
   }
 
+  /** Buscar recurso digital por id*/
+  cargarRecursoDigital(id: string){
+    this.digital = true;
+    this.recDigital = new RecursoDigital();
+    let result = this.recursosDigitales.filter(rd => rd._id == id)[0];
+    Object.assign(this.recDigital,result);
+    this.modificar = true;
+  }
+
+  /** Modificar un recurso fisico o digital*/
+  modificarRecurso(content: any){
+    if(this.fisico == true){
+      this.recursoService.updateRecursosFisicos(this.recFisico).subscribe(
+        (result) => {
+          if(result.status == 200){
+            this.respuesta = result;
+            this.open(content);
+          }
+        }
+      )
+      this.fisico = false;
+      this.modificar = false;
+      this.cargarRecursosFisicos();
+      this.rerender();
+    }else{
+      this.recursoService.updateRecursosDigital(this.recDigital).subscribe(
+        (result) => {
+          if(result.status == 200){
+            this.respuesta = result;
+            this.open(content);
+          }
+        }
+      )
+      this.digital = false;
+      this.modificar = false;
+      this.cargarRecursosDigitales();
+      this.rerender();
+    }
+  }
+
+  /** Elimina un recurso fisico por id (Falta arreglar)*/
   eliminarRecursoFisico(id: string){
     this.recursoService.deleteRecursoFisico(id).subscribe(
       (result) => {
@@ -144,27 +223,37 @@ export class RecursoFormComponent implements OnInit {
     )
   }
 
-  modificarRecursoDigital(id: string){
-
-  }
-
+  /** Eliminar recurso digital por id*/
   eliminarRecursoDigital(id: string){
-
+    this.recursoService.deleteRecursoDigital(id).subscribe(
+      (result) => {
+        this.respuesta = result;
+        this.cargarRecursosDigitales();
+        this.rerender();
+      }
+    )
   }
 
   ngAfterViewInit(): void {
     this.dtTrigger.next(undefined);
+    this.dtTrigger2.next(undefined);
   }
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
+    this.dtTrigger2.unsubscribe();
   }
 
   rerender(): void {
-    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.destroy();
-      this.dtTrigger.next(undefined);   
+    this.dtElements.forEach((dtElement: DataTableDirective) => {
+      if(dtElement.dtInstance){
+        dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+        });
+      }
     });
+      this.dtTrigger.next(undefined);
+      this.dtTrigger2.next(undefined); 
   }
 
 }
