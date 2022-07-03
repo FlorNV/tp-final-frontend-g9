@@ -9,17 +9,12 @@ export class Reunion {
     _id!: string;
     horaInicio!: Date;
     horaFinal!: Date;
-    // prioridad!: Prioridad;
     prioridad!: string;
-    // tipoReunion!: TipoReunion;
     tipoReunion!: string;
     oficina!: any;
-    // participantes!: Array<Empleado>;
     participantes!: string[];
-    // recursos!: Array<RecursoFisico>;
-    recursos!: string[];
-    // recursosDigitales!: Array<RecursoDigital>;
     recursosDigitales!: string[];
+    recursos!: string[];
     estado!: any;
     estaDeshabilitada!: boolean;
     reunionConfirmada!: boolean;
