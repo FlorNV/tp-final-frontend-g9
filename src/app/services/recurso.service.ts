@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RecursoDigital } from '../models/recurso-digital';
@@ -27,6 +27,13 @@ export class RecursoService {
     return this._http.get("http://localhost:8000/api/v1/recursos/",options);
   }
 
+  public getRecursosFisicosByReservacion(estaReservado: boolean): Observable<any>{
+    const options = {
+      headers: new HttpHeaders({}),
+      paramas: new HttpParams().set('estaReservado', estaReservado)
+    };
+    return this._http.get("http://localhost:8000/api/v1/recursos/",options);
+  }
 
   public updateRecursosFisicos(recFisico: RecursoFisico): Observable<any>{
     const options = {

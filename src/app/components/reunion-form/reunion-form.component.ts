@@ -1,14 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Empleado } from 'src/app/models/empleado';
+import { Estado } from 'src/app/models/estado';
+import { Oficina } from 'src/app/models/oficina';
 import { Prioridad } from 'src/app/models/prioridad';
 import { RecursoDigital } from 'src/app/models/recurso-digital';
 import { RecursoFisico } from 'src/app/models/recurso-fisico';
 import { Reunion } from 'src/app/models/reunion';
 import { TipoReunion } from 'src/app/models/tipo-reunion';
 import { EmpleadoService } from 'src/app/services/empleado.service';
+import { EstadosService } from 'src/app/services/estados.service';
+import { OficinaService } from 'src/app/services/oficina.service';
 import { PrioridadService } from 'src/app/services/prioridad.service';
 import { RecursoService } from 'src/app/services/recurso.service';
 import { ReunionService } from 'src/app/services/reunion.service';
@@ -21,11 +26,12 @@ import { TipoReunionService } from 'src/app/services/tipo-reunion.service';
 })
 export class ReunionFormComponent implements OnInit {
 
+  // public reunionForm: FormGroup;
   reunion!: Reunion;
   prioridades!: Array<Prioridad>;
   tiposReuniones!: Array<TipoReunion>;
   oficinas!: Array<any>;
-  participantes!: Array<any>;
+  empleados!: Array<any>;
   estados!: Array<any>;
   recursosFisicos!: Array<RecursoFisico>;
   recursosDigitales!: Array<RecursoDigital>;
@@ -43,7 +49,10 @@ export class ReunionFormComponent implements OnInit {
               private prioridadService: PrioridadService,
               private recursoService: RecursoService,
               private tipoReunionService: TipoReunionService,
+              private oficinaService: OficinaService,
+              private estadoService: EstadosService,
               private modalService: NgbModal,
+              private fb: FormBuilder,
               private router: Router,
               private activatedRoute: ActivatedRoute) { 
     
@@ -74,7 +83,28 @@ export class ReunionFormComponent implements OnInit {
       allowSearchFilter: true,
       searchPlaceholderText: 'Buscar'
     };
+    // this.reunionForm = this.fb.group({ 
+    //   horaInicio: new FormControl('', [Validators.required]), 
+    //   horaFinal: new FormControl('', [Validators.required]),
+    //   prioridad: new FormControl('', [Validators.required]),
+    //   tipoReunion: new FormControl('', [Validators.required]),
+    //   oficina: new FormControl('', [Validators.required]),
+    //   participantes: new FormControl('', [Validators.required]),
+    //   digitales: new FormControl('', [Validators.required]),
+    //   fisicos: new FormControl('', [Validators.required]),
+    //   estado: new FormControl('', [Validators.required]),
+    // });
   }
+
+  // get horaInicio(){ return this.reunionForm.get('horaInicio'); }
+  // get horaFinal(){ return this.reunionForm.get('horaFinal'); }
+  // get prioridad(){ return this.reunionForm.get('prioridad'); }
+  // get tipoReunion(){ return this.reunionForm.get('tipoReunion'); }
+  // get oficina(){ return this.reunionForm.get('oficina'); }
+  // get participantes(){ return this.reunionForm.get('participantes'); }
+  // get digitales(){ return this.reunionForm.get('inicio'); }
+  // get fisicos(){ return this.reunionForm.get('inicio'); }
+  // get estado(){ return this.reunionForm.get('estado'); }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(
@@ -131,13 +161,13 @@ export class ReunionFormComponent implements OnInit {
   cargarParticipantes(): void {
     this.empleadoService.getEmpleados().subscribe(
       result => {
-        this.participantes = new Array<any>();
+        this.empleados = new Array<any>();
         result.data.empleados.forEach((element: any) => {
           let participante = {
             _id: element._id,
             nombreCompleto: `${element.apellido}, ${element.nombre}`
           }
-          this.participantes.push(participante);
+          this.empleados.push(participante);
         });
       }
     )
@@ -157,42 +187,29 @@ export class ReunionFormComponent implements OnInit {
   }
 
   cargarRecursosFisicos(): void {
-    // this.recursoService.getRecursosFisicos().subscribe(
-    //   result => {
-    //     this.recursosFisicos = new Array<RecursoFisico>();
-    //     result.data.recursos.forEach((element: any) => {
-    //       let recurso = new RecursoFisico();
-    //       Object.assign(recurso, element);
-    //       this.recursosFisicos.push(recurso);
-    //     });
-    //     console.log(result);
-    //   }
-    // )
-    this.recursosFisicos = [
-      { _id: "62c04aaaa2dce049812eacbf", nombre: "proyector", estaReservado: true },
-      { _id: "62c06e42a2dce049812eacea", nombre: "computadora", estaReservado: false },
-      { _id: "62c08099c4299a4d26f2a165", nombre: "Pantalla", estaReservado: false }
-    ];
-    this.recursosFisicos = this.recursosFisicos.filter(rf => !rf.estaReservado);
+    this.recursoService.getRecursosFisicosByReservacion(false).subscribe(
+      result => {
+        this.recursosFisicos = new Array<RecursoFisico>();
+        result.data.recursos.forEach((element: any) => {
+          let recurso = new RecursoFisico();
+          Object.assign(recurso, element);
+          this.recursosFisicos.push(recurso);
+        });
+      }
+    )
   }
 
   cargarRecursosDigitales(): void {
-    // this.recursoService.getRecursosDigitales().subscribe(
-    //   result => {
-    //     this.recursosDigitales = new Array<RecursoDigital>();
-    //     result.data.recursos.forEach((element: any) => {
-    //       let recurso = new RecursosDigital();
-    //       Object.assign(recurso, element);
-    //       this.recursosDigitales.push(recurso);
-    //     });
-    //     console.log(result);
-    //   }
-    // )
-
-    this.recursosDigitales = [
-      { _id: "62c04c46a2dce049812eacd4", nombre: "pdf", recurso: "pdf" },
-      { _id: "62c088adc4299a4d26f2a19a", nombre: "diapositivas", recurso: "diapositivas" }
-    ];
+    this.recursoService.getRecursosDigitales().subscribe(
+      result => {
+        this.recursosDigitales = new Array<RecursoDigital>();
+        result.data.recursos.forEach((element: any) => {
+          let recurso = new RecursoDigital();
+          Object.assign(recurso, element);
+          this.recursosDigitales.push(recurso);
+        });
+      }
+    )
   }
 
   cargarTiposReuniones(): void {
@@ -206,25 +223,29 @@ export class ReunionFormComponent implements OnInit {
   }
 
   cargarOficinas(): void {
-    this.oficinas = [
-      { _id: "62c084e9c4299a4d26f2a179", nombre: "Oficina 1", estaOcupada: true },
-      { _id: "62c084f6c4299a4d26f2a17b", nombre: "Oficina 2", estaOcupada: true },
-      { _id: "62c084fcc4299a4d26f2a17d", nombre: "Oficina 3", estaOcupada: false },
-      { _id: "62c084ffc4299a4d26f2a17f", nombre: "Oficina 4", estaOcupada: false },
-      { _id: "62c08503c4299a4d26f2a181", nombre: "Oficina 5", estaOcupada: false },
-      { _id: "62c08524c4299a4d26f2a183", nombre: "Sala de junta", estaOcupada: false }
-    ];
-    this.oficinas = this.oficinas.filter(oficina => !oficina.estaOcupada);
+    this.oficinaService.getOficinasByOcupacion(false).subscribe(
+      result => {
+        this.oficinas = new Array<Oficina>();
+        result.data.oficinas.forEach((element: any) => {
+          let oficina = new Oficina();
+          Object.assign(oficina, element);
+          this.oficinas.push(oficina);
+        });
+      }
+    )
   }
 
   cargarEstados(): void {
-    this.estados = [
-      { _id: "62c0860bc4299a4d26f2a186", nombreEstado: "Celebrada" },
-      { _id: "62c08620c4299a4d26f2a188", nombreEstado: "No celebrada" },
-      { _id: "62c086b8c4299a4d26f2a190", nombreEstado: "Pospuesta" },
-      { _id: "62c086ccc4299a4d26f2a192", nombreEstado: "En proceso" },
-      { _id: "62c086d4c4299a4d26f2a194", nombreEstado: "Cancelada" }
-    ];
+    this.estadoService.getEstados().subscribe(
+      result => {
+        this.estados = new Array<Estado>();
+        result.data.estados.forEach((element: any) => {
+          let estado = new Estado();
+          Object.assign(estado, element);
+          this.estados.push(estado);
+        });
+      }
+    )
   }
 
   setReunion(): void {
