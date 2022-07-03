@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
@@ -92,7 +93,7 @@ export class TipoReunionComponent implements OnInit {
       this.modificar=true;
     }
 
-    modificarTipoReunion(content:any){
+    modificarTipoReunion(content:any, form: NgForm){
       console.log(content)
       this.tipoReunion.updateTipoReunion(this.tipo).subscribe({
         next:(result)=>{
@@ -101,7 +102,7 @@ export class TipoReunionComponent implements OnInit {
             this.open(content);
             this.getTiposReunion();
             this.rerender();
-            this.cancelarTipoReunion()
+            this.cancelarTipoReunion(form)
             }
           },
            error : () => {
@@ -111,10 +112,11 @@ export class TipoReunionComponent implements OnInit {
         })
     }
 
-    cancelarTipoReunion(){
+    cancelarTipoReunion(form: NgForm){
         this.modificar=false;
         this.tipo._id="";
         this.tipo.tipoReunion="";
+        form.resetForm();
     }
 
     ngAfterViewInit(): void {

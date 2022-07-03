@@ -24,9 +24,9 @@
 
                         <div class="col-12 text-center mt-5">
 
-                            <button type="submit" class="btn btn-celeste px-5 ms-4" *ngIf="!modificar" (click)="agregarTipoReunion(content)">Agregar</button>
-                            <button type="submit" class="btn btn-celeste px-5 ms-4" *ngIf="modificar" (click)="modificarTipoReunion(content)">Modificar</button>
-                            <button type="submit" class="btn btn-celeste px-5 ms-4" *ngIf="modificar" (click)="cancelarTipoReunion()">Cancelar</button>
+                            <button type="submit" class="btn btn-celeste px-5 ms-4" [disabled]="!tipoReunionForm.valid" *ngIf="!modificar" (click)="agregarTipoReunion(content)">Agregar</button>
+                            <button type="submit" class="btn btn-celeste px-5 ms-4" [disabled]="!tipoReunionForm.valid" *ngIf="modificar" (click)="modificarTipoReunion(content, tipoReunionForm)">Modificar</button>
+                            <button type="submit" class="btn btn-celeste px-5 ms-4" *ngIf="modificar" (click)="cancelarTipoReunion(tipoReunionForm)">Cancelar</button>
                         </div>
 
                     </form>

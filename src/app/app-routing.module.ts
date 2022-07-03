@@ -8,14 +8,17 @@ import { DatatableEmpleadoComponent } from './components/datatable-empleado/data
 import { DependenciasComponent } from './components/dependencias/dependencias.component';
 import { TipoReunionComponent } from './components/tipo-reunion/tipo-reunion.component';
 import { RecursoFormComponent } from './components/recurso-form/recurso-form.component';
+import { ReunionFormComponent } from './components/reunion-form/reunion-form.component';
+
   
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'empleado-form/:id', component: EmpleadoFormComponent },
     { path: 'empleados', component: DatatableEmpleadoComponent},
     { path: 'tipoReunion', component: TipoReunionComponent },
-    { path: 'recurso-form', component: RecursoFormComponent},
+    { path: 'recursos', component: RecursoFormComponent},
     { path: 'dependencias', component: DependenciasComponent },
+    { path: 'reunion-form/:id', component: ReunionFormComponent },
     { path: '**', pathMatch: 'full', redirectTo: 'login' },
 ];
 
@@ -32,5 +35,6 @@ export const routingComponents = [
   DatatableEmpleadoComponent,
   RecursoFormComponent,
   TipoReunionComponent,
+  ReunionFormComponent,
   
 ];

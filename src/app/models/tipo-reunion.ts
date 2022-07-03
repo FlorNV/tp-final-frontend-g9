@@ -1,4 +1,5 @@
 export class TipoReunion {
-    _id!:string;
+
+    _id!: string;
     tipoReunion!:string 
 }
