@@ -9,15 +9,18 @@ import { DependenciasComponent } from './components/dependencias/dependencias.co
 import { TipoReunionComponent } from './components/tipo-reunion/tipo-reunion.component';
 import { RecursoFormComponent } from './components/recurso-form/recurso-form.component';
 import { CalendarioComponent } from './components/calendario/calendario.component';
+import { ReunionFormComponent } from './components/reunion-form/reunion-form.component';
+
   
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'empleado-form/:id', component: EmpleadoFormComponent },
     { path: 'empleados', component: DatatableEmpleadoComponent},
     { path: 'tipoReunion', component: TipoReunionComponent },
-    { path: 'recurso-form', component: RecursoFormComponent},
+    { path: 'recursos', component: RecursoFormComponent},
     { path: 'dependencias', component: DependenciasComponent },
     { path: 'calendario', component: CalendarioComponent },
+    { path: 'reunion-form/:id', component: ReunionFormComponent },
     { path: '**', pathMatch: 'full', redirectTo: 'login' },
 ];
 
@@ -35,5 +38,6 @@ export const routingComponents = [
   RecursoFormComponent,
   TipoReunionComponent,
   CalendarioComponent,
+  ReunionFormComponent,
   
 ];

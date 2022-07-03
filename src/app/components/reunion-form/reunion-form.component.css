@@ -1,21 +1,3 @@
-thead {
-    background-color: #E55767;
-    color: #fff;
-}
-
-thead tr th {
-    text-align: center !important;
-}
-
-tbody tr td{
-    text-align: center !important;
-}
-
-.bg-rosa {
-    background-color: #E55767;
-    color: #fff;
-}
-
 .bg-celeste {
     background-color: #2a9ed2;
 }
@@ -57,7 +39,7 @@ label.form-label {
 }
 
 .titulo ~ i {
-    font-size: 6rem;
+    font-size: 3rem;
 }
 
 p i {
