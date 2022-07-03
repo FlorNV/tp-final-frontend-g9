@@ -10,6 +10,7 @@ import { TipoReunionComponent } from './components/tipo-reunion/tipo-reunion.com
 import { RecursoFormComponent } from './components/recurso-form/recurso-form.component';
 import { CalendarioComponent } from './components/calendario/calendario.component';
 import { ReunionFormComponent } from './components/reunion-form/reunion-form.component';
+import { OficinaComponent } from './components/oficina/oficina.component';
 
   
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
     { path: 'dependencias', component: DependenciasComponent },
     { path: 'calendario', component: CalendarioComponent },
     { path: 'reunion-form/:id', component: ReunionFormComponent },
+    {path:'oficina',component: OficinaComponent},
     { path: '**', pathMatch: 'full', redirectTo: 'login' },
 ];
 
@@ -39,5 +41,5 @@ export const routingComponents = [
   TipoReunionComponent,
   CalendarioComponent,
   ReunionFormComponent,
-  
+  OficinaComponent,
 ];

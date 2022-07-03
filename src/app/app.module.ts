@@ -25,6 +25,7 @@ import { YesNoPipe } from './yes-no.pipe';
 import { TipoReunionComponent } from './components/tipo-reunion/tipo-reunion.component';
 import { LoginService } from './services/login.service';
 import { RecursoFormComponent } from './components/recurso-form/recurso-form.component';
+import { OficinaComponent } from './components/oficina/oficina.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { RecursoFormComponent } from './components/recurso-form/recurso-form.com
     DatatableEmpleadoComponent,
     YesNoPipe,
     TipoReunionComponent,
-    RecursoFormComponent
+    RecursoFormComponent,
+    OficinaComponent
   ],
   imports: [
     BrowserModule,
