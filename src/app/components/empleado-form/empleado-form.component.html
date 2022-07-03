@@ -130,12 +130,12 @@
 
                         <div class="col-12 text-center mt-5">
                             <button *ngIf="accion=='new'" (click)="agregarEmpleado(content)" [disabled]="!empleadoForm.valid"
-                            type="submit" class="btn btn-celeste px-5 ms-4">Agregar</button>
+                            type="submit" class="btn btn-celeste px-4 ms-4">Agregar</button>
 
                             <button *ngIf="accion=='update'" (click)="modificarEmpleado(content)" [disabled]="!empleadoForm.valid"
-                            type="submit" class="btn btn-celeste px-5 ms-4">Modificar</button>
+                            type="submit" class="btn btn-celeste px-4 ms-4">Modificar</button>
 
-                            <button *ngIf="accion=='update'" (click)="cancelar()" type="submit" class="btn btn-rojo px-5 ms-4">Cancelar</button>
+                            <button *ngIf="accion=='update'" (click)="cancelar()" type="submit" class="btn btn-rojo px-4 ms-4">Cancelar</button>
                         </div>
                     </form>
                 </div>

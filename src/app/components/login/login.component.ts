@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
           if(this.empleado.rol=="ADMINISTRADOR"){
             this.open(content, 'empleados');
           }else if(this.empleado.rol=="PARTICIPANTE"){
-            this.open(content,'empleados');//TODO:cambiar a agenda cuando exista
+            this.open(content,'calendario');
           }
         }
       },

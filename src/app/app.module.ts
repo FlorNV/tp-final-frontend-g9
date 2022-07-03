@@ -33,7 +33,7 @@ import { RecursoFormComponent } from './components/recurso-form/recurso-form.com
     DatatableEmpleadoComponent,
     YesNoPipe,
     TipoReunionComponent,
-    RecursoFormComponent,
+    RecursoFormComponent
   ],
   imports: [
     BrowserModule,
