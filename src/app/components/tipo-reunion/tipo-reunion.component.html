@@ -24,8 +24,9 @@
 
                         <div class="col-12 text-center mt-5">
 
-                            <button type="submit" class="btn btn-celeste px-5 ms-4" *ngIf="tipo" (click)="agregarTipoReunion(content)">Agregar</button>
-
+                            <button type="submit" class="btn btn-celeste px-5 ms-4" [disabled]="!tipoReunionForm.valid" *ngIf="!modificar" (click)="agregarTipoReunion(content)">Agregar</button>
+                            <button type="submit" class="btn btn-celeste px-5 ms-4" [disabled]="!tipoReunionForm.valid" *ngIf="modificar" (click)="modificarTipoReunion(content, tipoReunionForm)">Modificar</button>
+                            <button type="submit" class="btn btn-celeste px-5 ms-4" *ngIf="modificar" (click)="cancelarTipoReunion(tipoReunionForm)">Cancelar</button>
                         </div>
 
                     </form>
@@ -35,6 +36,37 @@
         </div>
     </div>
 </div>
+<div class="container-fluid p-5">
+    <h5 class="bg-rosa mb-0 px-5 py-3 rounded-top">Registro Tipo Reunión</h5>
+    <div class="px-5 py-4 bg-white rounded-bottom">
+        <table datatable class="table table-bordered align-middle" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+            <thead>
+                <tr class="align-middle">
+                    <th>Reunión</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let t of tipos">
+                    <td>{{t.tipoReunion}}</td>
+                    
+                    <td>
+                        <button class="btn btn-celeste d-block m-auto my-1" (click)="cargarTipoReunion(t._id)">
+                            <i class="bi bi-pen-fill"></i>
+                        </button>
+                        <button class="btn btn-secondary d-block m-auto my-1" (click)="eliminarTipoReunion(t._id)">
+                            <i class="bi bi-trash3-fill"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+
 
 <ng-template #content let-modal>
     <div class="modal-header">
