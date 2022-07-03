@@ -1,5 +1,5 @@
 import { Component, OnInit, Query, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Form, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
@@ -147,9 +147,9 @@ export class RecursoFormComponent implements OnInit {
     this.rerender();
   }
 
-  cancelar(recursoForm: Form){
+  cancelar(recursoForm: NgForm){
     this.modificar = false;
-    
+    recursoForm.resetForm();
   }
 
   /** Modal*/

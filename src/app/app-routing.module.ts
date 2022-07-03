@@ -14,7 +14,7 @@ const routes: Routes = [
     { path: 'empleado-form/:id', component: EmpleadoFormComponent },
     { path: 'empleados', component: DatatableEmpleadoComponent},
     { path: 'tipoReunion', component: TipoReunionComponent },
-    { path: 'recurso-form', component: RecursoFormComponent},
+    { path: 'recursos', component: RecursoFormComponent},
     { path: 'dependencias', component: DependenciasComponent },
     { path: '**', pathMatch: 'full', redirectTo: 'login' },
 ];
