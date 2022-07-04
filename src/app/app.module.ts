@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -25,7 +25,9 @@ import { YesNoPipe } from './yes-no.pipe';
 import { TipoReunionComponent } from './components/tipo-reunion/tipo-reunion.component';
 import { LoginService } from './services/login.service';
 import { RecursoFormComponent } from './components/recurso-form/recurso-form.component';
+import { TokenInterceptorService } from './services/token-interceptor.service';
 import { OficinaComponent } from './components/oficina/oficina.component';
+import { AuthGuard } from './services/auth.guard';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,13 @@ import { OficinaComponent } from './components/oficina/oficina.component';
     }),
     CustomFormsModule
   ],
-  providers: [LoginService],
+  providers: [LoginService,
+  {
+   provide: HTTP_INTERCEPTORS,
+   useClass: TokenInterceptorService,
+   multi: true
+  },
+  AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
