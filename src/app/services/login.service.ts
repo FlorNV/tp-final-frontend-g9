@@ -28,6 +28,7 @@ export class LoginService {
     sessionStorage.removeItem("user");
     sessionStorage.removeItem("perfil");
     sessionStorage.removeItem("userid");
+    sessionStorage.removeItem("token");
   }
 
   public userLoggedIn(){
