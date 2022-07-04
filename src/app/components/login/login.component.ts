@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem("user", this.empleado.apellido + " " + this.empleado.nombre);
           sessionStorage.setItem("userid", this.empleado._id);
           sessionStorage.setItem("perfil", this.empleado.rol);
+          sessionStorage.setItem("token", result.data.token);
           this.message = "Autenticación Exitosa"
           if(this.empleado.rol=="ADMINISTRADOR"){
             this.open(content, 'empleados');
