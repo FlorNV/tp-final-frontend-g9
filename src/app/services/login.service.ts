@@ -25,7 +25,7 @@ export class LoginService {
   }
 
   public logout(){
-    sessionStorage.removeItem("x-token");
+    sessionStorage.removeItem("token");
     sessionStorage.removeItem("user");
     sessionStorage.removeItem("perfil");
     sessionStorage.removeItem("userid");
@@ -66,6 +66,6 @@ export class LoginService {
   }
 
   loggedIn(){
-    return !!localStorage.getItem("token");
+    return !!sessionStorage.getItem("token");
   }
 }

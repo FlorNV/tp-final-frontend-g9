@@ -8,13 +8,12 @@ import { LoginService } from './login.service';
 })
 export class TokenInterceptorService implements HttpInterceptor {
 
-  token: any = sessionStorage.getItem("token")
   constructor(private loginService: LoginService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const tokenizeReq = req.clone({
       setHeaders: {
-        'x-token': `${this.token}`,
+        'x-token': `${this.loginService.getToken()}`,
       }
     });
     return next.handle(tokenizeReq);
