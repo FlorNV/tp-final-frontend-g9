@@ -10,6 +10,7 @@ import { TipoReunionComponent } from './components/tipo-reunion/tipo-reunion.com
 import { RecursoFormComponent } from './components/recurso-form/recurso-form.component';
 import { CalendarioComponent } from './components/calendario/calendario.component';
 import { ReunionFormComponent } from './components/reunion-form/reunion-form.component';
+import { OficinaComponent } from './components/oficina/oficina.component';
 import { AuthGuard } from './services/auth.guard';
   
 const routes: Routes = [
@@ -21,7 +22,7 @@ const routes: Routes = [
     { path: 'dependencias', component: DependenciasComponent, canActivate: [AuthGuard]},
     { path: 'calendario', component: CalendarioComponent, canActivate: [AuthGuard]},
     { path: 'reunion-form/:id', component: ReunionFormComponent, canActivate: [AuthGuard]},
-    { path: '**', pathMatch: 'full', redirectTo: 'login' },
+    { path:'oficina',component: OficinaComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({
@@ -39,5 +40,5 @@ export const routingComponents = [
   TipoReunionComponent,
   CalendarioComponent,
   ReunionFormComponent,
-  
+  OficinaComponent,
 ];

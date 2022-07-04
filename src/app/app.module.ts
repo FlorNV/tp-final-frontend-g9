@@ -26,6 +26,7 @@ import { TipoReunionComponent } from './components/tipo-reunion/tipo-reunion.com
 import { LoginService } from './services/login.service';
 import { RecursoFormComponent } from './components/recurso-form/recurso-form.component';
 import { TokenInterceptorService } from './services/token-interceptor.service';
+import { OficinaComponent } from './components/oficina/oficina.component';
 import { AuthGuard } from './services/auth.guard';
 
 @NgModule({
@@ -35,7 +36,8 @@ import { AuthGuard } from './services/auth.guard';
     DatatableEmpleadoComponent,
     YesNoPipe,
     TipoReunionComponent,
-    RecursoFormComponent
+    RecursoFormComponent,
+    OficinaComponent
   ],
   imports: [
     BrowserModule,
