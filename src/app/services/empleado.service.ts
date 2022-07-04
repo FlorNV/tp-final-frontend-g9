@@ -30,6 +30,14 @@ export class EmpleadoService {
     return this._http.get(this.URL, options);
   }
 
+  public getEmpleadosByEstado(estaEnReunion: boolean): Observable<any> {
+    const options = { 
+      headers: new HttpHeaders({}),
+      params: new HttpParams().set('estaEnReunion', estaEnReunion) 
+    };
+    return this._http.get(this.URL, options);
+  }
+
   public getEmpleado(id: string): Observable<any> {
     const option = { headers: new HttpHeaders({}) };
     return this._http.get(this.URL + id, option);
