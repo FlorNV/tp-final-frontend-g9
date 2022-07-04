@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   empleado!: Empleado;
   respuesta!: any;
   message!: string;
+  token!: any;
 
   indice!: number;
   constructor(private loginService: LoginService,
@@ -34,6 +35,9 @@ export class LoginComponent implements OnInit {
         if(result.status == 200){
           this.empleado = new Empleado();
           this.empleado = result.data.empleado;
+          this.token = result.data.token;
+          console.log(this.token)
+          sessionStorage.setItem("token",result.data.token);
           sessionStorage.setItem("user", this.empleado.apellido + " " + this.empleado.nombre);
           sessionStorage.setItem("userid", this.empleado._id);
           sessionStorage.setItem("perfil", this.empleado.rol);

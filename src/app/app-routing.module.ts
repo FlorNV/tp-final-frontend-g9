@@ -10,17 +10,17 @@ import { TipoReunionComponent } from './components/tipo-reunion/tipo-reunion.com
 import { RecursoFormComponent } from './components/recurso-form/recurso-form.component';
 import { CalendarioComponent } from './components/calendario/calendario.component';
 import { ReunionFormComponent } from './components/reunion-form/reunion-form.component';
-
+import { AuthGuard } from './services/auth.guard';
   
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
-    { path: 'empleado-form/:id', component: EmpleadoFormComponent },
-    { path: 'empleados', component: DatatableEmpleadoComponent},
-    { path: 'tipoReunion', component: TipoReunionComponent },
-    { path: 'recursos', component: RecursoFormComponent},
-    { path: 'dependencias', component: DependenciasComponent },
-    { path: 'calendario', component: CalendarioComponent },
-    { path: 'reunion-form/:id', component: ReunionFormComponent },
+    { path: 'empleado-form/:id', component: EmpleadoFormComponent, canActivate: [AuthGuard]},
+    { path: 'empleados', component: DatatableEmpleadoComponent, canActivate: [AuthGuard]},
+    { path: 'tipoReunion', component: TipoReunionComponent, canActivate: [AuthGuard]},
+    { path: 'recursos', component: RecursoFormComponent, canActivate: [AuthGuard]},
+    { path: 'dependencias', component: DependenciasComponent, canActivate: [AuthGuard]},
+    { path: 'calendario', component: CalendarioComponent, canActivate: [AuthGuard]},
+    { path: 'reunion-form/:id', component: ReunionFormComponent, canActivate: [AuthGuard]},
     { path: '**', pathMatch: 'full', redirectTo: 'login' },
 ];
 
