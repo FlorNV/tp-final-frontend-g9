@@ -12,6 +12,7 @@ import { CalendarioComponent } from './components/calendario/calendario.componen
 import { ReunionFormComponent } from './components/reunion-form/reunion-form.component';
 import { OficinaComponent } from './components/oficina/oficina.component';
 import { AuthGuard } from './services/auth.guard';
+import { EstadisticaComponent } from './components/estadistica/estadistica.component';
   
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -23,6 +24,7 @@ const routes: Routes = [
     { path: 'calendario', component: CalendarioComponent, canActivate: [AuthGuard]},
     { path: 'reunion-form/:id', component: ReunionFormComponent, canActivate: [AuthGuard]},
     { path:'oficina',component: OficinaComponent, canActivate: [AuthGuard]},
+    {path:'estadistica',component:EstadisticaComponent}
 ];
 
 @NgModule({
@@ -41,4 +43,5 @@ export const routingComponents = [
   CalendarioComponent,
   ReunionFormComponent,
   OficinaComponent,
+  EstadisticaComponent,
 ];

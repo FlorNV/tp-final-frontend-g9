@@ -28,6 +28,7 @@ import { RecursoFormComponent } from './components/recurso-form/recurso-form.com
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { OficinaComponent } from './components/oficina/oficina.component';
 import { AuthGuard } from './services/auth.guard';
+import { EstadisticaComponent } from './components/estadistica/estadistica.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { AuthGuard } from './services/auth.guard';
     YesNoPipe,
     TipoReunionComponent,
     RecursoFormComponent,
-    OficinaComponent
+    OficinaComponent,
+    EstadisticaComponent
   ],
   imports: [
     BrowserModule,
