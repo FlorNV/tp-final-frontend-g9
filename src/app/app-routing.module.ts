@@ -13,6 +13,8 @@ import { ReunionFormComponent } from './components/reunion-form/reunion-form.com
 import { OficinaComponent } from './components/oficina/oficina.component';
 import { AuthGuard } from './services/auth.guard';
 import { BusquedaAvanzadaComponent } from './components/busqueda-avanzada/busqueda-avanzada.component';
+import { EstadisticaComponent } from './components/estadistica/estadistica.component';
+import { ReunionesComponent } from './components/reuniones/reuniones.component';
   
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -23,8 +25,11 @@ const routes: Routes = [
     { path: 'dependencias', component: DependenciasComponent, canActivate: [AuthGuard]},
     { path: 'calendario', component: CalendarioComponent, canActivate: [AuthGuard]},
     { path: 'reunion-form/:id', component: ReunionFormComponent, canActivate: [AuthGuard]},
+    { path: 'reuniones', component: ReunionesComponent, canActivate: [AuthGuard]},
     { path: 'oficina',component: OficinaComponent, canActivate: [AuthGuard]},
-    { path: 'busqueda-avanzada', component: BusquedaAvanzadaComponent}
+    { path: 'busqueda-avanzada', component: BusquedaAvanzadaComponent},
+    { path: 'estadistica',component:EstadisticaComponent}
+
 ];
 
 @NgModule({
@@ -33,14 +38,16 @@ const routes: Routes = [
 })
 export class AppRoutingModule { };
 export const routingComponents = [
-  LoginComponent, 
   HeaderComponent, 
-  DependenciasComponent,
+  LoginComponent, 
   EmpleadoFormComponent,
   DatatableEmpleadoComponent,
-  RecursoFormComponent,
   TipoReunionComponent,
+  RecursoFormComponent,
+  DependenciasComponent,
   CalendarioComponent,
   ReunionFormComponent,
+  ReunionesComponent,
   OficinaComponent,
+  EstadisticaComponent,
 ];
