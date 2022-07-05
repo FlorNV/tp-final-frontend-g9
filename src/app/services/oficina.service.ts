@@ -24,7 +24,7 @@ export class OficinaService {
     return this._http.post(this.URL, body, options);
   }
 
-  public getOficinasByOcupacion(estaOcupada: boolean): Observable<any>{
+  public getOficinasByEstado(estaOcupada: boolean): Observable<any>{
     const options = {
       headers: new HttpHeaders({}),
       params: new HttpParams().set('estaOcupada', estaOcupada)
