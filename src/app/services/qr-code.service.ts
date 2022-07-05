@@ -13,13 +13,7 @@ export class QrCodeService {
     // obtiene la url actual del navegador
     this.value = window.location.href;
   }
-
-  /**
-   * 
-   *    Agregar este html al lugar donde se tiene que generar el codigo QR
-   *     <ngx-qrcode #parent [elementType]="elementType" [errorCorrectionLevel]="correctionLevel" [value]="value"
-        alt="qr code reunion"></ngx-qrcode>
-   */
+  
   obtenerValoresQRCode() {
     return {
       elementType: this.elementType,
