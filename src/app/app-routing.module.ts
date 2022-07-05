@@ -23,7 +23,7 @@ const routes: Routes = [
     { path: 'dependencias', component: DependenciasComponent, canActivate: [AuthGuard]},
     { path: 'calendario', component: CalendarioComponent, canActivate: [AuthGuard]},
     { path: 'reunion-form/:id', component: ReunionFormComponent, canActivate: [AuthGuard]},
-    { path:'oficina',component: OficinaComponent, canActivate: [AuthGuard]},
+    { path: 'oficina',component: OficinaComponent, canActivate: [AuthGuard]},
     { path: 'busqueda-avanzada', component: BusquedaAvanzadaComponent}
 ];
 
