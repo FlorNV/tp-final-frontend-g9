@@ -14,6 +14,9 @@ import { OficinaComponent } from './components/oficina/oficina.component';
 import { AuthGuard } from './services/auth.guard';
 import { AudienciaComponent } from './components/audiencia/audiencia.component';
 import { BuscarAudienciaComponent } from './components/buscar-audiencia/buscar-audiencia.component';
+import { ReunionesComponent } from './components/reuniones/reuniones.component';
+import { BusquedaAvanzadaComponent } from './components/busqueda-avanzada/busqueda-avanzada.component';
+import { EstadisticaComponent } from './components/estadistica/estadistica.component';
   
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -24,9 +27,13 @@ const routes: Routes = [
     { path: 'dependencias', component: DependenciasComponent, canActivate: [AuthGuard]},
     { path: 'calendario', component: CalendarioComponent, canActivate: [AuthGuard]},
     { path: 'reunion-form/:id', component: ReunionFormComponent, canActivate: [AuthGuard]},
-    { path:'oficina',component: OficinaComponent, canActivate: [AuthGuard]},
+    { path: 'reuniones', component: ReunionesComponent, canActivate: [AuthGuard]},
     { path: 'audiencia',component: AudienciaComponent, canActivate: [AuthGuard]},
     { path: 'buscar-audiencia',component: BuscarAudienciaComponent, canActivate: [AuthGuard]},
+    { path: 'oficina',component: OficinaComponent, canActivate: [AuthGuard]},
+    { path: 'busqueda-avanzada', component: BusquedaAvanzadaComponent},
+    { path: 'estadistica',component:EstadisticaComponent}
+
 ];
 
 @NgModule({
@@ -35,16 +42,18 @@ const routes: Routes = [
 })
 export class AppRoutingModule { };
 export const routingComponents = [
-  LoginComponent, 
   HeaderComponent, 
-  DependenciasComponent,
+  LoginComponent, 
   EmpleadoFormComponent,
   DatatableEmpleadoComponent,
-  RecursoFormComponent,
   TipoReunionComponent,
+  RecursoFormComponent,
+  DependenciasComponent,
   CalendarioComponent,
   ReunionFormComponent,
+  ReunionesComponent,
   OficinaComponent,
   AudienciaComponent,
-  BuscarAudienciaComponent
+  BuscarAudienciaComponent,
+  EstadisticaComponent,
 ];
