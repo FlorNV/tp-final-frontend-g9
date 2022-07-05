@@ -46,10 +46,10 @@
                     <a class="nav-link active" aria-current="page" [routerLink]="['calendario']">Agenda</a>
                 </li>
                 <li class="nav-item" *ngIf="loginService.userRole()=='PARTICIPANTE'">
-                    <a class="nav-link mx-3" href="#">Audiencia</a>
+                    <a class="nav-link mx-3" [routerLink]="['audiencia']">Audiencia</a>
                 </li>
                 <li class="nav-item" *ngIf="loginService.userRole()=='PARTICIPANTE'">
-                    <a class="nav-link mx-3" href="#">Consultar Audiencia</a>
+                    <a class="nav-link mx-3" [routerLink]="['buscar-audiencia']">Consultar Audiencias</a>
                 </li>
 
 
@@ -60,8 +60,6 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <li><a class="dropdown-item" [routerLink]="['estadistica']">Estadísticas</a></li>
-                    </ul>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <li><a class="dropdown-item" [routerLink]="['busqueda-avanzada']">Búsquedas avanzadas</a></li>
                     </ul>
                 </li>

@@ -12,9 +12,11 @@ import { CalendarioComponent } from './components/calendario/calendario.componen
 import { ReunionFormComponent } from './components/reunion-form/reunion-form.component';
 import { OficinaComponent } from './components/oficina/oficina.component';
 import { AuthGuard } from './services/auth.guard';
+import { AudienciaComponent } from './components/audiencia/audiencia.component';
+import { BuscarAudienciaComponent } from './components/buscar-audiencia/buscar-audiencia.component';
+import { ReunionesComponent } from './components/reuniones/reuniones.component';
 import { BusquedaAvanzadaComponent } from './components/busqueda-avanzada/busqueda-avanzada.component';
 import { EstadisticaComponent } from './components/estadistica/estadistica.component';
-import { ReunionesComponent } from './components/reuniones/reuniones.component';
   
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -26,6 +28,8 @@ const routes: Routes = [
     { path: 'calendario', component: CalendarioComponent, canActivate: [AuthGuard]},
     { path: 'reunion-form/:id', component: ReunionFormComponent, canActivate: [AuthGuard]},
     { path: 'reuniones', component: ReunionesComponent, canActivate: [AuthGuard]},
+    { path: 'audiencia',component: AudienciaComponent, canActivate: [AuthGuard]},
+    { path: 'buscar-audiencia',component: BuscarAudienciaComponent, canActivate: [AuthGuard]},
     { path: 'oficina',component: OficinaComponent, canActivate: [AuthGuard]},
     { path: 'busqueda-avanzada', component: BusquedaAvanzadaComponent},
     { path: 'estadistica',component:EstadisticaComponent}
@@ -49,5 +53,7 @@ export const routingComponents = [
   ReunionFormComponent,
   ReunionesComponent,
   OficinaComponent,
+  AudienciaComponent,
+  BuscarAudienciaComponent,
   EstadisticaComponent,
 ];

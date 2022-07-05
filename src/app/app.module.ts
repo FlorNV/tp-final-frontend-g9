@@ -20,7 +20,8 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DataTablesModule } from 'angular-datatables';
-import { YesNoPipe } from './yes-no.pipe';
+import { YesNoPipe } from './pipes/yes-no.pipe';
+import { FilterPipe } from './pipes/filter.pipe';
 import { LoginService } from './services/login.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { AuthGuard } from './services/auth.guard';
@@ -29,7 +30,8 @@ import { AuthGuard } from './services/auth.guard';
   declarations: [
     AppComponent,
     routingComponents,
-    YesNoPipe
+    YesNoPipe,
+    FilterPipe,
   ],
   imports: [
     BrowserModule,
