@@ -23,6 +23,7 @@
                         <li><a class="dropdown-item" [routerLink]="['empleados']">Lista de Empleados</a></li>
                         <li><a class="dropdown-item" [routerLink]="['recursos']">Recursos</a></li>
                         <li><a class="dropdown-item" [routerLink]="['tipoReunion']">Tipos de reuniones</a></li>
+                        <li><a class="dropdown-item" [routerLink]="['oficina']">Oficinas</a></li>
                     </ul>
                 </li>
                 <li class="nav-item" *ngIf="loginService.userRole()=='ADMINISTRADOR'">
@@ -58,9 +59,7 @@
                         Reportes
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <li><a class="dropdown-item" [routerLink]="['estadistica']">Estdisticas</a></li>
                     </ul>
                 </li>
                 
