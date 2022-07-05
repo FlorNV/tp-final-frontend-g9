@@ -12,6 +12,7 @@ import { CalendarioComponent } from './components/calendario/calendario.componen
 import { ReunionFormComponent } from './components/reunion-form/reunion-form.component';
 import { OficinaComponent } from './components/oficina/oficina.component';
 import { AuthGuard } from './services/auth.guard';
+import { BusquedaAvanzadaComponent } from './components/busqueda-avanzada/busqueda-avanzada.component';
 import { EstadisticaComponent } from './components/estadistica/estadistica.component';
 import { ReunionesComponent } from './components/reuniones/reuniones.component';
   
@@ -26,6 +27,7 @@ const routes: Routes = [
     { path: 'reunion-form/:id', component: ReunionFormComponent, canActivate: [AuthGuard]},
     { path: 'reuniones', component: ReunionesComponent, canActivate: [AuthGuard]},
     { path: 'oficina',component: OficinaComponent, canActivate: [AuthGuard]},
+    { path: 'busqueda-avanzada', component: BusquedaAvanzadaComponent},
     { path: 'estadistica',component:EstadisticaComponent}
 
 ];
