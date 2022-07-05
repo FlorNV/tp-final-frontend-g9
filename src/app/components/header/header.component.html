@@ -38,10 +38,10 @@
                     <a class="nav-link active" aria-current="page" [routerLink]="['calendario']">Agenda</a>
                 </li>
                 <li class="nav-item" *ngIf="loginService.userRole()=='PARTICIPANTE'">
-                    <a class="nav-link mx-3" href="#">Audiencia</a>
+                    <a class="nav-link mx-3" [routerLink]="['audiencia']">Audiencia</a>
                 </li>
                 <li class="nav-item" *ngIf="loginService.userRole()=='PARTICIPANTE'">
-                    <a class="nav-link mx-3" href="#">Consultar Audiencia</a>
+                    <a class="nav-link mx-3" [routerLink]="['buscar-audiencia']">Consultar Audiencias</a>
                 </li>
 
 

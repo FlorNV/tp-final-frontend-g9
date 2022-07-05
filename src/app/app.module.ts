@@ -20,24 +20,18 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DataTablesModule } from 'angular-datatables';
-import { DatatableEmpleadoComponent } from './components/datatable-empleado/datatable-empleado.component'
-import { YesNoPipe } from './yes-no.pipe';
-import { TipoReunionComponent } from './components/tipo-reunion/tipo-reunion.component';
+import { YesNoPipe } from './pipes/yes-no.pipe';
+import { FilterPipe } from './pipes/filter.pipe';
 import { LoginService } from './services/login.service';
-import { RecursoFormComponent } from './components/recurso-form/recurso-form.component';
 import { TokenInterceptorService } from './services/token-interceptor.service';
-import { OficinaComponent } from './components/oficina/oficina.component';
 import { AuthGuard } from './services/auth.guard';
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
-    DatatableEmpleadoComponent,
     YesNoPipe,
-    TipoReunionComponent,
-    RecursoFormComponent,
-    OficinaComponent
+    FilterPipe,
   ],
   imports: [
     BrowserModule,
