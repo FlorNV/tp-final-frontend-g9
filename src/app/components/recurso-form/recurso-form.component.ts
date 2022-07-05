@@ -69,6 +69,7 @@ export class RecursoFormComponent implements OnInit {
           Object.assign(recFisico, element);
           this.recursosFisicos.push(recFisico);
         });
+        this.new = false;
         this.rerender();
       }
     })
@@ -84,6 +85,7 @@ export class RecursoFormComponent implements OnInit {
           Object.assign(recDigital,element);
           this.recursosDigitales.push(recDigital);
         });
+        this.new = false;
         this.rerender();
       }
     })

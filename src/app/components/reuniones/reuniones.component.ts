@@ -96,6 +96,18 @@ export class ReunionesComponent implements OnInit, OnDestroy {
       this.cargarReuniones();
   }
 
+  confirmarReunion(reunion: Reunion, content: any) {
+    this.reunionService.confirmReunion(reunion._id).subscribe(
+      result => {
+        this.respuesta = result;
+      },
+      error => {
+        this.respuesta = error;
+      }
+    )
+    this.open(content);
+  }
+
   open(content: any) {
     this.modalService.open(content, { centered: true });
   }

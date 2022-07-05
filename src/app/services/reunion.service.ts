@@ -19,7 +19,7 @@ export class ReunionService {
   public createEvent(event: any): Observable<any> { 
     const httpOptions = { 
       headers: new HttpHeaders({ 
-        "Authorization": "Bearer ya29.a0ARrdaM_irStzOB0uPe_d4LS48fUKd7JpLtXVOtDUNY66-VkpfMJGieXE-bVfCcBamdP684mZJDsjVD6lRz3CawX5SO7QXcDzmN_CIj7LB-Zz7eA8IXT3bWJqpi5nVM7Gq0GW3I4wcB4E2WqqvFObDrkHwYi3", 
+        "Authorization": "Bearer ya29.a0ARrdaM8ynaeRbr1ebiO8T1WaAQT0j14bOmb5k-Cys7Csx2DI19YphEaw1BSlreWo1tlnwJfq8aZqcwAPcXgy7xPeke8WX7N3LxlKsnMsW8Qq7gaPgM7XY0Bh2d0b7p4730b9-jPMm8D1IwO2oZ0JLLtVDpte", 
         "Accept": "application/ecmascript", 
         "Content-Type": "application/json" 
       }) 
@@ -37,6 +37,13 @@ export class ReunionService {
     };
     const body = JSON.stringify(reunion);
     return this._http.post(this.URL, body, options);
+  }
+
+  public confirmReunion(id: string): Observable<any> {
+    const options = {
+      headers: new HttpHeaders({})
+    };
+    return this._http.post(this.URL+ 'confirmar/' + id, null, options);
   }
 
   public getReuniones(): Observable<any> {
@@ -65,4 +72,5 @@ export class ReunionService {
     const options = {headers: new HttpHeaders({})};
     return this._http.get(this.URL + id, options);
   }
+  
 }

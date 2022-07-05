@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -22,12 +22,14 @@ import { AppComponent } from './app.component';
 import { DataTablesModule } from 'angular-datatables';
 import { YesNoPipe } from './yes-no.pipe';
 import { LoginService } from './services/login.service';
+import { TokenInterceptorService } from './services/token-interceptor.service';
+import { AuthGuard } from './services/auth.guard';
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
-    YesNoPipe,
+    YesNoPipe
   ],
   imports: [
     BrowserModule,
@@ -53,7 +55,13 @@ import { LoginService } from './services/login.service';
     }),
     CustomFormsModule
   ],
-  providers: [LoginService],
+  providers: [LoginService,
+  {
+   provide: HTTP_INTERCEPTORS,
+   useClass: TokenInterceptorService,
+   multi: true
+  },
+  AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

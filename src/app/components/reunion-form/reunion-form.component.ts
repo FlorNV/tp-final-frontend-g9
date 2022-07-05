@@ -299,9 +299,8 @@ export class ReunionFormComponent implements OnInit {
   setReunion(): void {
     
     this.event.start.dateTime = this.toIsoString(new Date(this.reunion.horaInicio)); 
-    this.event.end.dateTime = this.toIsoString(new Date(this.reunion.horaFinal)); 
-    this.event.summary = this.reunion.tipoReunion.tipoReunion;
-
+    this.event.end.dateTime = this.toIsoString(new Date(this.reunion.horaFinal));
+    this.event.summary = this.tiposReuniones.find((t: any) => t._id = this.reunion.tipoReunion)?.tipoReunion;
 
     let participantes: string[] = [];
     this.selectedItemsParticipantes.forEach(element => {

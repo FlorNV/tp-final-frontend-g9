@@ -56,6 +56,9 @@
                 </ngx-qrcode>
             </div>
             <div class="text-end">
+                <button (click)="confirmarReunion(reunion, content)" class="btn btn-rojo m-2">
+                    Confirmar
+                </button>
                 <button (click)="modificar(reunion)" class="btn btn-celeste m-2">
                     <i class="bi bi-pen-fill"></i>
                 </button>
@@ -72,13 +75,6 @@
 
     <h5 class="bg-rojo mb-0 px-5 py-3 rounded-top mt-5 text-white">Resgistro de Reuniones</h5>
     <div class="px-5 py-4 bg-white rounded-bottom">
-        <!-- <form class="mt-2 mb-5" action="">
-            <div class="row">
-                <div class="col">
-                  <input type="text" class="form-control" placeholder="Ingrese consulta">
-                </div>
-            </div>
-        </form> -->
         <table datatable class="table table-bordered align-middle text-center" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
             <thead>
                 <tr class="align-middle">
