@@ -32,7 +32,7 @@
                             
                         </div>
                         
-                        <div  class="col-12">
+                        <div *ngIf="modificar" class="col-12">
                             <label class="form-label d-inline-block">¿Está ocupada?</label>
                             <div class="form-check form-check-inline ms-5">
                                 <input type="radio" name="estaOcupada" class="form-check-input" id="si" 
@@ -53,9 +53,9 @@
                         
                         <div class="col-12 text-center mt-5">
 
-                            <button type="submit" class="btn btn-celeste px-5 ms-4" [disabled]="!oficinaForm.valid" *ngIf="!modificar" (click)="crearOficina(content)">Agregar</button>
+                            <button type="submit" class="btn btn-celeste px-5 ms-4" [disabled]="!oficinaForm.valid" *ngIf="!modificar" (click)="agregarOficina(content, oficinaForm)">Agregar</button>
                             <button type="submit" class="btn btn-celeste px-5 ms-4" [disabled]="!oficinaForm.valid" *ngIf="modificar" (click)="modificarOficina(content, oficinaForm)">Modificar</button>
-                            <button type="submit" class="btn btn-celeste px-5 ms-4" *ngIf="modificar" (click)="cancelarOficina(oficinaForm)">Cancelar</button>
+                            <button type="submit" class="btn btn-rojo px-5 ms-4" *ngIf="modificar" (click)="cancelarOficina(oficinaForm)">Cancelar</button>
                         </div>
                         
                     </form>

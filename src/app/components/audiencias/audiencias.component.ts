@@ -8,11 +8,11 @@ import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-audiencia',
-  templateUrl: './audiencia.component.html',
-  styleUrls: ['./audiencia.component.css']
+  selector: 'app-audiencias',
+  templateUrl: './audiencias.component.html',
+  styleUrls: ['./audiencias.component.css']
 })
-export class AudienciaComponent implements OnInit, OnDestroy  {
+export class AudienciasComponent implements OnInit, OnDestroy  {
 
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;

@@ -5,11 +5,11 @@ import { OficinaService } from 'src/app/services/oficina.service';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 
 @Component({
-  selector: 'app-estadistica',
-  templateUrl: './estadistica.component.html',
-  styleUrls: ['./estadistica.component.css']
+  selector: 'app-estadisticas',
+  templateUrl: './estadisticas.component.html',
+  styleUrls: ['./estadisticas.component.css']
 })
-export class EstadisticaComponent implements OnInit {
+export class EstadisticasComponent implements OnInit {
 
   constructor(private oficinaService: OficinaService) { 
   }

@@ -4,6 +4,10 @@
 .bg-claro {
     background-color: #ebeff3;
 }
+.btn-rojo {
+    background-color: #e55767;
+    color: #fff;
+}
 .btn-rojo:hover {
     background-color: rgba(229, 87, 103, 0.8);
 }

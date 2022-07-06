@@ -43,7 +43,7 @@ export class OficinaComponent implements OnInit {
   
   }
   
-  crearOficina(content: any): void {
+  agregarOficina(content: any, form: NgForm): void {
     this.oficinaService.addOficina(this.oficina).subscribe({
       next:(result)=>{
          if(result.status==201){
@@ -51,6 +51,7 @@ export class OficinaComponent implements OnInit {
           this.open(content);
           this.getOficinas();
           this.rerender();
+          form.resetForm();
          }
       },
       error: (error) => {
