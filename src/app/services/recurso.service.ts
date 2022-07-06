@@ -9,7 +9,13 @@ import { RecursoFisico } from '../models/recurso-fisico';
 })
 export class RecursoService {
 
+  urlRecursosFisicos: string;
+  urlRecursosDigitales: string;
+
   constructor(private _http: HttpClient) {
+    
+    this.urlRecursosFisicos = "http://localhost:8000/api/v1/recursos/";
+    this.urlRecursosDigitales = "http://localhost:8000/api/v1/recursos-digitales/";
   }
 
   public addRecursoFisico(recFisico: RecursoFisico): Observable<any>{
@@ -19,12 +25,12 @@ export class RecursoService {
       })
     };
     const body = JSON.stringify(recFisico);
-    return this._http.post("http://localhost:8000/api/v1/recursos/",body,options);
+    return this._http.post(this.urlRecursosFisicos, body, options);
   }
 
   public getRecursosFisicos(): Observable<any>{
     const options = {headers: new HttpHeaders({})};
-    return this._http.get("http://localhost:8000/api/v1/recursos/",options);
+    return this._http.get(this.urlRecursosFisicos, options);
   }
 
   public getRecursosFisicosByReservacion(estaReservado: boolean): Observable<any>{
@@ -32,7 +38,7 @@ export class RecursoService {
       headers: new HttpHeaders({}),
       paramas: new HttpParams().set('estaReservado', estaReservado)
     };
-    return this._http.get("http://localhost:8000/api/v1/recursos/",options);
+    return this._http.get(this.urlRecursosFisicos, options);
   }
 
   public updateRecursosFisicos(recFisico: RecursoFisico): Observable<any>{
@@ -42,12 +48,12 @@ export class RecursoService {
       })
     };
     const body = JSON.stringify(recFisico);
-    return this._http.put("http://localhost:8000/api/v1/recursos/"+recFisico._id,body,options)
+    return this._http.put(this.urlRecursosFisicos + recFisico._id, body, options)
   }
 
   public deleteRecursoFisico(id: string): Observable<any> {
     const options = {headers: new HttpHeaders ({})};
-    return this._http.delete("http://localhost:8000/api/v1/recursos/"+ id,options);
+    return this._http.delete(this.urlRecursosFisicos + id, options);
   }
 
   public addRecursoDigital(recDigital: RecursoDigital): Observable<any>{
@@ -57,12 +63,12 @@ export class RecursoService {
       })
     };
     const body = JSON.stringify(recDigital);
-    return this._http.post("http://localhost:8000/api/v1/recursos-digitales/",body,options);
+    return this._http.post(this.urlRecursosDigitales, body, options);
   }
 
   public getRecursosDigitales(): Observable<any>{
     const options = {headers: new HttpHeaders({})};
-    return this._http.get("http://localhost:8000/api/v1/recursos-digitales/",options);
+    return this._http.get(this.urlRecursosDigitales, options);
   }
 
   public updateRecursosDigital(recDigital: RecursoDigital): Observable<any>{
@@ -72,12 +78,12 @@ export class RecursoService {
       })
     };
     const body = JSON.stringify(recDigital);
-    return this._http.put("http://localhost:8000/api/v1/recursos-digitales/",body,options)
+    return this._http.put(this.urlRecursosDigitales + recDigital._id,body, options)
   }
 
   public deleteRecursoDigital(id: string): Observable<any> {
     const options = {headers: new HttpHeaders ({})};
-    return this._http.delete("http://localhost:8000/api/v1/recursos-digitales/"+id,options);
+    return this._http.delete(this.urlRecursosDigitales + id, options);
   }
 
 }

@@ -22,8 +22,8 @@
                         <li><a class="dropdown-item" [routerLink]="['empleado-form/0']">Nuevo Empleado</a></li>
                         <li><a class="dropdown-item" [routerLink]="['empleados']">Lista de Empleados</a></li>
                         <li><a class="dropdown-item" [routerLink]="['recursos']">Recursos</a></li>
-                        <li><a class="dropdown-item" [routerLink]="['tipoReunion']">Tipos de reuniones</a></li>
-                        <li><a class="dropdown-item" [routerLink]="['oficina']">Oficinas</a></li>
+                        <li><a class="dropdown-item" [routerLink]="['tipo-reunion']">Tipos de reuniones</a></li>
+                        <li><a class="dropdown-item" [routerLink]="['oficinas']">Oficinas</a></li>
                     </ul>
                 </li>
                 <li class="nav-item" *ngIf="loginService.userRole()=='ADMINISTRADOR'">
@@ -46,7 +46,7 @@
                     <a class="nav-link active" aria-current="page" [routerLink]="['calendario']">Agenda</a>
                 </li>
                 <li class="nav-item" *ngIf="loginService.userRole()=='PARTICIPANTE'">
-                    <a class="nav-link mx-3" [routerLink]="['audiencia']">Audiencia</a>
+                    <a class="nav-link mx-3" [routerLink]="['audiencias']">Audiencia</a>
                 </li>
                 <li class="nav-item" *ngIf="loginService.userRole()=='PARTICIPANTE'">
                     <a class="nav-link mx-3" [routerLink]="['buscar-audiencia']">Consultar Audiencias</a>
@@ -59,7 +59,7 @@
                         Reportes
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" [routerLink]="['estadistica']">Estadísticas</a></li>
+                        <li><a class="dropdown-item" [routerLink]="['estadisticas']">Estadísticas</a></li>
                         <li><a class="dropdown-item" [routerLink]="['busqueda-avanzada']">Búsquedas avanzadas</a></li>
                     </ul>
                 </li>

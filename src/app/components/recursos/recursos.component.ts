@@ -9,11 +9,11 @@ import { RecursoFisico } from 'src/app/models/recurso-fisico';
 import { RecursoService } from 'src/app/services/recurso.service';
 
 @Component({
-  selector: 'app-recurso-form',
-  templateUrl: './recurso-form.component.html',
-  styleUrls: ['./recurso-form.component.css']
+  selector: 'app-recursos',
+  templateUrl: './recursos.component.html',
+  styleUrls: ['./recursos.component.css']
 })
-export class RecursoFormComponent implements OnInit {
+export class RecursosComponent implements OnInit {
 
   @ViewChildren(DataTableDirective)
   dtElements!: QueryList<DataTableDirective>;
@@ -21,15 +21,10 @@ export class RecursoFormComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   dtTrigger2: Subject<any> = new Subject<any>();
 
-  recursoForm = new FormGroup({
-    nombre: new FormControl('',[Validators.required]),
-    recurso: new FormControl('',[Validators.required])
-  })
-
   fisico: boolean = false;
   digital: boolean = false;
   recurso: boolean = false;
-  modificar: boolean= false;
+  modificar: boolean = false;
   new: boolean = false;
 
   recFisico!: RecursoFisico;
@@ -44,9 +39,6 @@ export class RecursoFormComponent implements OnInit {
     
     
   }
-
-  get nombre(){return this.recursoForm.get('nombre');}
-  get recursoF(){return this.recursoForm.get('recurso');}
 
   ngOnInit():void {
     this.dtOptions = {
@@ -151,23 +143,23 @@ export class RecursoFormComponent implements OnInit {
 
   cancelar(recursoForm: NgForm){
     this.modificar = false;
+    this.fisico = false;
+    this.digital = false;
     recursoForm.resetForm();
   }
 
   /** Modal*/
   open(content: any) {
-    this.modalService.open(content, { centered: true }).result.then(
-      (result) =>{
-        
-      }, (reason) => {
-        
-      }
-    )
+    this.modalService.open(content, { centered: true }).result.then((result) => {
+      this.cargarRecursosDigitales();
+      this.cargarRecursosFisicos();
+    });
   }
 
   /** Buscar recurso fisico por id*/
   cargarRecursoFisico(id: string){
     this.fisico = true;
+    this.digital = false;
     this.recFisico = new RecursoFisico();
     let result = this.recursosFisicos.filter(rf => rf._id == id)[0];
     Object.assign(this.recFisico,result);
@@ -177,10 +169,12 @@ export class RecursoFormComponent implements OnInit {
   /** Buscar recurso digital por id*/
   cargarRecursoDigital(id: string){
     this.digital = true;
+    this.fisico = false;
     this.recDigital = new RecursoDigital();
     let result = this.recursosDigitales.filter(rd => rd._id == id)[0];
     Object.assign(this.recDigital,result);
     this.modificar = true;
+    console.log(this.recDigital);
   }
 
   /** Modificar un recurso fisico o digital*/
@@ -190,14 +184,13 @@ export class RecursoFormComponent implements OnInit {
         (result) => {
           if(result.status == 200){
             this.respuesta = result;
+            console.log(result.status);
             this.open(content);
           }
         }
       )
       this.fisico = false;
       this.modificar = false;
-      this.cargarRecursosFisicos();
-      this.rerender();
     }else{
       this.recursoService.updateRecursosDigital(this.recDigital).subscribe(
         (result) => {
@@ -209,8 +202,6 @@ export class RecursoFormComponent implements OnInit {
       )
       this.digital = false;
       this.modificar = false;
-      this.cargarRecursosDigitales();
-      this.rerender();
     }
   }
 

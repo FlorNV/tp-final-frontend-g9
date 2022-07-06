@@ -6,11 +6,11 @@ import { Empleado } from 'src/app/models/empleado';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-datatable-empleado',
-  templateUrl: './datatable-empleado.component.html',
-  styleUrls: ['./datatable-empleado.component.css']
+  selector: 'app-empleados',
+  templateUrl: './empleados.component.html',
+  styleUrls: ['./empleados.component.css']
 })
-export class DatatableEmpleadoComponent implements OnInit {
+export class EmpleadosComponent implements OnInit {
 
   @ViewChild(DataTableDirective, {static: false})
   dtElement!: DataTableDirective;
