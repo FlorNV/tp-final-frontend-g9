@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { data } from 'jquery';
 import { Empleado } from 'src/app/models/empleado';
 import { Notificacion } from 'src/app/models/notificacion';
 import { Oficina } from 'src/app/models/oficina';
 import { Reunion } from 'src/app/models/reunion';
+import { TipoReunion } from 'src/app/models/tipo-reunion';
 import { EmpleadoService } from 'src/app/services/empleado.service';
 import { LoginService } from 'src/app/services/login.service';
 import { NotificacionService } from 'src/app/services/notificacion.service';
 import { OficinaService } from 'src/app/services/oficina.service';
+import { TipoReunionService } from 'src/app/services/tipo-reunion.service';
 
 @Component({
   selector: 'app-header',
@@ -20,16 +23,18 @@ export class HeaderComponent implements OnInit {
   reuniones!: Array<Reunion>;
   participante!: any;
   notificacion!: Notificacion;
-  oficina!: Oficina;
   oficinas!: Array<Oficina>;
+  tipoReuniones!: Array<TipoReunion>;
   id!: any;
 
   constructor(public loginService: LoginService,
               public empleadoService: EmpleadoService,
               public notificacionService: NotificacionService,
-              public oficinaService: OficinaService) {
+              public oficinaService: OficinaService,
+              public tipoReunionService: TipoReunionService) {
                 this.obtenerOficinas();
                 this.obtenerEmpealdo();
+                this.obtenerTipoReuniones();
                 this.obtenerNotificaiones();
               }
 
@@ -53,26 +58,22 @@ export class HeaderComponent implements OnInit {
   }
 
   obtenerNotificaiones(){
-    this.oficina = new Oficina();
     this.reuniones = new Array<Reunion>();
     this.notificacionService.getNotificaiones(this.empleado).subscribe(
     (result) => {
-      //let id: string = (result['data']['notificaciones'][0]['reunion']['oficina'])
-      //console.log(this.oficina)
+      console.log(result['data']['notificaciones'][0]['reunion']['tipoReunion'])
       for(let i=0;i<result.data.notificaciones.length;i++){
-        //this.oficina = this.oficinas.find((o) => (o._id === result['data']['notificaciones'][i]['reunion']))!;
         this.participante = result['data']['notificaciones'][i]['empleado'];
         
         if(this.participante._id == this.id){
           this.reunion = new Reunion();
           Object.assign(this.reunion,result['data']['notificaciones'][i].reunion);
-          console.log(result['data']['notificaciones'][i]['reunion']['oficina'])
-          //this.reunion.oficina = this.oficinas.find((o) => (o._id === result['data']['notificaciones'][i]['reunion']['oficina']))! 
+          this.reunion.oficina = this.oficinas.find(o => o._id == result['data']['notificaciones'][i]['reunion']['oficina']);
+          this.reunion.tipoReunion = this.tipoReuniones.find(tr => tr._id == result['data']['notificaciones'][i]['reunion']['tipoReunion']);
           this.reuniones.push(this.reunion);
         }
       }
       console.log(this.reuniones)
-      //this.obtenerOficina(this.reuniones[0]._id)
     },
     (error) => {
       console.log(error);
@@ -84,25 +85,18 @@ export class HeaderComponent implements OnInit {
     this.oficinas = new Array<Oficina>;
     this.oficinaService.getOficinas().subscribe(
       (result) => {
-        this.oficina = new Oficina();
-        Object.assign(this.oficina,result['data']['oficinas']);
-        this.oficinas.push(this.oficina);
-        console.log(this.oficinas);
+        this.oficinas = result['data']['oficinas'];
       }
     )
   }
-  
-  /*obtenerOficina(id: string): void{
-    console.log(this.oficinas[1])
-    this.oficina = new Oficina();
-    for(let i=0;i<this.oficinas.length;i++){
-      console.log(this.oficinas[i]._id);
-      if(this.oficinas[i]._id==id){
-        
-        this.oficina = this.oficinas[i];
-        console.log(this.oficina);
-      }
-    }
-  }*/
 
+  obtenerTipoReuniones(){
+    this.tipoReuniones = new Array<TipoReunion>();
+    this.tipoReunionService.getTiposReunion().subscribe(
+      (result) => {
+        console.log(result.data.tiposReunion)
+        this.tipoReuniones = result['data']['tiposReunion'];
+      }
+    )
+  }
 }

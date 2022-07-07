@@ -80,7 +80,7 @@
                                 <h6 class="mb-1">Reunion</h6>
                             </div>
                             <a href="#" class="list-group-item list-group-item-action active noti" aria-current="true" *ngFor="let r of reuniones">
-                                <p class="mb-1">Tipo de reunion: </p>
+                                <p class="mb-1">Tipo de reunion: {{r.tipoReunion.tipoReunion}} </p>
                                 <p class="mb-1">Oficina: {{r.oficina.nombre}} </p>
                                 <small>Fecha: {{r.horaFinal | date:'short'}} </small>
                             </a>
