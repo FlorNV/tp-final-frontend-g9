@@ -41,6 +41,12 @@ li .dropdown-item:hover{
 }
 
 .notificacion{
+    position: absolute;
+    top:52px;
+    right: 150px;
+}
+
+.notificacioni{
     width: 30px;
     height: 30px;
 }
@@ -51,20 +57,16 @@ li .dropdown-item:hover{
 }
 
 .list-group{
-    width: 250px;
+    width: 350px;
+    border: 10px;
+}
+
+.titulo{
+    background-color: #E55767;
+    color: #EBEFF3;
 }
 .list-group a{
     background-color: white;
     color: black;
-    
 }
 
-.list-group-item:hover{
-    background-color: #E55767;
-    color: #EBEFF3;
-}
-
-.list-group h6{
-    background-color: #E55767 ;
-    color: white;
-}

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { data } from 'jquery';
 import { Empleado } from 'src/app/models/empleado';
 import { Notificacion } from 'src/app/models/notificacion';
 import { Oficina } from 'src/app/models/oficina';
@@ -23,9 +22,12 @@ export class HeaderComponent implements OnInit {
   reuniones!: Array<Reunion>;
   participante!: any;
   notificacion!: Notificacion;
+  notificaciones!: Array<Notificacion>;
   oficinas!: Array<Oficina>;
   tipoReuniones!: Array<TipoReunion>;
   id!: any;
+  leido!: Array<boolean>;
+  espera!: any;
 
   constructor(public loginService: LoginService,
               public empleadoService: EmpleadoService,
@@ -41,17 +43,21 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  actualizarNotificaciones(){
+    console.log("entra")
+    
+  }
+
   logout(){
     this.loginService.logout();
   }
-
    
   obtenerEmpealdo(){
     this.id = this.loginService.idLogged();
     this.empleadoService.getEmpleado(this.id).subscribe(
       (result) => {
         this.empleado = new Empleado();
-        Object.assign(this.empleado,result['data']['empleado']);
+        this.empleado = result['data']['empleado']
       }
     )
     
@@ -61,10 +67,9 @@ export class HeaderComponent implements OnInit {
     this.reuniones = new Array<Reunion>();
     this.notificacionService.getNotificaiones(this.empleado).subscribe(
     (result) => {
-      console.log(result['data']['notificaciones'][0]['reunion']['tipoReunion'])
+      console.log(result['data']['notificaciones'])
       for(let i=0;i<result.data.notificaciones.length;i++){
         this.participante = result['data']['notificaciones'][i]['empleado'];
-        
         if(this.participante._id == this.id){
           this.reunion = new Reunion();
           Object.assign(this.reunion,result['data']['notificaciones'][i].reunion);
@@ -98,5 +103,9 @@ export class HeaderComponent implements OnInit {
         this.tipoReuniones = result['data']['tiposReunion'];
       }
     )
+  }
+
+  prueba(reunion: Reunion){
+    console.log(reunion)
   }
 }
