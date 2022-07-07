@@ -39,3 +39,32 @@ li .dropdown-item:hover{
     background-color: hsl(353, 73%, 70%);
     color: #EBEFF3;
 }
+
+.notificacion{
+    width: 30px;
+    height: 30px;
+}
+
+.noti{
+    background-color: #E55767;
+    border: none;
+}
+
+.list-group{
+    width: 250px;
+}
+.list-group a{
+    background-color: white;
+    color: black;
+    
+}
+
+.list-group-item:hover{
+    background-color: #E55767;
+    color: #EBEFF3;
+}
+
+.list-group h6{
+    background-color: #E55767 ;
+    color: white;
+}
