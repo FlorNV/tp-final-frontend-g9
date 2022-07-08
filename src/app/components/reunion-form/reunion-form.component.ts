@@ -442,6 +442,8 @@ export class ReunionFormComponent implements OnInit {
       this.cargarParticipantesLibres();
       this.cargarRecursosFisicosLibres();
       this.cargarOficinasLibres();
+      this.selectedItemsParticipantes = [];
+      this.selectedItemsFisicos = [];
     }
   }
 
@@ -455,6 +457,8 @@ export class ReunionFormComponent implements OnInit {
       this.cargarParticipantesLibres();
       this.cargarRecursosFisicosLibres();
       this.cargarOficinasLibres();
+      this.selectedItemsParticipantes = [];
+      this.selectedItemsFisicos = [];
     }
   }
 
