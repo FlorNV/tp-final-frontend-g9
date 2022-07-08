@@ -31,8 +31,13 @@
                         [(ngModel)]="reunion.horaFinal" name="finalizacion" minima required #finalizacion="ngModel"
                         [ngClass]="{'border-danger': finalizacion.invalid && (finalizacion.dirty || finalizacion.touched)}">
 
-                        <div *ngIf="finalizacion.invalid && (finalizacion.dirty || finalizacion.touched) && finalizacion.errors?.['required']" class="form-text text-danger">
-                            <i class="bi bi-exclamation-circle"></i> Ingrese hora de finalización.
+                        <div *ngIf="finalizacion.invalid && (finalizacion.dirty || finalizacion.touched)" class="form-text text-danger">
+                            <div *ngIf="finalizacion.errors?.['required']">
+                                <i class="bi bi-exclamation-circle"></i> Ingrese fecha de inicio.
+                            </div>
+                            <div *ngIf="finalizacion.errors?.['minima']">
+                                <i class="bi bi-exclamation-circle"></i> Ingrese una fecha actual.
+                            </div>
                         </div>
                     </div>
 
@@ -121,7 +126,7 @@
                     <button *ngIf="accion=='new'" (click)="agregarReunion()" [disabled]="!reunionForm.valid"
                     type="submit" class="btn btn-celeste px-5 ms-4">Agregar</button>
 
-                    <button *ngIf="accion=='update'" (click)="modificarReunion(content)" [disabled]="!reunionForm.valid"
+                    <button *ngIf="accion=='update'" (click)="modificarReunion()" [disabled]="!reunionForm.valid"
                     type="submit" class="btn btn-celeste px-5 ms-4">Modificar</button>
 
                     <button *ngIf="accion=='update'" (click)="cancelar()" type="submit" class="btn btn-rojo px-5 ms-4">Cancelar</button>
@@ -131,16 +136,3 @@
     </div>
 </div>
 
-<ng-template #content let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Aviso</h4>
-    </div>
-    <div class="modal-body text-center text-uppercase">
-        <p class="mt-4">{{ respuesta.message }}</p>
-        <p *ngIf="respuesta.status==201 || respuesta.status==200" class="mt-4"><i class="bi bi-check-circle text-success"></i></p>
-        <p *ngIf="respuesta.status!=201 && respuesta.status!==200" class="mt-4"><i class="bi bi-exclamation-circle text-danger"></i></p>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-celeste" (click)="modal.close()">Close</button>
-    </div>
-</ng-template>

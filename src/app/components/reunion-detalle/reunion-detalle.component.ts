@@ -69,8 +69,12 @@ export class ReunionDetalleComponent implements OnInit {
       if (result.isConfirmed) {
         this.reunionService.deleteReunion(reunion._id).subscribe(
           result => {
-            Swal.fire(result.message, '', 'success');
-            location.reload();
+            Swal.fire(result.message, '', 'success').then(
+              result => {
+                if(result.isConfirmed)
+                this.router.navigate(['reunion-detalle']);
+              }
+            )
           },
           error => {
             Swal.fire(error.error.message, '', 'error')

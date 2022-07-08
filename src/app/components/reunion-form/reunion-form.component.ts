@@ -131,7 +131,7 @@ export class ReunionFormComponent implements OnInit {
     this.reuniones = new Array<Reunion>();
   }
 
-  //TODO corregir
+  //TODO: corregir
   agregarReunion() {
     this.setReunion();
     if(this.esReprogramada()){
@@ -192,7 +192,7 @@ export class ReunionFormComponent implements OnInit {
     }
   }
 
-  //TODO corregir
+  //TODO: corregir
   esReprogramada(): boolean {
     let esReprogramada = false;
     let esPrioridadAlta = false;
@@ -225,8 +225,15 @@ export class ReunionFormComponent implements OnInit {
     this.reunionService.getReunionById(id).subscribe(
       result => {
         this.iniciarReunion();
-        this.reunion.horaInicio = new Date(result.data.reunion.horaInicio).toISOString().slice(0, -8);
-        this.reunion.horaFinal = new Date(result.data.reunion.horaFinal).toISOString().slice(0, -8);
+
+        let horaInicio = new Date(result.data.reunion.horaInicio);
+        horaInicio.setMinutes(horaInicio.getMinutes() - horaInicio.getTimezoneOffset());
+        this.reunion.horaInicio = horaInicio.toISOString().slice(0, -8);
+        
+        let horaFinal = new Date(result.data.reunion.horaFinal);
+        horaFinal.setMinutes(horaFinal.getMinutes() - horaFinal.getTimezoneOffset());
+        this.reunion.horaFinal = horaFinal.toISOString().slice(0, -8);
+
         this.selectedItemsDigitales = result.data.reunion.recursosDigitales;
         this.selectedItemsFisicos = result.data.reunion.recursos;
         this.selectedItemsParticipantes = this.crearListaParticipantes(result.data.reunion.participantes);
@@ -243,7 +250,7 @@ export class ReunionFormComponent implements OnInit {
     )
   }
 
-  modificarReunion(content: any): void {
+  modificarReunion(): void {
     this.setReunion();
     console.log(this.reunion);
     this.reunionService.updateReunion(this.reunion).subscribe(
@@ -357,6 +364,19 @@ export class ReunionFormComponent implements OnInit {
       }
     )
   }
+  async cargarOficinasLibres() {
+    this.oficinaService.getEOficinasLibres(this.horaInicio, this.horaFinal).subscribe(
+      result => {
+        this.oficinas = new Array<Oficina>();
+        result.data.oficinasLibres.forEach((element: any) => {
+          let oficina = new Oficina();
+          Object.assign(oficina, element);
+          this.oficinas.push(oficina);
+        });
+      }
+    )
+  }
+
 
   async obtenerReuniones() {
     this.reunionService.getReunionesByFields(this.horaInicio, this.horaFinal).subscribe(
@@ -415,14 +435,14 @@ export class ReunionFormComponent implements OnInit {
   }
 
   onChangeFecha() {
-    this.formatearFechas();
+    this.horaInicio = this.obtenerFechaFormateada(this.horaInicio);
+    this.horaFinal = this.obtenerFechaFormateada(this.horaFinal);
     let prioridad = this.obtenerPrioridad();
     if(prioridad === undefined || prioridad.tipoPrioridad !== "ALTA") {
       this.obtenerReuniones();
-      console.log(this.reuniones);
       this.cargarParticipantesLibres();
       this.cargarRecursosFisicosLibres();
-      //TODO: Cargar oficinas libres
+      this.cargarOficinasLibres();
     }
   }
 
@@ -435,13 +455,15 @@ export class ReunionFormComponent implements OnInit {
     } else {
       this.cargarParticipantesLibres();
       this.cargarRecursosFisicosLibres();
-      //TODO: Cargar oficinas libres
+      this.cargarOficinasLibres();
     }
   }
 
-  formatearFechas(): void {
-    this.horaInicio = this.dp.transform(new Date(this.reunion.horaInicio), 'yyyy-MM-ddTHH:mm:ss.SSS') +'Z';
-    this.horaFinal = this.dp.transform(new Date(this.reunion.horaFinal), 'yyyy-MM-ddTHH:mm:ss.SSS') +'Z';
+  obtenerFechaFormateada(date: string): string {
+    let dateAux = new Date(this.reunion.horaFinal);
+    dateAux.setMinutes(dateAux.getMinutes() - dateAux.getTimezoneOffset());
+
+    return dateAux.toISOString().slice(0, -8);
   }
 
   obtenerPrioridad(): any {
@@ -456,14 +478,6 @@ export class ReunionFormComponent implements OnInit {
       }
     )
     return oficinas.find((of: any) => of._id == this.reunion.oficina);
-  }
-
-  open(content: any): void {
-    this.modalService.open(content, { centered: true }).result.then(()=>{
-      if(this.respuesta.status == 201 || this.respuesta.status == 200){
-        this.router.navigate(['calendario']);
-      }
-    });
   }
 
   cancelar(): void{

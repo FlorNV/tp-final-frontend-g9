@@ -8,7 +8,7 @@
                     <th>Horario</th>
                     <th>Prioridad</th>
                     <th>Oficina</th>
-                    <!-- <th>Estado</th> -->
+                    <th>Estado</th>
                     <th>Deshabilitada</th>
                     <th>Confirmada</th>
                     <th>Acciones</th>
@@ -24,7 +24,7 @@
                     </td>
                     <td>{{ r.prioridad.tipoPrioridad }}</td>
                     <td>{{ r.oficina.nombre }}</td>
-                    <!-- <td>{{ r.estado.nombreEstado }}</td> -->
+                    <td>{{ r.estado.nombreEstado }}</td>
                     <td>{{ r.estaDeshabilitada | yesNo }}</td>
                     <td>{{ r.reunionConfirmada | yesNo }}</td>
                     <td>
