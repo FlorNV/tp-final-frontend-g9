@@ -31,6 +31,25 @@ export class CalendarioComponent implements OnInit {
     this.events = [
     ]
 
+    if (sessionStorage.getItem("perfil") === "PARTICIPANTE") {
+      const id = sessionStorage.getItem("userid")!;
+      this.reunionesService.getReunionesParticipantes(JSON.stringify([id])).subscribe(
+        ( {data } )=> {
+          this.events = data.reuniones.map((r: any) => ({
+            title: r.tipoReunion.tipoReunion,
+            start: r.horaInicio,
+            end: r.horaFinal,
+            description: r.tipoReunion.tipoReunion,
+          }))
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
+
+      return;
+    }
+
     this.reunionesService.getReuniones().subscribe(
       ({data })=> {
         this.events = data.reuniones.map((r: any) => ({
