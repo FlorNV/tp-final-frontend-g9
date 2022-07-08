@@ -47,8 +47,8 @@
                     <td>{{ r.estaDeshabilitada | yesNo }}</td>
                     <td>{{ r.reunionConfirmada | yesNo }}</td>
                     <td>
-                        <button (click)="open(content)" class="btn btn-celeste d-block m-auto my-1">
-                            <i class="bi bi-qr-code"></i>
+                        <button (click)="verReunion(r)" class="btn btn-celeste d-block m-auto my-1">
+                            <i class="bi bi-eye"></i>
                         </button>
                     </td>
                 </tr>
@@ -60,7 +60,7 @@
 </div>
 
 
-
+<!-- 
 <ng-template #content let-modal>
     <div class="modal-header">
       <h5 class="modal-title" id="modal-basic-title">Código de verificación</h5>
@@ -76,5 +76,5 @@
     <div class="modal-footer">
       <button type="button" class="btn btn-celeste" (click)="modal.close()">Cerrar</button>
     </div>
-</ng-template>
+</ng-template> -->
 
