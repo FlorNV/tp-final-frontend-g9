@@ -17,6 +17,8 @@ import { NgxQRCodeModule } from "@techiediaries/ngx-qrcode";
 /* Notificaciones */
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+/* alife-file-to-base64 */
+import { AlifeFileToBase64Module } from "alife-file-to-base64";
 
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,6 +30,7 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
 import { AuthGuard } from './services/auth.guard';
 import { DatePipe } from '@angular/common';
 import { FechaValidaDirective } from './directivas/fecha-valida.directive';
+import { RequireFile } from './directivas/directiva.directive';
 
 @NgModule({
   declarations: [
@@ -36,6 +39,7 @@ import { FechaValidaDirective } from './directivas/fecha-valida.directive';
     YesNoPipe,
     FilterPipe,
     FechaValidaDirective,
+    RequireFile,
   ],
   imports: [
     BrowserModule,
@@ -70,7 +74,8 @@ import { FechaValidaDirective } from './directivas/fecha-valida.directive';
       multi: true
     },
     AuthGuard,
-    DatePipe
+    DatePipe,
+    AlifeFileToBase64Module,
   ],
   bootstrap: [AppComponent]
 })

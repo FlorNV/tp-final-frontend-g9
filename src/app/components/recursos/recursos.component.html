@@ -57,13 +57,13 @@
 
                         <div class="col-12 my-5">
                             <label class="form-label" for="recurso">Recurso</label>
-                            <input [(ngModel)]="recDigital.recurso" class="form-control" type="text" name="recurso" id="recurso" 
-                            placeholder="Ingrese nombre del recurso" required #recurso="ngModel"
+                            <input class="form-control" type="file" alife-file-to-base64 
+                            [(fileModel)]="files" [(rawFileModel)]="rawFiles" ngModel name="recurso" requireFile #recurso="ngModel"
                             [ngClass]="{'border-danger': recurso.invalid && (recurso.dirty || recurso.touched)}">
 
-                            <div *ngIf="recurso.invalid && (recurso.dirty || recurso.touched) && recurso.errors?.['required']" class="form-text text-danger">
+                            <div *ngIf="recurso.invalid && (recurso.dirty || recurso.touched) && recurso.errors?.['requireFile']" class="form-text text-danger">
                                 <i class="bi bi-exclamation-circle"></i> El recurso es requerido.
-                            </div> 
+                            </div>                            
                         </div>
                         
                         <div class="col-12 text-center mt-5">
@@ -80,6 +80,8 @@
                         </div>
                         
                     </form>
+
+                    <img src="{{imagen}}" alt="">
                 </div>
             </div>
         </div>
@@ -105,7 +107,7 @@
                                 <button class="btn btn-celeste d-block m-auto my-1" (click)="cargarRecursoFisico(rf._id)">
                                     <i class="bi bi-pen-fill"></i>
                                 </button>
-                                <button class="btn btn-secondary d-block m-auto my-1" (click)="eliminarRecursoFisico(rf._id)">
+                                <button class="btn btn-secondary d-block m-auto my-1" (click)="eliminarRecursoFisico(rf._id, content)">
                                     <i class="bi bi-trash3-fill"></i>
                                 </button>
                             </td>
@@ -131,7 +133,11 @@
                     <tbody>
                         <tr *ngFor="let rd of recursosDigitales">
                             <td>{{rd.nombre}}</td>
-                            <td>{{rd.recurso}}</td>
+                            <td>
+                                <button class="btn btn-rojo" (click)="descargarArchivo(rd)">
+                                    <i class="bi bi-download"></i>
+                                </button>
+                            </td>
                             <td>
                                 <button class="btn btn-celeste d-block m-auto my-1" (click)="cargarRecursoDigital(rd._id)">
                                     <i class="bi bi-pen-fill"></i>
