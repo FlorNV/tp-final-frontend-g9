@@ -15,17 +15,19 @@ export class EstadisticaPartComponent implements OnInit {
   oficinas: Array<any> = [];
   valores: Array<any> = [];
   dataP:Array<any> =[]
+  dataPie:Array<any> =[]
   fechas = ['2022-07', '2022-08', '2022-09']
   ngOnInit(): void {
     this.getEstadisticasOficinas();
   }
   getEstadisticasOficinas() {
-    this.oficinaService.getEstadisticasOficinas().subscribe({
+    this.oficinaService.getOficinas().subscribe({
       next: (result) => {
         this.oficinas = [];
         this.oficinas = result['data']['oficinas'];
         this.filterValues();
         this.getLabelsBarParticipante()
+        this.getLabelsPieParticipante()
         console.log(this.dataP)
         this.update();
       },
@@ -113,6 +115,70 @@ getLabelsBarParticipante(){
       console.log(array)
   this.valores.forEach((x:any, index:number)=>(this.dataP.push({label:x["nombre"], data:array[index]})))
 }
+/*
+// Pie
+*/
+public pieChartOptions: ChartConfiguration['options'] = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: true,
+      position: 'top',
+    },
+    datalabels: {
+      formatter: (value, ctx) => {
+        if (ctx.chart.data.labels) {
+          return ctx.chart.data.labels[ctx.dataIndex];
+        }
+      },
+    },
+  }
+};
+public pieChartData: ChartData<'pie', number[], string | string[]> = {
+  labels: this.fechas,
+  datasets: [ {
+    data: this.dataPie
+  } ]
+};
+public pieChartType: ChartType = 'pie';
+public pieChartPlugins = [ DataLabelsPlugin ];
+/*
+// events
+public chartClicked({ event, active }: { event: ChartEvent, active: {}[] }): void {
+  console.log(event, active);
+}
+
+public chartHovered({ event, active }: { event: ChartEvent, active: {}[] }): void {
+  console.log(event, active);
+}
+
+*/
 
 
+
+changeLegendPosition(): void {
+  if (this.pieChartOptions?.plugins?.legend) {
+    this.pieChartOptions.plugins.legend.position = this.pieChartOptions.plugins.legend.position === 'left' ? 'top' : 'left';
+  }
+
+  this.chart?.render();
+}
+
+toggleLegend(): void {
+  if (this.pieChartOptions?.plugins?.legend) {
+    this.pieChartOptions.plugins.legend.display = !this.pieChartOptions.plugins.legend.display;
+  }
+
+  this.chart?.render();
+}
+getLabelsPieParticipante(){
+  this.fechas.forEach(i => {let count=0;
+    this.valores.forEach((x:any)=>{   
+        count+=x[i].usos
+        }
+        );
+        this.dataPie.push(count);
+        })
+
+}
 }

@@ -21,7 +21,7 @@ export class EstadisticasComponent implements OnInit {
     this.update();
   }
   getEstadisticasOficinas() {
-    this.oficinaService.getEstadisticasOficinas().subscribe({
+    this.oficinaService.getOficinas().subscribe({
       next: (result) => {
         this.oficinas = [];
         this.oficinas = result['data']['oficinas'];
