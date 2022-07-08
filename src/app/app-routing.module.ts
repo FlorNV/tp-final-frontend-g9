@@ -56,4 +56,5 @@ export const routingComponents = [
   AudienciasComponent,
   BuscarAudienciaComponent,
   EstadisticasComponent,
+  BusquedaAvanzadaComponent
 ];

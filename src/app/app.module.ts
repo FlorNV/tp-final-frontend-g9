@@ -31,7 +31,7 @@ import { AuthGuard } from './services/auth.guard';
     AppComponent,
     routingComponents,
     YesNoPipe,
-    FilterPipe,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
