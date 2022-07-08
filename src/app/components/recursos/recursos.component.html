@@ -95,14 +95,12 @@
                     <thead>
                         <tr class="align-middle">
                             <th>Nombre</th>
-                            <th>Ocupado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let rf of recursosFisicos">
                             <td>{{rf.nombre}}</td>
-                            <td>{{rf.estaReservado | yesNo}}</td>
                             <td>
                                 <button class="btn btn-celeste d-block m-auto my-1" (click)="cargarRecursoFisico(rf._id)">
                                     <i class="bi bi-pen-fill"></i>

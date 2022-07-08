@@ -39,8 +39,21 @@ export class EmpleadoService {
   }
 
   public getEmpleado(id: string): Observable<any> {
-    const option = { headers: new HttpHeaders({}) };
-    return this._http.get(this.URL + id, option);
+    const options = { headers: new HttpHeaders({}) };
+    return this._http.get(this.URL + id, options);
+  }
+
+  public getEmpleadoLibres(horaInicio: any, horaFinal: any): Observable<any> {
+    
+    let params = new HttpParams();
+    params = params.append('horaInicio', horaInicio);
+    params = params.append('horaFinal', horaFinal);
+
+    const options = { 
+      headers: new HttpHeaders({}),
+      params: params
+    };
+    return this._http.get(this.URL + "libres", options);
   }
 
   public updateEmpleado(empleado: Empleado): Observable<any> {

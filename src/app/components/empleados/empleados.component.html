@@ -8,7 +8,6 @@
                     <th>Nombre</th>
                     <th>Legajo</th>
                     <th>Email</th>
-                    <th>Está en Reunión</th>
                     <th>Rol</th>
                     <th>Dependencias</th>
                     <th>Acciones</th>
@@ -20,7 +19,6 @@
                     <td>{{e.nombre}}</td>
                     <td>{{e.legajo}}</td>
                     <td>{{e.email}}</td>
-                    <td>{{e.estaEnReunion | yesNo}}</td>
                     <td>{{e.rol}}</td>
                     <td >
                         <p *ngFor="let t of e.dependencias">
