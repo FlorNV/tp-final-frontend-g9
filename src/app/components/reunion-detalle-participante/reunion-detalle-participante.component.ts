@@ -57,6 +57,6 @@ export class ReunionDetalleParticipanteComponent implements OnInit {
   }
 
   volver() {
-    this.router.navigate(['reuniones']);
+    this.router.navigate(['audiencias']);
   }
 }

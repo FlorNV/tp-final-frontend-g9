@@ -13,7 +13,7 @@
                     <th>Recursos</th>
                     <th>Deshabilitada</th>
                     <th>Confirmada</th>
-                    <th>QR</th>
+                    <th>Ver</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,7 +26,6 @@
                     </td>
                     <td>{{ r.prioridad.tipoPrioridad }}</td>
                     <td>{{ r.oficina.nombre }}</td>
-                    <!-- <td>{{ r.estado.nombreEstado }}</td> -->
                     <td class="text-start">
                         <ul>
                             <li *ngFor="let p of r.participantes">

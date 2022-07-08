@@ -12,7 +12,7 @@
                     <th>Horario</th>
                     <th>Prioridad</th>
                     <th>Oficina</th>
-                    <!-- <th>Estado</th> -->
+                    <th>Estado</th>
                     <th>Participantes</th>
                     <th>Recursos</th>
                     <th>Deshabilitada</th>
@@ -29,7 +29,7 @@
                     </td>
                     <td>{{ r.prioridad.tipoPrioridad }}</td>
                     <td>{{ r.oficina.nombre }}</td>
-                    <!-- <td>{{ r.estado.nombreEstado }}</td> -->
+                    <td>{{ r.estado.nombreEstado }}</td>
                     <td class="text-start">
                         <ul *ngIf="!esParticipante(r.participantes)">
                             <li *ngFor="let p of r.participantes">
