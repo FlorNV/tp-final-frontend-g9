@@ -6,6 +6,7 @@ import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiedi
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-audiencias',
@@ -21,17 +22,18 @@ export class AudienciasComponent implements OnInit, OnDestroy  {
 
   reuniones!: Array<Reunion>;
 
-  elementType: any;
-  correctionLevel: any;
-  value: string = "";
+  // elementType: any;
+  // correctionLevel: any;
+  // value: string = "";
 
   constructor(private reunionService: ReunionService, 
               public loginService: LoginService,
-              private modalService: NgbModal) { 
+              private modalService: NgbModal,
+              private router: Router) { 
   
-    this.elementType = NgxQrcodeElementTypes.URL;
-    this.correctionLevel = NgxQrcodeErrorCorrectionLevels.LOW;
-    this.value = window.location.href;
+    // this.elementType = NgxQrcodeElementTypes.URL;
+    // this.correctionLevel = NgxQrcodeErrorCorrectionLevels.LOW;
+    // this.value = window.location.href;
   }
 
   ngOnInit(): void {
@@ -76,7 +78,11 @@ export class AudienciasComponent implements OnInit, OnDestroy  {
     });
   }
 
-  open(content: any) {
-    this.modalService.open(content, { centered: true });
+  verReunion(reunion: Reunion) {
+    this.router.navigate(['detalles', reunion._id]);
   }
+
+  // open(content: any) {
+  //   this.modalService.open(content, { centered: true });
+  // }
 }

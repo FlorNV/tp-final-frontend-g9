@@ -18,7 +18,7 @@ import { ReunionesComponent } from './components/reuniones/reuniones.component';
 import { BusquedaAvanzadaComponent } from './components/busqueda-avanzada/busqueda-avanzada.component';
 import { EstadisticasComponent } from './components/estadisticas/estadisticas.component';
 import { EstadisticaPartComponent } from './components/estadistica-part/estadistica-part.component';
-  
+import { ReunionDetalleParticipanteComponent } from "./components/reunion-detalle-participante/reunion-detalle-participante.component";
 import { ReunionDetalleComponent } from './components/reunion-detalle/reunion-detalle.component';
 
 const routes: Routes = [
@@ -36,8 +36,9 @@ const routes: Routes = [
     { path: 'oficinas', component: OficinaComponent, canActivate: [AuthGuard]},
     { path: 'busqueda-avanzada', component: BusquedaAvanzadaComponent},
     { path: 'estadisticas', component: EstadisticasComponent},
-    {path:'estadisticaP',component:EstadisticaPartComponent},
+    { path: 'estadisticaP',component:EstadisticaPartComponent},
     { path: 'reunion-detalle/:id', component: ReunionDetalleComponent},
+    { path: 'detalles/:id', component: ReunionDetalleParticipanteComponent},
     { path: '**', pathMatch: 'full', redirectTo: 'login'}
 ];
 
@@ -63,5 +64,6 @@ export const routingComponents = [
   EstadisticasComponent,
   BusquedaAvanzadaComponent,
   EstadisticaPartComponent,
-  ReunionDetalleComponent
+  ReunionDetalleComponent,
+  ReunionDetalleParticipanteComponent
 ];
