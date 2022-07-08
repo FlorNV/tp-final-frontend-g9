@@ -25,6 +25,7 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { LoginService } from './services/login.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { AuthGuard } from './services/auth.guard';
+import { EstadisticaPartComponent } from './components/estadistica-part/estadistica-part.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { AuthGuard } from './services/auth.guard';
     routingComponents,
     YesNoPipe,
     FilterPipe,
+    EstadisticaPartComponent,
   ],
   imports: [
     BrowserModule,

@@ -14,6 +14,7 @@ export class EstadisticasComponent implements OnInit {
   oficinas: Array<any> = [];
   valores: Array<any> = [];
   data:Array<any> =[]
+  dataP:Array<any> =[]
   fechas = ['2022-07', '2022-08', '2022-09']
   ngOnInit(): void {
     this.getEstadisticasOficinas();
@@ -123,10 +124,6 @@ export class EstadisticasComponent implements OnInit {
     this.chart?.update();
   }
   
-
-
-
-
 
 
 
