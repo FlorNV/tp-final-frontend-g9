@@ -17,6 +17,8 @@ import { BuscarAudienciaComponent } from './components/buscar-audiencia/buscar-a
 import { ReunionesComponent } from './components/reuniones/reuniones.component';
 import { BusquedaAvanzadaComponent } from './components/busqueda-avanzada/busqueda-avanzada.component';
 import { EstadisticasComponent } from './components/estadisticas/estadisticas.component';
+import { EstadisticaPartComponent } from './components/estadistica-part/estadistica-part.component';
+  
 import { ReunionDetalleComponent } from './components/reunion-detalle/reunion-detalle.component';
 
 const routes: Routes = [
@@ -34,6 +36,7 @@ const routes: Routes = [
     { path: 'oficinas', component: OficinaComponent, canActivate: [AuthGuard]},
     { path: 'busqueda-avanzada', component: BusquedaAvanzadaComponent},
     { path: 'estadisticas', component: EstadisticasComponent},
+    {path:'estadisticaP',component:EstadisticaPartComponent},
     { path: 'reunion-detalle/:id', component: ReunionDetalleComponent},
     { path: '**', pathMatch: 'full', redirectTo: 'login'}
 ];
@@ -58,5 +61,6 @@ export const routingComponents = [
   AudienciasComponent,
   BuscarAudienciaComponent,
   EstadisticasComponent,
+  EstadisticaPartComponent,
   ReunionDetalleComponent
 ];

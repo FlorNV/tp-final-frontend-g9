@@ -28,6 +28,7 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { LoginService } from './services/login.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { AuthGuard } from './services/auth.guard';
+import { EstadisticaPartComponent } from './components/estadistica-part/estadistica-part.component';
 import { DatePipe } from '@angular/common';
 import { FechaValidaDirective } from './directivas/fecha-valida.directive';
 import { RequireFile } from './directivas/directiva.directive';
@@ -38,6 +39,7 @@ import { RequireFile } from './directivas/directiva.directive';
     routingComponents,
     YesNoPipe,
     FilterPipe,
+    EstadisticaPartComponent,
     FechaValidaDirective,
     RequireFile,
   ],
@@ -49,6 +51,7 @@ import { RequireFile } from './directivas/directiva.directive';
     HttpClientModule,
     NgbModalModule,
     NgbModule,
+    AlifeFileToBase64Module,
     NgMultiSelectDropDownModule.forRoot(),
     CalendarModule.forRoot({
       provide: DateAdapter,
