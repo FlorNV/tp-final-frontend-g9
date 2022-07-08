@@ -14,10 +14,11 @@ export class EstadisticasComponent implements OnInit {
   oficinas: Array<any> = [];
   valores: Array<any> = [];
   data:Array<any> =[]
-  dataP:Array<any> =[]
+  dataPie:Array<any> =[]
   fechas = ['2022-07', '2022-08', '2022-09']
   ngOnInit(): void {
     this.getEstadisticasOficinas();
+    this.update();
   }
   getEstadisticasOficinas() {
     this.oficinaService.getEstadisticasOficinas().subscribe({
@@ -26,6 +27,7 @@ export class EstadisticasComponent implements OnInit {
         this.oficinas = result['data']['oficinas'];
         this.filterValues();
         this.getLabelsBarOficina()
+        this.getLabelsPieOficina()
         this.update();
       },
       error: () => {
@@ -124,15 +126,6 @@ export class EstadisticasComponent implements OnInit {
     this.chart?.update();
   }
   
-
-
-
-
-
-
-
-
-  
   //ESTADISTICA TIPO TORTA
 
   public pieChartOptions: ChartConfiguration['options'] = {
@@ -152,8 +145,10 @@ export class EstadisticasComponent implements OnInit {
     },
   };
   public pieChartData: ChartData<'pie', number[], string | string[]> = {
-    labels: ['2022-07', '2022-08', '2022-09'],
-    datasets: this.valores,
+    labels: this.fechas,
+    datasets: [ {
+      data: this.dataPie
+    } ]
   };
   public pieChartType: ChartType = 'pie';
   public pieChartPlugins = [DataLabelsPlugin];
@@ -177,6 +172,29 @@ export class EstadisticasComponent implements OnInit {
 
     this.chart?.render();
   }
+  getLabelsPieOficina(){
+    this.fechas.forEach(i => {let count=0;
+      this.valores.forEach((x:any)=>{   
+          count+=x[i].usos
+          }
+          );
+          this.dataPie.push(count);
+          })
+
+  }
+
 }
 
 
+/*
+  getLabelsPieOficina(){
+    this.fechas.forEach(i => {let count=0;
+      this.valores.forEach((x:any)=>{   
+          count+=x[i].usos
+
+          }
+          );
+          this.dataPie.push(count);
+          })
+  }
+*/

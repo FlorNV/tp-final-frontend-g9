@@ -10,7 +10,18 @@
           (chartClick)="chartClicked($event)">
         </canvas>
       </div>
-      <button mat-button mat-raised-button color="primary" (click)="update()">Update</button>
+    </div>
+    <div>
+      <div class="row">
+        <div class="chart">
+          <canvas baseChart
+                  [data]="pieChartData"
+                  [type]="pieChartType"
+                  [options]="pieChartOptions"
+                  [plugins]="pieChartPlugins">
+          </canvas>
+        </div>
+      </div>
     </div>
   </div>
  
