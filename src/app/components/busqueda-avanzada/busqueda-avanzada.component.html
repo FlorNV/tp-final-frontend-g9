@@ -1,10 +1,10 @@
 <!-- *********** TABLA 1 PARA MOSTRAR FILTRO POR LEGAJO O ROL -->
-<!-- <div class="row justify-content-center">
+<div class="row justify-content-center">
   <div class="row">
     <h2 class="col-md-4 offset-5">Busqueda avanzada</h2>
   </div>
   <div class="row justify-content-center gy-3">
-    <div class="col-md-2 offset-1 form-floating">
+    <div class="col-md-2 form-floating">
       <select [(ngModel)]="legajo" class="form-select" id="legajo" aria-label="Floating label select example"
       (ngModelChange)="onChange1($event)">
         <option selected>Legajo</option>
@@ -13,6 +13,15 @@
         </option>
       </select>
       <label for="floatingSelect">Seleccione Legajo</label>
+    </div>
+    <div class="col-md-2 offset-1 mb-4">
+      <ng-multiselect-dropdown
+      [placeholder]="'Seleccione participantes'"
+      [settings]="dropdownSettings"
+      [data]="participantes"
+      [(ngModel)]="selectedItem"
+      name="participantes">
+      </ng-multiselect-dropdown>
     </div>
     <div class="col-md-2 offset-1 form-floating">
       <select [(ngModel)]="oficinaf" class="form-select" id="legajo" aria-label="Floating label select example" (ngModelChange)="onChange3($event)">
@@ -24,15 +33,15 @@
       <label for="floatingSelect">Seleccione oficina</label>
     </div>
     <div class="col-md-6 offset-1 gy-5 my-5">
-      <button type="submit" class="btn btn-celeste px-4 ms-4 col-md" *ngIf="filtro1"  (click)="filtroLegajo()">Buscar</button>
-      <button type="submit" class="btn btn-celeste px-4 ms-4 col-md" *ngIf="filtro2" (click)="filtroParticipante()">Buscar</button>
+      <button type="submit" class="btn btn-celeste px-4 ms-4 col-md" *ngIf="filtro1" (click)="filtroLegajo()">Buscar Legajo</button>
+      <button type="submit" class="btn btn-celeste px-4 ms-4 col-md" (click)="filtroParticipantes()">Buscar Participantes</button>
       <button type="submit" class="btn btn-celeste px-4 ms-4 col-md" *ngIf="filtro3" (click)="filtroOficina()">Buscar</button>
       <button type="submit" class="btn btn-celeste px-4 ms-4 col-md" *ngIf="filtro4" (click)="filtroFecha()">Buscar</button>
     </div>
 </div>
 
   
-</div>
+
 <div class="row">
     <div class="col-md-10 offset-1">
         <table class="table table-striped-columns">
@@ -48,7 +57,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let a of aux">
+                <tr *ngFor="let a of reunionesFiltradas">
                   <td>{{a.horaInicio | date:'short'}}</td>
                   <td>{{a.horaFinal | date:'short'}}</td>
                   <td>{{a.oficina.nombre}}</td>
@@ -73,4 +82,4 @@
         </table>
     </div>
 </div>
- -->
+

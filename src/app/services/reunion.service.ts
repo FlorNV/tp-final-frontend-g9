@@ -53,6 +53,25 @@ export class ReunionService {
     return this._http.get(this.URL, options);
   }
 
+  public getReunionesFiltradas(legajo: string): Observable<any>{
+    const options = {
+      headers: new HttpHeaders({}),
+      params: new HttpParams()
+      .set('legajo',legajo)
+    }
+    return this._http.get(this.URL,options);
+  }
+
+  public getReunionesParticipantes(participantes: any): Observable<any>{
+    const options = {
+      headers: new HttpHeaders({}),
+      params: new HttpParams()
+      .set('participantes',participantes)
+    }
+    return this._http.get(this.URL,options);
+  }
+
+
   public getReunionById(id: string): Observable<any> {
     const options = {headers: new HttpHeaders({})};
     return this._http.get(this.URL + id, options);

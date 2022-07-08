@@ -9,3 +9,12 @@
 th {
     background-color: #e55767;
 }
+
+table{
+    background-color: white;
+}
+
+thead{
+    color: #e55767;
+    color:  white;
+}

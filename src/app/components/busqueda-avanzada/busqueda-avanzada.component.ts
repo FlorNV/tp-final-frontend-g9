@@ -15,23 +15,23 @@ import { ReunionService } from 'src/app/services/reunion.service';
 export class BusquedaAvanzadaComponent implements OnInit {
 
   empleado!: Empleado;
-  empleados!: Array<Empleado>;
-  oficina!: Oficina;
-  oficinas!: Array<Oficina>;
   reunion!: Reunion;
+  oficina!: Oficina;
+  empleados!: Array<Empleado>;
   reuniones!: Array<Reunion>;
+  reunionesFiltradas!: Array<Reunion>;
+  oficinas!: Array<Oficina>;
   aux!: Array<any>;
-  aux2!: Array<any>;
 
   respuesta!: any;
   indice: number =0;
 
-  selectedItem!: Array<any>;
+  selectedItem: Array<any> = [""];
   dropdownSettings: IDropdownSettings;
   
   legajo!: string;
   participante!: string;
-  participantes!: Array<any>;
+  participantes: Array<any> = [""];
   oficinaf!: string;
   fecha!: string;
 
@@ -119,47 +119,33 @@ export class BusquedaAvanzadaComponent implements OnInit {
     this.filtro3 = true;
   }
 
-
   filtroLegajo(){
-    this.aux = new Array<any>();
-    this.aux2 = new Array<any>();
-    for(this.indice; this.indice < this.reuniones.length; this.indice++){
-      this.aux2 = this.reuniones[this.indice].participantes;
-      for(let j=0;j < this.aux2.length; j++){
-        if(this.aux2[j].legajo == this.legajo){
-          this.aux.push(this.reuniones[this.indice]);
-        }
+    this.reunionesFiltradas = Array<Reunion>();
+    this.reunion = new Reunion()
+    this.reunionService.getReunionesFiltradas(this.legajo).subscribe(
+      (result) => {
+        console.log(result['data'])
+        this.reunionesFiltradas = result.data.reuniones;
+        console.log(this.reunionesFiltradas);
+      },
+      (error) => {
+        console.log(error)
       }
-    }
-    if(this.aux==null){
-      alert("El empleado no participa en ninguna reuinio")
-    }
-    this.indice = 0;
-    console.log(this.aux);
+    )
   }
 
-  filtroParticipante(){
-   /* this.existe = false;
-    this.aux = new Array<any>();
-    this.aux2 = new Array<any>();
-    let a: number;
-    for(this.indice; this.indice < this.reuniones.length; this.indice++){
-      for(let j=0;j < this.aux2.length; j++){
-
-        for(let k=0; k < this.participantes.length;k++){
-          if(this.aux2[j].apellido + ", " + this.aux2[j].nombre == this.participantes[k].nombreCompleto){
-            console.log(this.aux2[j]);
-            this.existe = true;
-            this.aux.push(this.reuniones[this.indice]);
-          }
-        }
+ filtroParticipantes(){
+    let participantes: Array<Empleado> = new Array<Empleado>();
+    this.selectedItem.forEach(element => {
+      participantes.push(element._id);
+    })
+    console.log(JSON.stringify(participantes));
+    this.reunionService.getReunionesParticipantes(JSON.stringify(participantes)).subscribe(
+      (result) => {
+        console.log(result.data)
+        this.reunionesFiltradas = result['data']['reuniones']
       }
-    }
-    if(this.existe==false){
-      this.filtro2 = false;
-      alert("El empleado no participa en ninguna reuinio")
-    }
-    this.indice = 0;*/
+    )
   }
 
   filtroOficina(){
