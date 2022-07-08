@@ -4,8 +4,6 @@ export class Oficina {
 
     _id!: string;
     nombre!: string;
-    estaOcupada!: boolean;
+    reunionesActivas!: Array<Reunion>;
     historialDeReuniones!: Array<Reunion>;
-    reunion!: Reunion;
-
 }

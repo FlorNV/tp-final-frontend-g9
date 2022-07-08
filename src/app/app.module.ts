@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
@@ -27,6 +28,8 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { LoginService } from './services/login.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { AuthGuard } from './services/auth.guard';
+import { DatePipe } from '@angular/common';
+import { FechaValidaDirective } from './directivas/fecha-valida.directive';
 import { RequireFile } from './directivas/directiva.directive';
 
 @NgModule({
@@ -35,6 +38,7 @@ import { RequireFile } from './directivas/directiva.directive';
     routingComponents,
     YesNoPipe,
     FilterPipe,
+    FechaValidaDirective,
     RequireFile,
   ],
   imports: [
@@ -60,15 +64,19 @@ import { RequireFile } from './directivas/directiva.directive';
       registrationStrategy: 'registerWhenStable:30000'
     }),
     CustomFormsModule,
+    [SweetAlert2Module.forRoot()]
+  ],
+  providers: [
+    LoginService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    },
+    AuthGuard,
+    DatePipe,
     AlifeFileToBase64Module,
   ],
-  providers: [LoginService,
-  {
-   provide: HTTP_INTERCEPTORS,
-   useClass: TokenInterceptorService,
-   multi: true
-  },
-  AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

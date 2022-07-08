@@ -55,17 +55,6 @@
                             </div>
                         </div>
 
-                        <!-- <div class="col-12 my-5">
-                            <label class="form-label" for="recurso">Recurso</label>
-                            <input [(ngModel)]="recDigital.recurso" class="form-control" type="text" name="recurso" id="recurso" 
-                            placeholder="Ingrese nombre del recurso" required #recurso="ngModel"
-                            [ngClass]="{'border-danger': recurso.invalid && (recurso.dirty || recurso.touched)}">
-
-                            <div *ngIf="recurso.invalid && (recurso.dirty || recurso.touched) && recurso.errors?.['required']" class="form-text text-danger">
-                                <i class="bi bi-exclamation-circle"></i> El recurso es requerido.
-                            </div> 
-                        </div> -->
-
                         <div class="col-12 my-5">
                             <label class="form-label" for="recurso">Recurso</label>
                             <input class="form-control" type="file" alife-file-to-base64 
@@ -108,14 +97,12 @@
                     <thead>
                         <tr class="align-middle">
                             <th>Nombre</th>
-                            <th>Ocupado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let rf of recursosFisicos">
                             <td>{{rf.nombre}}</td>
-                            <td>{{rf.estaReservado | yesNo}}</td>
                             <td>
                                 <button class="btn btn-celeste d-block m-auto my-1" (click)="cargarRecursoFisico(rf._id)">
                                     <i class="bi bi-pen-fill"></i>
