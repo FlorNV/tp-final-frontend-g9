@@ -11,6 +11,7 @@ import { CustomFormsModule } from 'ng2-validation';
 import { NgChartsModule } from "ng2-charts";
 /* Calendario */
 import { CalendarModule, DateAdapter } from "angular-calendar";
+import { FullCalendarModule } from "primeng/fullcalendar";
 import { adapterFactory } from "angular-calendar/date-adapters/date-fns";
 /* Código QR */
 import { NgxQRCodeModule } from "@techiediaries/ngx-qrcode";
@@ -57,6 +58,7 @@ import { RequireFile } from './directivas/directiva.directive';
       provide: DateAdapter,
       useFactory: adapterFactory
     }),
+    FullCalendarModule,
     ReactiveFormsModule,
     NgxQRCodeModule,
     AppRoutingModule,

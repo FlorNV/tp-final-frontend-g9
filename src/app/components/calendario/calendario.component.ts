@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import { ReunionService } from 'src/app/services/reunion.service';
 
 @Component({
   selector: 'app-calendario',
@@ -6,10 +10,40 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./calendario.component.css']
 })
 export class CalendarioComponent implements OnInit {
+  events: any[] = [];
+  options: any;
 
-  constructor() { }
+  constructor(private reunionesService: ReunionService) { }
 
   ngOnInit(): void {
+    
+    this.options = {
+      plugins: [dayGridPlugin, timeGridPlugin,interactionPlugin],
+      defaulDate: new Date(),
+      header:{
+        left: 'prev,next',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
+      editable: false
+    }
+
+    this.events = [
+    ]
+
+    this.reunionesService.getReuniones().subscribe(
+      ({data })=> {
+        this.events = data.reuniones.map((r: any) => ({
+          title: r.tipoReunion.tipoReunion,
+          start: r.horaInicio,
+          end: r.horaFinal,
+          description: r.tipoReunion.tipoReunion,
+        }))
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
   }
 
 }
