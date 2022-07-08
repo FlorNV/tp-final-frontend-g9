@@ -1,8 +1,9 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
-import { Estado } from 'src/app/models/estado';
 import { Oficina } from 'src/app/models/oficina';
 import { Prioridad } from 'src/app/models/prioridad';
 import { RecursoDigital } from 'src/app/models/recurso-digital';
@@ -10,7 +11,6 @@ import { RecursoFisico } from 'src/app/models/recurso-fisico';
 import { Reunion } from 'src/app/models/reunion';
 import { TipoReunion } from 'src/app/models/tipo-reunion';
 import { EmpleadoService } from 'src/app/services/empleado.service';
-import { EstadosService } from 'src/app/services/estados.service';
 import { OficinaService } from 'src/app/services/oficina.service';
 import { PrioridadService } from 'src/app/services/prioridad.service';
 import { RecursoService } from 'src/app/services/recurso.service';
@@ -24,23 +24,26 @@ import { TipoReunionService } from 'src/app/services/tipo-reunion.service';
 })
 export class ReunionFormComponent implements OnInit {
 
-  reunion!: Reunion;
-  prioridades!: Array<Prioridad>;
-  tiposReuniones!: Array<TipoReunion>;
-  oficinas!: Array<any>;
-  empleados!: Array<any>;
-  estados!: Array<any>;
-  recursosFisicos!: Array<RecursoFisico>;
-  recursosDigitales!: Array<RecursoDigital>;
-  selectedItemsParticipantes!: Array<any>;
-  selectedItemsDigitales!: Array<any>;
-  selectedItemsFisicos!: Array<any>;
+  reunion: Reunion = new Reunion();
+  reuniones: Array<Reunion>;
+  prioridades: Array<Prioridad> = new Array<Prioridad>();
+  tiposReuniones: Array<TipoReunion> = new Array<TipoReunion>();
+  oficinas: Array<any> = new Array<any>();
+  empleados: Array<any> = new Array<any>();
+  recursosFisicos: Array<RecursoFisico> = new Array<RecursoFisico>();
+  recursosDigitales: Array<RecursoDigital> = new Array<RecursoDigital>();
+  selectedItemsParticipantes: Array<any> = new Array<any>();
+  selectedItemsDigitales: Array<any> = new Array<any>();
+  selectedItemsFisicos: Array<any> = new Array<any>();
   dropdownSettingsParticipantes: IDropdownSettings;
   dropdownSettingsDigitales: IDropdownSettings;
   dropdownSettingsFisicos: IDropdownSettings;
-  respuesta!: any;
+  horaInicio: any;
+  horaFinal: any;
+  respuesta: any;
+  icon: any;
   accion!: string;
-  event!: any;
+  event: any;
 
   constructor(private reunionService: ReunionService,
               private empleadoService: EmpleadoService,
@@ -48,7 +51,7 @@ export class ReunionFormComponent implements OnInit {
               private recursoService: RecursoService,
               private tipoReunionService: TipoReunionService,
               private oficinaService: OficinaService,
-              private estadoService: EstadosService,
+              private dp: DatePipe,
               private modalService: NgbModal,
               private router: Router,
               private activatedRoute: ActivatedRoute) { 
@@ -65,7 +68,7 @@ export class ReunionFormComponent implements OnInit {
     this.dropdownSettingsDigitales = {
       singleSelection: false,
       idField: '_id',
-      textField: 'recurso',
+      textField: 'nombre',
       enableCheckAll: false,
       itemsShowLimit: 3,
       allowSearchFilter: true,
@@ -96,6 +99,7 @@ export class ReunionFormComponent implements OnInit {
         timeZone: "America/Argentina/Jujuy"
       }
     };
+    this.reuniones = new Array<Reunion>();
   }
 
   ngOnInit(): void {
@@ -110,16 +114,8 @@ export class ReunionFormComponent implements OnInit {
           this.cargarRecursosFisicos();
           this.cargarTiposReuniones();
           this.cargarOficinas();
-          this.cargarEstados();
         } else {
           this.accion = 'update';
-          // this.cargarPrioridades();
-          // this.cargarParticipantes();
-          // this.cargarRecursosDigitales();
-          // this.cargarRecursosFisicos();
-          // this.cargarTiposReuniones();
-          // this.cargarOficinas();
-          // this.cargarEstados();
           this.cargarReunion(params['id']);
         }
        
@@ -132,27 +128,91 @@ export class ReunionFormComponent implements OnInit {
     this.selectedItemsParticipantes = new Array<any>();
     this.selectedItemsDigitales = new Array<any>();
     this.selectedItemsFisicos = new Array<any>();
+    this.reuniones = new Array<Reunion>();
   }
 
-  agregarReunion(content: any): void {
+  //TODO: corregir
+  agregarReunion() {
     this.setReunion();
-    console.log(this.reunion);
-    this.reunionService.addReunion(this.reunion).subscribe(
-      result => {
-        if(result.status == 201) {
-          this.respuesta = result;
-          console.log(result);
+    if(this.esReprogramada()){
+      Swal.fire({
+        title: '<p>Seleccionó prioridad ALTA. Algunas reuniones serán reprogramadas. ¿Quiere proceder?</p>',
+        showDenyButton: true,
+        confirmButtonText: 'Si',
+        denyButtonText: 'No',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.reunionService.addReunion(this.reunion).subscribe(
+            result => {
+              console.log(result);
+              Swal.fire(result.message, '', 'success').then(
+                result => {
+                  if(result.isConfirmed)
+                    this.router.navigate(['calendario']);
+                }
+              )
+            },
+            error => {
+              console.log(error);
+              this.respuesta = error.error;
+            }
+          )
+          if(this.respuesta.status == 200) {
+            Swal.fire({
+              title: `<strong>${this.respuesta.message}</strong>`,
+              icon: 'success',
+              html: `${this.respuesta.reunionReprogramada}`,
+              showCancelButton: true,
+              focusConfirm: false,
+              confirmButtonText: 'OK'
+            })
+          } else {
+          Swal.fire('Operación cancelada', '', 'info')
+          }
+        } else if (result.isDenied) {
+          Swal.fire(this.respuesta.message, '', 'error')
         }
-      },
-      error => {
-        this.respuesta = error.error;
+      })
+    } else {
+      console.log(this.reunion);
+      this.reunionService.addReunion(this.reunion).subscribe(
+        result => {
+          Swal.fire(result.message, '', 'success').then(
+            result => {
+              if(result.isConfirmed){
+                this.router.navigate(['calendario']);
+              }
+            }
+          )
+        },
+        error => {
+          Swal.fire(error.error.message, '', 'error')
+        }
+      )
+    }
+  }
+
+  //TODO: corregir
+  esReprogramada(): boolean {
+    let esReprogramada = false;
+    let esPrioridadAlta = false;
+    let prioridad = this.obtenerPrioridad();
+
+    this.oficinas.forEach(o => {
+      if(o._id === this.reunion.oficina){
+        o.reunionesActivas.forEach((ra: any) => {
+          if(ra.prioridad == prioridad.tipoPrioridad) {
+            esPrioridadAlta = true;
+            return;
+          }
+        });
+        return;
       }
-    )
-    this.reunionService.createEvent(this.event).subscribe(
-      result=>{ console.log(result); }, 
-      error=>{ console.log(error); } 
-    )
-    this.open(content);
+    });
+    if(prioridad.tipoPrioridad === "ALTA" && !esPrioridadAlta) {
+      esReprogramada = true;
+    }
+    return esReprogramada;
   }
 
   async cargarReunion(id: string) {
@@ -162,12 +222,18 @@ export class ReunionFormComponent implements OnInit {
     await this.cargarPrioridades();
     await this.cargarTiposReuniones();
     await this.cargarOficinas();
-    await this.cargarEstados();
     this.reunionService.getReunionById(id).subscribe(
-      result=>{
+      result => {
         this.iniciarReunion();
-        this.reunion.horaInicio = new Date(result.data.reunion.horaInicio).toISOString().slice(0, -8);
-        this.reunion.horaFinal = new Date(result.data.reunion.horaFinal).toISOString().slice(0, -8);
+
+        let horaInicio = new Date(result.data.reunion.horaInicio);
+        horaInicio.setMinutes(horaInicio.getMinutes() - horaInicio.getTimezoneOffset());
+        this.reunion.horaInicio = horaInicio.toISOString().slice(0, -8);
+        
+        let horaFinal = new Date(result.data.reunion.horaFinal);
+        horaFinal.setMinutes(horaFinal.getMinutes() - horaFinal.getTimezoneOffset());
+        this.reunion.horaFinal = horaFinal.toISOString().slice(0, -8);
+
         this.selectedItemsDigitales = result.data.reunion.recursosDigitales;
         this.selectedItemsFisicos = result.data.reunion.recursos;
         this.selectedItemsParticipantes = this.crearListaParticipantes(result.data.reunion.participantes);
@@ -175,6 +241,8 @@ export class ReunionFormComponent implements OnInit {
         this.reunion.tipoReunion = result.data.reunion.tipoReunion._id;
         this.reunion.oficina = result.data.reunion.oficina._id;
         this.reunion.estado = result.data.reunion.estado._id;
+        this.reunion._id = result.data.reunion._id;
+        console.log(this.reunion);
       },
       error => {
         this.respuesta = error.error;
@@ -182,19 +250,23 @@ export class ReunionFormComponent implements OnInit {
     )
   }
 
-  modificarReunion(content: any): void {
-    // this.reunionService.updateReunion(this.reunion).subscribe(
-    //   result => {
-    //     if(result.status == 201) {
-    //       this.respuesta = result;
-    //       console.log(result);
-    //     }
-    //   },
-    //   error => {
-    //     this.respuesta = error.error;
-    //     console.log(error.error);
-    //   }
-    // )
+  modificarReunion(): void {
+    this.setReunion();
+    console.log(this.reunion);
+    this.reunionService.updateReunion(this.reunion).subscribe(
+      result => {
+        Swal.fire(result.message, '', 'success').then(
+          result => {
+            if(result.isConfirmed){
+              this.router.navigate(['calendario']);
+            }
+          }
+        )
+      },
+      error => {
+        Swal.fire(error.error.message, '', 'error');
+      }
+    )
   }
 
   async cargarParticipantes() {
@@ -202,6 +274,15 @@ export class ReunionFormComponent implements OnInit {
       result => {
         this.empleados = new Array<any>();
         this.empleados = this.crearListaParticipantes(result.data.empleados);
+      }
+    )
+  }
+
+  async cargarParticipantesLibres() {
+    this.empleadoService.getEmpleadoLibres(this.horaInicio, this.horaFinal).subscribe(
+      result => {
+        this.empleados = new Array<any>();
+        this.empleados = this.crearListaParticipantes(result.data.empleadosLibres);
       }
     )
   }
@@ -220,10 +301,23 @@ export class ReunionFormComponent implements OnInit {
   }
 
   async cargarRecursosFisicos() {
-    this.recursoService.getRecursosFisicosByReservacion(false).subscribe(
+    this.recursoService.getRecursosFisicos().subscribe(
       result => {
         this.recursosFisicos = new Array<RecursoFisico>();
         result.data.recursos.forEach((element: any) => {
+          let recurso = new RecursoFisico();
+          Object.assign(recurso, element);
+          this.recursosFisicos.push(recurso);
+        });
+      }
+    )
+  }
+
+  async cargarRecursosFisicosLibres() {
+    this.recursoService.getRecursosFisicosLibres(this.horaInicio, this.horaFinal).subscribe(
+      result => {
+        this.recursosFisicos = new Array<RecursoFisico>();
+        result.data.recursosLibres.forEach((element: any) => {
           let recurso = new RecursoFisico();
           Object.assign(recurso, element);
           this.recursosFisicos.push(recurso);
@@ -259,7 +353,7 @@ export class ReunionFormComponent implements OnInit {
   }
 
   async cargarOficinas() {
-    this.oficinaService.getOficinasByEstado(false).subscribe(
+    this.oficinaService.getOficinas().subscribe(
       result => {
         this.oficinas = new Array<Oficina>();
         result.data.oficinas.forEach((element: any) => {
@@ -270,15 +364,28 @@ export class ReunionFormComponent implements OnInit {
       }
     )
   }
-
-  async cargarEstados() {
-    this.estadoService.getEstados().subscribe(
+  async cargarOficinasLibres() {
+    this.oficinaService.getEOficinasLibres(this.horaInicio, this.horaFinal).subscribe(
       result => {
-        this.estados = new Array<Estado>();
-        result.data.estados.forEach((element: any) => {
-          let estado = new Estado();
-          Object.assign(estado, element);
-          this.estados.push(estado);
+        this.oficinas = new Array<Oficina>();
+        result.data.oficinasLibres.forEach((element: any) => {
+          let oficina = new Oficina();
+          Object.assign(oficina, element);
+          this.oficinas.push(oficina);
+        });
+      }
+    )
+  }
+
+
+  async obtenerReuniones() {
+    this.reunionService.getReunionesByFields(this.horaInicio, this.horaFinal).subscribe(
+      result => {
+        this.reuniones = new Array<Reunion>();
+        result.data.reuniones.forEach((element: any) => {
+          let reunion = new Reunion();
+          Object.assign(reunion, element);
+          this.reuniones.push(reunion);
         });
       }
     )
@@ -298,9 +405,9 @@ export class ReunionFormComponent implements OnInit {
 
   setReunion(): void {
     
-    this.event.start.dateTime = this.toIsoString(new Date(this.reunion.horaInicio)); 
-    this.event.end.dateTime = this.toIsoString(new Date(this.reunion.horaFinal));
-    this.event.summary = this.tiposReuniones.find((t: any) => t._id = this.reunion.tipoReunion)?.tipoReunion;
+    // this.event.start.dateTime = this.toIsoString(new Date(this.reunion.horaInicio)); 
+    // this.event.end.dateTime = this.toIsoString(new Date(this.reunion.horaFinal));
+    // this.event.summary = this.tiposReuniones.find((t: any) => t._id = this.reunion.tipoReunion)?.tipoReunion;
 
     let participantes: string[] = [];
     this.selectedItemsParticipantes.forEach(element => {
@@ -327,12 +434,50 @@ export class ReunionFormComponent implements OnInit {
     ':' + pad(Math.abs(tzo) % 60); 
   }
 
-  open(content: any): void {
-    this.modalService.open(content, { centered: true }).result.then(()=>{
-      if(this.respuesta.status == 201 || this.respuesta.status == 200){
-        this.router.navigate(['calendario']);
+  onChangeFecha() {
+    this.horaInicio = this.obtenerFechaFormateada(this.horaInicio);
+    this.horaFinal = this.obtenerFechaFormateada(this.horaFinal);
+    let prioridad = this.obtenerPrioridad();
+    if(prioridad === undefined || prioridad.tipoPrioridad !== "ALTA") {
+      this.obtenerReuniones();
+      this.cargarParticipantesLibres();
+      this.cargarRecursosFisicosLibres();
+      this.cargarOficinasLibres();
+    }
+  }
+
+  onChangePrioridad() {
+    let prioridad = this.obtenerPrioridad() ;
+    if(prioridad !== undefined && prioridad.tipoPrioridad === "ALTA"){
+      this.cargarParticipantes();
+      this.cargarOficinas();
+      this.cargarRecursosFisicos();
+    } else {
+      this.cargarParticipantesLibres();
+      this.cargarRecursosFisicosLibres();
+      this.cargarOficinasLibres();
+    }
+  }
+
+  obtenerFechaFormateada(date: string): string {
+    let dateAux = new Date(this.reunion.horaFinal);
+    dateAux.setMinutes(dateAux.getMinutes() - dateAux.getTimezoneOffset());
+
+    return dateAux.toISOString().slice(0, -8);
+  }
+
+  obtenerPrioridad(): any {
+    return this.prioridades.find((p: any) => p._id == this.reunion.prioridad);
+  }
+
+  obtenerOficina(): any {
+    let oficinas = new Array<Oficina>();
+    this.oficinaService.getOficinas().subscribe(
+      result => {
+        oficinas = result.data.oficinas;
       }
-    });
+    )
+    return oficinas.find((of: any) => of._id == this.reunion.oficina);
   }
 
   cancelar(): void{

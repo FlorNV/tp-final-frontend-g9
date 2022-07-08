@@ -16,7 +16,7 @@ export class NotificacionService {
 
   public getNotificaiones(empleado: Empleado): Observable<any>{
     const options = { headers: new HttpHeaders({})};
-    return this._http.get(this.URL+empleado,options)
+    return this._http.get(this.URL,options)
   }
 
   public getNotificaionById(id: string): Observable<any>{

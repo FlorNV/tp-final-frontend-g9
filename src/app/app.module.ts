@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
@@ -16,6 +17,8 @@ import { NgxQRCodeModule } from "@techiediaries/ngx-qrcode";
 /* Notificaciones */
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+/* alife-file-to-base64 */
+import { AlifeFileToBase64Module } from "alife-file-to-base64";
 
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +29,9 @@ import { LoginService } from './services/login.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { AuthGuard } from './services/auth.guard';
 import { EstadisticaPartComponent } from './components/estadistica-part/estadistica-part.component';
+import { DatePipe } from '@angular/common';
+import { FechaValidaDirective } from './directivas/fecha-valida.directive';
+import { RequireFile } from './directivas/directiva.directive';
 
 @NgModule({
   declarations: [
@@ -34,6 +40,8 @@ import { EstadisticaPartComponent } from './components/estadistica-part/estadist
     YesNoPipe,
     FilterPipe,
     EstadisticaPartComponent,
+    FechaValidaDirective,
+    RequireFile,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +51,7 @@ import { EstadisticaPartComponent } from './components/estadistica-part/estadist
     HttpClientModule,
     NgbModalModule,
     NgbModule,
+    AlifeFileToBase64Module,
     NgMultiSelectDropDownModule.forRoot(),
     CalendarModule.forRoot({
       provide: DateAdapter,
@@ -57,15 +66,20 @@ import { EstadisticaPartComponent } from './components/estadistica-part/estadist
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
-    CustomFormsModule
+    CustomFormsModule,
+    [SweetAlert2Module.forRoot()]
   ],
-  providers: [LoginService,
-  {
-   provide: HTTP_INTERCEPTORS,
-   useClass: TokenInterceptorService,
-   multi: true
-  },
-  AuthGuard],
+  providers: [
+    LoginService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    },
+    AuthGuard,
+    DatePipe,
+    AlifeFileToBase64Module,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -32,6 +32,9 @@ export class RecursosComponent implements OnInit {
   respuesta!: any;
   recursosFisicos!: Array<RecursoFisico>;
   recursosDigitales!: Array<RecursoDigital>; 
+  files!: any;
+  rawFiles!: any;
+  imagen!: string;
 
   constructor(private recursoService: RecursoService,
               private modalService: NgbModal,
@@ -83,6 +86,14 @@ export class RecursosComponent implements OnInit {
     })
   }
 
+  /** Descarga un recurso digital*/
+  descargarArchivo(rd: RecursoDigital) {
+    const link = document.createElement('a');
+    link.href = rd.recurso;
+    link.download = rd.nombre;
+    link.click();
+  }
+
   /** Carga un nuevo recurso fisico*/
   recursoFisico(){
     this.recFisico = new RecursoFisico();
@@ -122,6 +133,7 @@ export class RecursosComponent implements OnInit {
 
   /** Alta de un recurso digital*/
   agregarRecursoDigital(content: any) {
+    this.recDigital.recurso = this.files[0].base64;
     this.recursoService.addRecursoDigital(this.recDigital).subscribe(
       (result) => {
         if(result.status==201){
@@ -172,7 +184,7 @@ export class RecursosComponent implements OnInit {
     this.fisico = false;
     this.recDigital = new RecursoDigital();
     let result = this.recursosDigitales.filter(rd => rd._id == id)[0];
-    Object.assign(this.recDigital,result);
+    Object.assign(this.recDigital, result);
     this.modificar = true;
     console.log(this.recDigital);
   }
@@ -206,12 +218,13 @@ export class RecursosComponent implements OnInit {
   }
 
   /** Elimina un recurso fisico por id (Falta arreglar)*/
-  eliminarRecursoFisico(id: string){
+  eliminarRecursoFisico(id: string, content: any){
     this.recursoService.deleteRecursoFisico(id).subscribe(
       (result) => {
         this.respuesta = result;
         this.cargarRecursosFisicos();
         this.rerender();
+        this.open(content);
       }
     )
   }

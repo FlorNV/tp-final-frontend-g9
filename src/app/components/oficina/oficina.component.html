@@ -17,7 +17,6 @@
                 </div>
                 <div class="col-md-8 p-5 bg-white">
                     <form #oficinaForm="ngForm"  class="row g-3" action="" method="POST">
-
                         <div *ngIf="oficina">
                             <div class="col-12">
                                 <label class="form-label" for="nombre">Oficina</label>
@@ -29,27 +28,7 @@
                                     <i class="bi bi-exclamation-circle"></i> La oficina es requerida.
                                 </div>
                             </div>
-                            
                         </div>
-                        
-                        <div *ngIf="modificar" class="col-12">
-                            <label class="form-label d-inline-block">¿Está ocupada?</label>
-                            <div class="form-check form-check-inline ms-5">
-                                <input type="radio" name="estaOcupada" class="form-check-input" id="si" 
-                                [value]="true" [(ngModel)]="oficina.estaOcupada">
-                                <label class="form-check-label" for="si">
-                                    Sí
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline ms-5">
-                                <input type="radio"name="estaOcupada" class="form-check-input" id="no" 
-                                [value]="false" [(ngModel)]="oficina.estaOcupada">
-                                <label class="form-check-label" for="no">
-                                    No
-                                </label>
-                            </div>
-                        </div>
-                        
                         
                         <div class="col-12 text-center mt-5">
 
@@ -74,15 +53,12 @@
             <thead>
                 <tr class="align-middle">
                     <th>Reunión</th>
-                    <th>Ocupada?</th>
                     <th>Opciones</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let o of oficinas">
                     <td>{{o.nombre}}</td>
-                    <td>{{o.estaOcupada  | yesNo}}</td>
-                    
                     <td>
                         <button class="btn btn-celeste d-block m-auto my-1" (click)="cargarOficina(o._id)">
                             <i class="bi bi-pen-fill"></i>

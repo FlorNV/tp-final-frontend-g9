@@ -53,6 +53,23 @@ export class ReunionService {
     return this._http.get(this.URL, options);
   }
 
+  public getReunionById(id: string): Observable<any> {
+    const options = {headers: new HttpHeaders({})};
+    return this._http.get(this.URL + id, options);
+  }
+
+  public getReunionesByFields(horaInicio: any, horaFinal: any): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('horaInicio', horaInicio);
+    params = params.append('horaFinal', horaFinal);
+
+    const options = {
+      headers: new HttpHeaders({}),
+      params: params
+    };
+    return this._http.get(this.URL, options);
+  }
+
   public updateReunion(reunion: Reunion): Observable<any> {
     const options = {
       headers: new HttpHeaders({
@@ -66,11 +83,6 @@ export class ReunionService {
   public deleteReunion(id: string): Observable<any> {
     const options = {headers: new HttpHeaders({})};
     return this._http.delete(this.URL + id, options);
-  }
-
-  public getReunionById(id: string): Observable<any> {
-    const options = {headers: new HttpHeaders({})};
-    return this._http.get(this.URL + id, options);
   }
   
 }

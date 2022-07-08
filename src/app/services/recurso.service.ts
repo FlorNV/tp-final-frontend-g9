@@ -33,12 +33,17 @@ export class RecursoService {
     return this._http.get(this.urlRecursosFisicos, options);
   }
 
-  public getRecursosFisicosByReservacion(estaReservado: boolean): Observable<any>{
+  public getRecursosFisicosLibres(horaInicio: any, horaFinal: any): Observable<any>{
+    
+    let params = new HttpParams();
+    params = params.append('horaInicio', horaInicio);
+    params = params.append('horaFinal', horaFinal);
+
     const options = {
       headers: new HttpHeaders({}),
-      paramas: new HttpParams().set('estaReservado', estaReservado)
+      params: params
     };
-    return this._http.get(this.urlRecursosFisicos, options);
+    return this._http.get(this.urlRecursosFisicos + 'libres', options);
   }
 
   public updateRecursosFisicos(recFisico: RecursoFisico): Observable<any>{
