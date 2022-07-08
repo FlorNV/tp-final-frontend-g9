@@ -7,169 +7,44 @@
         </div>
 
         <div class="col-md-10 p-5 rounded-bottom bg-white">
-            <!-- <form [formGroup]="reunionForm" class="row justify-content-between" action="" method="POST">
-                
-                <div class="col-md-5 row">
-
-                    <div class="mb-4">
-                        <label class="form-label" for="inicio">Fecha y hora de inicio</label>
-                        <input class="form-control" type="datetime-local" id="inicio" formControlName="horaInicio"
-                        [ngClass]="{'border-danger': horaInicio?.invalid && (horaInicio?.dirty || horaInicio?.touched)}">
-
-                        <div *ngIf="horaInicio?.invalid && (horaInicio?.dirty || horaInicio?.touched)" class="form-text text-danger">
-                            <i class="bi bi-exclamation-circle"></i> Ingrese fecha de inicio.
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="form-label" for="finalizacion">Hora de finalización</label>
-                        <input class="form-control" type="datetime-local" id="finalizacion" formControlName="horaFinal" 
-                        [ngClass]="{'border-danger': horaFinal?.invalid && (horaFinal?.dirty || horaFinal?.touched)}">
-
-                        <div *ngIf="horaFinal?.invalid && (horaFinal?.dirty || horaFinal?.touched)" class="form-text text-danger">
-                            <i class="bi bi-exclamation-circle"></i> Ingrese hora de finalización.
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="form-label" for="prioridad">Prioridad</label>
-                        <select class="form-select" id="prioridad" formControlName="prioridad"
-                        [ngClass]="{'border-danger': prioridad?.invalid && (prioridad?.dirty || prioridad?.touched)}">
-                            <option [ngValue]="''" selected disabled>Seleccione Prioridad</option>
-                            <option *ngFor="let prioridad of prioridades" [ngValue]="prioridad">{{ prioridad.tipoPrioridad }}</option>
-                        </select>
-
-                        <div *ngIf="prioridad?.invalid && (prioridad?.dirty || prioridad?.touched)" class="form-text text-danger">
-                            <i class="bi bi-exclamation-circle"></i> Seleccione prioridad.
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="form-label" for="tipo">Tipo de reunión</label>
-                        <select class="form-select" id="tipo" formControlName="tipoReunion"
-                        [ngClass]="{'border-danger': tipoReunion?.invalid && (tipoReunion?.dirty || tipoReunion?.touched)}">
-                            <option [ngValue]="''" selected disabled>Seleccione tipo de reunión</option>
-                            <option *ngFor="let tipo of tiposReuniones" [ngValue]="tipo">{{ tipo.tipoReunion }}</option>
-                        </select>
-
-                        <div *ngIf="tipoReunion?.invalid && (tipoReunion?.dirty || tipoReunion?.touched)" class="form-text text-danger">
-                            <i class="bi bi-exclamation-circle"></i> Seleccione tipo de reunión.
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="form-label" for="oficina">Oficina</label>
-                        <select class="form-select" id="oficina" formControlName="oficina"
-                        [ngClass]="{'border-danger': oficina?.invalid && (oficina?.dirty || oficina?.touched)}">
-                            <option [ngValue]="''" selected disabled>Seleccione oficina</option>
-                            <option *ngFor="let oficina of oficinas" [ngValue]="oficina">{{ oficina.nombre }}</option>
-                        </select>
-
-                        <div *ngIf="oficina?.invalid && (oficina?.dirty || oficina?.touched)" class="form-text text-danger">
-                            <i class="bi bi-exclamation-circle"></i> Seleccione oficina.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-7 row">
-                    <div class="mb-4">
-                        <label class="form-label">Agregar participantes</label>
-                        <ng-multiselect-dropdown
-                        [placeholder]="'Seleccione participantes'"
-                        [settings]="dropdownSettingsParticipantes"
-                        [data]="empleados"
-                        formControlName="participantes"
-                        >
-                        </ng-multiselect-dropdown>
-                        <div *ngIf="participantes?.errors?.['required'] && participantes?.touched" class="form-text text-danger">
-                            <i class="bi bi-exclamation-circle"></i> Seleccione participantes.
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="form-label">Agregar recursos digitales</label>
-                        <ng-multiselect-dropdown
-                        [placeholder]="'Seleccione recursos'"
-                        [settings]="dropdownSettingsDigitales"
-                        [data]="digitales"
-                        formControlName="recursosDigitales"
-                        >
-                        </ng-multiselect-dropdown>
-                        <div *ngIf="recursosDigitales?.errors?.['required'] && recursosDigitales?.touched" class="form-text text-danger">
-                            <i class="bi bi-exclamation-circle"></i> Seleccione recursos.
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="form-label">Agregar recursos físicos</label>
-                        <ng-multiselect-dropdown
-                        [placeholder]="'Seleccione recursos'"
-                        [settings]="dropdownSettingsFisicos"
-                        [data]="fisicos"
-                        formControlName="recursos"
-                        >
-                        </ng-multiselect-dropdown>
-                        <div *ngIf="recursos?.errors?.['required'] && recursos?.touched" class="form-text text-danger">
-                            <i class="bi bi-exclamation-circle"></i> Seleccione recursos.
-                        </div>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="form-label" for="estado">Estado</label>
-                        <select class="form-select" id="estado" formControlName="estado"
-                        [ngClass]="{'border-danger': estado?.invalid && (estado?.dirty || estado?.touched)}">
-                            <option [ngValue]="''" selected disabled>Seleccione estado</option>
-                            <option *ngFor="let estado of estados" [ngValue]="estado">{{ estado.nombreEstado }}</option>
-                        </select>
-
-                        <div *ngIf="estado?.invalid && (estado?.dirty || estado?.touched)" class="form-text text-danger">
-                            <i class="bi bi-exclamation-circle"></i> Seleccione estado.
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div class="col-12 text-center mt-5">
-                    <button *ngIf="accion=='new'" (click)="agregarReunion(content)" [disabled]="!reunionForm.valid"
-                    type="submit" class="btn btn-celeste px-5 ms-4">Agregar</button>
-
-                    <button *ngIf="accion=='update'" (click)="modificarReunion(content)" [disabled]="!reunionForm.valid"
-                    type="submit" class="btn btn-celeste px-5 ms-4">Modificar</button>
-
-                    <button *ngIf="accion=='update'" (click)="cancelar()" type="submit" class="btn btn-rojo px-5 ms-4">Cancelar</button>
-                </div>
-            </form> -->
-
-
             <form #reunionForm="ngForm" class="row justify-content-between" action="" method="POST">
-                
                 <div class="col-md-5 row">
                     <div class="mb-4">
                         <label class="form-label" for="inicio">Fecha y hora de inicio</label>
-                        <input class="form-control" type="datetime-local" id="inicio"
-                        [(ngModel)]="reunion.horaInicio" name="inicio" required #inicio="ngModel"
+                        <input class="form-control" type="datetime-local" id="inicio" (change)="onChangeFecha()"
+                        [(ngModel)]="reunion.horaInicio" name="inicio" minima required #inicio="ngModel"
                         [ngClass]="{'border-danger': inicio.invalid && (inicio.dirty || inicio.touched)}">
 
-                        <div *ngIf="inicio.invalid && (inicio.dirty || inicio.touched) && inicio.errors?.['required']" class="form-text text-danger">
-                            <i class="bi bi-exclamation-circle"></i> Ingrese fecha de inicio.
+                        <div *ngIf="inicio.invalid && (inicio.dirty || inicio.touched)" class="form-text text-danger">
+                            <div *ngIf="inicio.errors?.['required']">
+                                <i class="bi bi-exclamation-circle"></i> Ingrese fecha de inicio.
+                            </div>
+                            <div *ngIf="inicio.errors?.['minima']">
+                                <i class="bi bi-exclamation-circle"></i> Ingrese una fecha actual.
+                            </div>
                         </div>
                     </div>
 
                     <div class="mb-4">
                         <label class="form-label" for="finalizacion">Hora de finalización</label>
-                        <input class="form-control" type="datetime-local" id="finalizacion"
-                        [(ngModel)]="reunion.horaFinal" name="finalizacion" required #finalizacion="ngModel"
+                        <input class="form-control" type="datetime-local" id="finalizacion" (change)="onChangeFecha()"
+                        [(ngModel)]="reunion.horaFinal" name="finalizacion" minima required #finalizacion="ngModel"
                         [ngClass]="{'border-danger': finalizacion.invalid && (finalizacion.dirty || finalizacion.touched)}">
 
-                        <div *ngIf="finalizacion.invalid && (finalizacion.dirty || finalizacion.touched) && finalizacion.errors?.['required']" class="form-text text-danger">
-                            <i class="bi bi-exclamation-circle"></i> Ingrese hora de finalización.
+                        <div *ngIf="finalizacion.invalid && (finalizacion.dirty || finalizacion.touched)" class="form-text text-danger">
+                            <div *ngIf="finalizacion.errors?.['required']">
+                                <i class="bi bi-exclamation-circle"></i> Ingrese fecha de inicio.
+                            </div>
+                            <div *ngIf="finalizacion.errors?.['minima']">
+                                <i class="bi bi-exclamation-circle"></i> Ingrese una fecha actual.
+                            </div>
                         </div>
                     </div>
 
                     <div class="mb-4">
                         <label class="form-label" for="prioridad">Prioridad</label>
-                        <select class="form-select" id="prioridad" [(ngModel)]="reunion.prioridad" name="prioridad" required #prioridad="ngModel"
+                        <select class="form-select" id="prioridad" (change)="onChangePrioridad()"
+                        [(ngModel)]="reunion.prioridad" name="prioridad" required #prioridad="ngModel"
                         [ngClass]="{'border-danger': prioridad.invalid && (prioridad.dirty || prioridad.touched)}">
                             <option *ngFor="let prioridad of prioridades" [ngValue]="prioridad._id">{{ prioridad.tipoPrioridad }}</option>
                         </select>
@@ -190,7 +65,9 @@
                             <i class="bi bi-exclamation-circle"></i> Seleccione tipo de reunión.
                         </div>
                     </div>
+                </div>
 
+                <div class="col-md-7 row">
                     <div class="mb-4">
                         <label class="form-label" for="oficina">Oficina</label>
                         <select class="form-select" id="oficina" [(ngModel)]="reunion.oficina" name="oficina" required #oficina="ngModel"
@@ -202,9 +79,7 @@
                             <i class="bi bi-exclamation-circle"></i> Seleccione oficina.
                         </div>
                     </div>
-                </div>
 
-                <div class="col-md-7 row">
                     <div class="mb-4">
                         <label class="form-label">Agregar participantes</label>
                         <ng-multiselect-dropdown
@@ -243,27 +118,15 @@
                         >
                         </ng-multiselect-dropdown>
                     </div>
-
-                    <div class="mb-4">
-                        <label class="form-label" for="estado">Estado</label>
-                        <select class="form-select" id="estado" [(ngModel)]="reunion.estado" name="estado" required #estado="ngModel"
-                        [ngClass]="{'border-danger': estado.invalid && (estado.dirty || estado.touched)}">
-                            <option *ngFor="let estado of estados" [ngValue]="estado._id">{{ estado.nombreEstado }}</option>
-                        </select>
-
-                        <div *ngIf="estado.invalid && (estado.dirty || estado.touched) && estado.errors?.['required']" class="form-text text-danger">
-                            <i class="bi bi-exclamation-circle"></i> Seleccione estado.
-                        </div>
-                    </div>
                 </div>
 
 
 
                 <div class="col-12 text-center mt-5">
-                    <button *ngIf="accion=='new'" (click)="agregarReunion(content)" [disabled]="!reunionForm.valid"
+                    <button *ngIf="accion=='new'" (click)="agregarReunion()" [disabled]="!reunionForm.valid"
                     type="submit" class="btn btn-celeste px-5 ms-4">Agregar</button>
 
-                    <button *ngIf="accion=='update'" (click)="modificarReunion(content)" [disabled]="!reunionForm.valid"
+                    <button *ngIf="accion=='update'" (click)="modificarReunion()" [disabled]="!reunionForm.valid"
                     type="submit" class="btn btn-celeste px-5 ms-4">Modificar</button>
 
                     <button *ngIf="accion=='update'" (click)="cancelar()" type="submit" class="btn btn-rojo px-5 ms-4">Cancelar</button>
@@ -273,16 +136,3 @@
     </div>
 </div>
 
-<ng-template #content let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Aviso</h4>
-    </div>
-    <div class="modal-body text-center text-uppercase">
-        <p class="mt-4">{{ respuesta.message }}</p>
-        <p *ngIf="respuesta.status==201 || respuesta.status==200" class="mt-4"><i class="bi bi-check-circle text-success"></i></p>
-        <p *ngIf="respuesta.status!=201 && respuesta.status!==200" class="mt-4"><i class="bi bi-exclamation-circle text-danger"></i></p>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-celeste" (click)="modal.close()">Close</button>
-    </div>
-</ng-template>

@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import * as printJS from "print-js";
 import { Router } from '@angular/router';
 import { Reunion } from 'src/app/models/reunion';
 import { ReunionService } from 'src/app/services/reunion.service';
-import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
+import { EstadosService } from 'src/app/services/estados.service';
+import { Estado } from 'src/app/models/estado';
 
 @Component({
   selector: 'app-reuniones',
@@ -20,23 +20,20 @@ export class ReunionesComponent implements OnInit, OnDestroy {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
 
-  reuniones!: Array<Reunion>;
   reunion!: Reunion;
+  reuniones!: Array<Reunion>;
+  estados!: Array<Estado>;
   ver: boolean = false;
   respuesta!: any;
 
-  elementType: any;
-  correctionLevel: any;
-  value: string = "";
+  
 
   constructor(private reunionService: ReunionService,
+              private estadoServices: EstadosService,
               private router: Router,
               private modalService: NgbModal) { 
 
-    this.reunion = new Reunion();
-    this.elementType = NgxQrcodeElementTypes.URL;
-    this.correctionLevel = NgxQrcodeErrorCorrectionLevels.LOW;
-    this.value = window.location.href;
+    
   }
 
   ngOnInit(): void {
@@ -46,13 +43,65 @@ export class ReunionesComponent implements OnInit, OnDestroy {
       pageLength: 5,
       scrollX: true
     };
+    this.iniciarReunion();
+    this.obtenerEstados();
     this.cargarReuniones();
   }
 
-  cargarReuniones(): void {
+  iniciarReunion() {
+    this.reunion = new Reunion();
+  }
+
+  obtenerEstados() {
+    this.estadoServices.getEstados().subscribe(
+      result => {
+        this.estados = new Array<Estado>();
+        result.data.estados.forEach((element: any) => {
+          let estado = new Estado();
+          Object.assign(estado, element);
+          this.estados.push(estado);
+        });
+      }
+    )
+  }
+
+  async deshabilitarReuniones() {
     this.reunionService.getReuniones().subscribe(
       result => {
-        this.reuniones = new Array<Reunion>;
+        result.data.reuniones.forEach((r: any) => {
+          let horaFinal = new Date(r.horaFinal).getTime();
+          let fechaActual = new Date().getTime();
+          if(horaFinal < fechaActual){
+            if(r.reunionConfirmada){
+              this.iniciarReunion();
+              Object.assign(this.reunion, r);
+              let estado = this.estados.find(e => e.nombreEstado === "Celebrada");
+              this.reunion.estado = estado?._id;
+              this.reunion.estaDeshabilitada = true;
+              this.modificarReunion();
+            }
+          }
+        });
+      }
+    )
+  }
+
+  modificarReunion() {
+    this.reunionService.updateReunion(this.reunion).subscribe(
+      result => {
+        console.log(result);
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+
+  async cargarReuniones() {
+    await this.deshabilitarReuniones();
+    this.reunionService.getReuniones().subscribe(
+      result => {
+        this.reuniones = new Array<Reunion>();
         result.data.reuniones.forEach((element: any) => {
           let reunion = new Reunion();
           Object.assign(reunion, element);
@@ -64,52 +113,7 @@ export class ReunionesComponent implements OnInit, OnDestroy {
   }
 
   verReunion(reunion: Reunion) {
-    this.reunion = reunion;
-    this.ver = true;
-  }
-
-  imprimir() {
-    printJS({
-      printable: 'reunion',
-      type: 'html',
-      targetStyles: ['*'],
-      header: 'Reunión',
-      headerStyle: 'font-size: 40px; text-align: center'
-    })
-  }
-
-  modificar(reunion: Reunion): void {
-    this.router.navigate(['reunion-form', reunion._id]);
-  }
-
-  eliminar(reunion: Reunion, content: any): void {
-    this.reunionService.deleteReunion(reunion._id).subscribe(
-        result => {
-          this.respuesta = result;
-        },
-        error => {
-          this.respuesta = error;
-        }
-      )
-      this.open(content);
-      this.ver = false;
-      this.cargarReuniones();
-  }
-
-  confirmarReunion(reunion: Reunion, content: any) {
-    this.reunionService.confirmReunion(reunion._id).subscribe(
-      result => {
-        this.respuesta = result;
-      },
-      error => {
-        this.respuesta = error;
-      }
-    )
-    this.open(content);
-  }
-
-  open(content: any) {
-    this.modalService.open(content, { centered: true });
+    this.router.navigate(['reunion-detalle', reunion._id]);
   }
 
   ngAfterViewInit(): void {

@@ -45,6 +45,18 @@ export class OficinaService {
     return this._http.get(this.URL +"/estadisticas", options);
   }
 
+  public getEOficinasLibres(horaInicio: any, horaFinal: any): Observable<any>{
+    let params = new HttpParams();
+    params = params.append('horaInicio', horaInicio);
+    params = params.append('horaFinal', horaFinal);
+
+    const options = {
+      headers: new HttpHeaders({}),
+      params: params
+    };
+    return this._http.get(this.URL +"libres", options);
+  }
+
   public updateOficina(oficina: Oficina): Observable<any>{
     const options = {
       headers: new HttpHeaders({
