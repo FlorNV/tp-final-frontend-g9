@@ -46,16 +46,16 @@ export class ReunionFormComponent implements OnInit {
   event: any;
 
   constructor(private reunionService: ReunionService,
-              private empleadoService: EmpleadoService,
-              private prioridadService: PrioridadService,
-              private recursoService: RecursoService,
-              private tipoReunionService: TipoReunionService,
-              private oficinaService: OficinaService,
-              private dp: DatePipe,
-              private modalService: NgbModal,
-              private router: Router,
-              private activatedRoute: ActivatedRoute) { 
-    
+    private empleadoService: EmpleadoService,
+    private prioridadService: PrioridadService,
+    private recursoService: RecursoService,
+    private tipoReunionService: TipoReunionService,
+    private oficinaService: OficinaService,
+    private dp: DatePipe,
+    private modalService: NgbModal,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) {
+
     this.dropdownSettingsParticipantes = {
       singleSelection: false,
       idField: '_id',
@@ -105,7 +105,7 @@ export class ReunionFormComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(
       params => {
-        if(params['id'] == '0'){
+        if (params['id'] == '0') {
           this.accion = 'new';
           this.iniciarReunion();
           this.cargarPrioridades();
@@ -118,7 +118,7 @@ export class ReunionFormComponent implements OnInit {
           this.accion = 'update';
           this.cargarReunion(params['id']);
         }
-       
+
       }
     )
   }
@@ -134,7 +134,7 @@ export class ReunionFormComponent implements OnInit {
   //TODO: corregir
   agregarReunion() {
     this.setReunion();
-    if(this.esReprogramada()){
+    if (this.esReprogramada()) {
       Swal.fire({
         title: '<p>Seleccionó prioridad ALTA. Algunas reuniones serán reprogramadas. ¿Quiere proceder?</p>',
         showDenyButton: true,
@@ -147,7 +147,7 @@ export class ReunionFormComponent implements OnInit {
               console.log(result);
               Swal.fire(result.message, '', 'success').then(
                 result => {
-                  if(result.isConfirmed)
+                  if (result.isConfirmed)
                     this.router.navigate(['calendario']);
                 }
               )
@@ -157,7 +157,7 @@ export class ReunionFormComponent implements OnInit {
               this.respuesta = error.error;
             }
           )
-          if(this.respuesta.status == 200) {
+          if (this.respuesta.status == 200) {
             Swal.fire({
               title: `<strong>${this.respuesta.message}</strong>`,
               icon: 'success',
@@ -167,19 +167,18 @@ export class ReunionFormComponent implements OnInit {
               confirmButtonText: 'OK'
             })
           } else {
-          Swal.fire('Operación cancelada', '', 'info')
+            Swal.fire('Operación cancelada', '', 'info')
           }
         } else if (result.isDenied) {
           Swal.fire(this.respuesta.message, '', 'error')
         }
       })
     } else {
-      console.log(this.reunion);
       this.reunionService.addReunion(this.reunion).subscribe(
         result => {
           Swal.fire(result.message, '', 'success').then(
             result => {
-              if(result.isConfirmed){
+              if (result.isConfirmed) {
                 this.router.navigate(['calendario']);
               }
             }
@@ -199,9 +198,9 @@ export class ReunionFormComponent implements OnInit {
     let prioridad = this.obtenerPrioridad();
 
     this.oficinas.forEach(o => {
-      if(o._id === this.reunion.oficina){
+      if (o._id === this.reunion.oficina) {
         o.reunionesActivas.forEach((ra: any) => {
-          if(ra.prioridad == prioridad.tipoPrioridad) {
+          if (ra.prioridad == prioridad.tipoPrioridad) {
             esPrioridadAlta = true;
             return;
           }
@@ -209,7 +208,7 @@ export class ReunionFormComponent implements OnInit {
         return;
       }
     });
-    if(prioridad.tipoPrioridad === "ALTA" && !esPrioridadAlta) {
+    if (prioridad.tipoPrioridad === "ALTA" && !esPrioridadAlta) {
       esReprogramada = true;
     }
     return esReprogramada;
@@ -229,7 +228,7 @@ export class ReunionFormComponent implements OnInit {
         let horaInicio = new Date(result.data.reunion.horaInicio);
         horaInicio.setMinutes(horaInicio.getMinutes() - horaInicio.getTimezoneOffset());
         this.reunion.horaInicio = horaInicio.toISOString().slice(0, -8);
-        
+
         let horaFinal = new Date(result.data.reunion.horaFinal);
         horaFinal.setMinutes(horaFinal.getMinutes() - horaFinal.getTimezoneOffset());
         this.reunion.horaFinal = horaFinal.toISOString().slice(0, -8);
@@ -257,7 +256,7 @@ export class ReunionFormComponent implements OnInit {
       result => {
         Swal.fire(result.message, '', 'success').then(
           result => {
-            if(result.isConfirmed){
+            if (result.isConfirmed) {
               this.router.navigate(['calendario']);
             }
           }
@@ -404,7 +403,7 @@ export class ReunionFormComponent implements OnInit {
   }
 
   setReunion(): void {
-    
+
     // this.event.start.dateTime = this.toIsoString(new Date(this.reunion.horaInicio)); 
     // this.event.end.dateTime = this.toIsoString(new Date(this.reunion.horaFinal));
     // this.event.summary = this.tiposReuniones.find((t: any) => t._id = this.reunion.tipoReunion)?.tipoReunion;
@@ -418,27 +417,27 @@ export class ReunionFormComponent implements OnInit {
     this.reunion.recursosDigitales = this.selectedItemsDigitales;
   }
 
-  toIsoString(date: Date) { 
-    var tzo = -date.getTimezoneOffset(), 
-    dif = tzo >= 0 ? '+' : '-', 
-    pad = function(num:any) { 
-      return (num < 10 ? '0' : '') + num; 
-    };
-    return date.getFullYear() + 
-    '-' + pad(date.getMonth() + 1) + 
-    '-' + pad(date.getDate()) + 
-    'T' + pad(date.getHours()) + 
-    ':' + pad(date.getMinutes()) + 
-    ':' + pad(date.getSeconds()) + 
-    dif + pad(Math.floor(Math.abs(tzo) / 60)) + 
-    ':' + pad(Math.abs(tzo) % 60); 
+  toIsoString(date: Date) {
+    var tzo = -date.getTimezoneOffset(),
+      dif = tzo >= 0 ? '+' : '-',
+      pad = function (num: any) {
+        return (num < 10 ? '0' : '') + num;
+      };
+    return date.getFullYear() +
+      '-' + pad(date.getMonth() + 1) +
+      '-' + pad(date.getDate()) +
+      'T' + pad(date.getHours()) +
+      ':' + pad(date.getMinutes()) +
+      ':' + pad(date.getSeconds()) +
+      dif + pad(Math.floor(Math.abs(tzo) / 60)) +
+      ':' + pad(Math.abs(tzo) % 60);
   }
 
   onChangeFecha() {
-    this.horaInicio = this.obtenerFechaFormateada(this.horaInicio);
-    this.horaFinal = this.obtenerFechaFormateada(this.horaFinal);
+    this.horaInicio = this.obtenerFechaFormateada(this.reunion.horaInicio);
+    this.horaFinal = this.obtenerFechaFormateada(this.reunion.horaFinal);
     let prioridad = this.obtenerPrioridad();
-    if(prioridad === undefined || prioridad.tipoPrioridad !== "ALTA") {
+    if (prioridad === undefined || prioridad.tipoPrioridad !== "ALTA") {
       this.obtenerReuniones();
       this.cargarParticipantesLibres();
       this.cargarRecursosFisicosLibres();
@@ -447,8 +446,8 @@ export class ReunionFormComponent implements OnInit {
   }
 
   onChangePrioridad() {
-    let prioridad = this.obtenerPrioridad() ;
-    if(prioridad !== undefined && prioridad.tipoPrioridad === "ALTA"){
+    let prioridad = this.obtenerPrioridad();
+    if (prioridad !== undefined && prioridad.tipoPrioridad === "ALTA") {
       this.cargarParticipantes();
       this.cargarOficinas();
       this.cargarRecursosFisicos();
@@ -460,7 +459,7 @@ export class ReunionFormComponent implements OnInit {
   }
 
   obtenerFechaFormateada(date: string): string {
-    let dateAux = new Date(this.reunion.horaFinal);
+    let dateAux = new Date(date);
     dateAux.setMinutes(dateAux.getMinutes() - dateAux.getTimezoneOffset());
 
     return dateAux.toISOString().slice(0, -8);
@@ -480,7 +479,7 @@ export class ReunionFormComponent implements OnInit {
     return oficinas.find((of: any) => of._id == this.reunion.oficina);
   }
 
-  cancelar(): void{
+  cancelar(): void {
     this.router.navigate(['reuniones']);
   }
 }
