@@ -16,6 +16,8 @@ import { NgxQRCodeModule } from "@techiediaries/ngx-qrcode";
 /* Notificaciones */
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+/* alife-file-to-base64 */
+import { AlifeFileToBase64Module } from "alife-file-to-base64";
 
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +27,7 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { LoginService } from './services/login.service';
 import { TokenInterceptorService } from './services/token-interceptor.service';
 import { AuthGuard } from './services/auth.guard';
+import { RequireFile } from './directivas/directiva.directive';
 
 @NgModule({
   declarations: [
@@ -32,6 +35,7 @@ import { AuthGuard } from './services/auth.guard';
     routingComponents,
     YesNoPipe,
     FilterPipe,
+    RequireFile,
   ],
   imports: [
     BrowserModule,
@@ -55,7 +59,8 @@ import { AuthGuard } from './services/auth.guard';
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
-    CustomFormsModule
+    CustomFormsModule,
+    AlifeFileToBase64Module,
   ],
   providers: [LoginService,
   {
