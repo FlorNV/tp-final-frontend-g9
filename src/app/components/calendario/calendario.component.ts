@@ -35,7 +35,8 @@ export class CalendarioComponent implements OnInit {
       const id = sessionStorage.getItem("userid")!;
       this.reunionesService.getReunionesParticipantes(JSON.stringify([id])).subscribe(
         ( {data } )=> {
-          this.events = data.reuniones.map((r: any) => ({
+          
+          this.events = data.reuniones.filter((r: any) => r.estado.nombreEstado === "PENDIENTE" || "EN PROCESO").map((r: any) => ({
             title: r.tipoReunion.tipoReunion,
             start: r.horaInicio,
             end: r.horaFinal,
@@ -51,8 +52,8 @@ export class CalendarioComponent implements OnInit {
     }
 
     this.reunionesService.getReuniones().subscribe(
-      ({data })=> {
-        this.events = data.reuniones.map((r: any) => ({
+      ({ data })=> {
+        this.events = data.reuniones.filter((r: any) => r.estado.nombreEstado === "PENDIENTE" || "EN PROCESO").map((r: any) => ({
           title: r.tipoReunion.tipoReunion,
           start: r.horaInicio,
           end: r.horaFinal,
