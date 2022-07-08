@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Empleado } from 'src/app/models/empleado';
 import { Notificacion } from 'src/app/models/notificacion';
 import { Oficina } from 'src/app/models/oficina';
@@ -33,7 +34,8 @@ export class HeaderComponent implements OnInit {
               public empleadoService: EmpleadoService,
               public notificacionService: NotificacionService,
               public oficinaService: OficinaService,
-              public tipoReunionService: TipoReunionService) {
+              public tipoReunionService: TipoReunionService,
+              public router: Router) {
                 this.obtenerOficinas();
                 this.obtenerEmpealdo();
                 this.obtenerTipoReuniones();
@@ -106,6 +108,7 @@ export class HeaderComponent implements OnInit {
   }
 
   prueba(reunion: Reunion){
+    this.router.navigate(['reunion-detalle', reunion._id]);
     console.log(reunion)
   }
 }
